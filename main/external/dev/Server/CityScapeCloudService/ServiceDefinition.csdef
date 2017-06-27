@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="CityScapeCloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WorkerRole name="DataProcessorRole" vmsize="Small">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="WorkerThreadsCount" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" />
+      <Setting name="StorageAccountConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
+  <WebRole name="MS.MeasurementStation.Service" vmsize="Small">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="HttpsIn" endpointName="HttpsIn" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="StorageAccountConnectionString" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" />
+      <Setting name="HealthStatusServieBusConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="HttpsIn" protocol="https" port="8081" certificate="cityscape.cloudapp.net" />
+    </Endpoints>
+    <Certificates>
+      <Certificate name="cityscape.cloudapp.net" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+  </WebRole>
+  <WebRole name="MS.Portal" vmsize="Medium">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="HttpIn" endpointName="HttpIn" />
+          <Binding name="HttpsIn" endpointName="HttpsIn" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="StorageAccountConnectionString" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" />
+      <Setting name="LiveClientId" />
+      <Setting name="LiveSecretClientId" />
+      <Setting name="RequestScopes" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="HttpIn" protocol="http" port="80" />
+      <InputEndpoint name="HttpsIn" protocol="https" port="443" certificate="cityscape.cloudapp.net" />
+    </Endpoints>
+    <Certificates>
+      <Certificate name="cityscape.cloudapp.net" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+  </WebRole>
+  <WorkerRole name="MS.StationHealthReportWorker" vmsize="Small">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="HealthStatusServieBusConnectionString" />
+      <Setting name="HighPriorityThreadCount" />
+      <Setting name="MediumPriorityThreadCount" />
+      <Setting name="LowPriorityThreadCount" />
+      <Setting name="StorageAccountConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>

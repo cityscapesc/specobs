@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Microsoft.Spectrum.Portal.Models.StationViewModel>
+@using Microsoft.Spectrum.Portal.Security;
+
+@foreach (var station in Model)
+{
+    <div class="infoBoxdiv hidden" id="info_@station.StationId">
+        <div class="infobox">
+            <div class="container">
+                <div class="title">
+                    <h2><a onclick='showStationInfo("@station.StationId", "stationInfo")'>@station.StationName</a></h2>
+                    <nav class="options">
+                        <ul>
+                            <li><a onclick='showStationInfo("@station.StationId","chart")' title="Create Charts">Create Charts</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <label title="Address">Address</label>
+                        <span>@station.Address</span>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label title="Latitude">Latitude</label>
+                            <span>@station.Latitude</span>
+                        </div>
+                        <div class="col">
+                            <label title="Longitude">Longitude</label>
+                            <span>@station.Longitude</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label title="Radio Type">Radio Type</label>
+                        <span>@station.RadioType</span>
+                    </div>
+                    <div class="current-info">
+                        <a onclick='showStationInfo("@station.StationId", "chart")' title="View Chart">View Chart</a>
+                        <a title="RAW IQ Data Download" onclick='showStationInfo("@station.StationId","rawdata")' class="btn-style">RAW IQ Data Download</a>
+                        <a onclick='showStationInfo("@station.StationId", "stationInfo")' title="More Info">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

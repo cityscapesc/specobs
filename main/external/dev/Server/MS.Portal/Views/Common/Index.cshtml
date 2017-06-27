@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    @section Left
+    {
+        <div class="content" id="homeLPane">
+            <div class="title">
+                <h2>FAQ</h2>
+            </div>
+
+            <nav class="sub-nav">
+                <ul>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav1" name="subNavigation" checked="checked" />
+                        <label for="sNav1" title="OVERVIEW">OVERVIEW</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav2" name="subNavigation" />
+                        <label for="sNav2" title="SPECTRUM STATIONS">SPECTRUM STATIONS</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav3" name="subNavigation" />
+                        <label for="sNav3" title="STATION REGISTRATION">STATION REGISTRATION</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav4" name="subNavigation" />
+                        <label for="sNav4" title="MANAGE MY STATION">MANAGE MY STATION</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav5" name="subNavigation" />
+                        <label for="sNav5" title="VIEW CHARTS">VIEW CHARTS</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav6" name="subNavigation" />
+                        <label for="sNav6" title="TROUBLESHOOT ISSUES">TROUBLESHOOT ISSUES</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav7" name="subNavigation" />
+                        <label for="sNav7" title="ACCESS TO RAW DATA">ACCESS TO RAW DATA</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="sNav8" name="subNavigation" />
+                        <label for="sNav8" title="CONTRIBUTIONS">CONTRIBUTIONS</label>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+    @section  Right{
+        <div class="container">
+            <div class="content">
+                <div class="sections show" id="General">
+                    <div class="title float">
+                        <h2>OVERVIEW</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "OVERVIEW" })
+                </div>
+                <div class="sections hidden" id="Stations">
+                    <div class="title float">
+                        <h2>SPECTRUM STATIONS</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "SPECTRUM STATIONS" })
+                </div>
+                <div class="sections hidden" id="ChartType">
+                    <div class="title float">
+                        <h2>STATION REGISTRATION</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "STATION REGISTRATION" })
+                </div>
+                <div class="sections hidden" id="Registartion">
+                    <div class="title float">
+                        <h2>MANAGE MY STATION</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "MANAGE MY STATION" })
+                </div>
+                <div class="sections hidden" id="StationManagement">
+                    <div class="title float">
+                        <h2>VIEW CHARTS</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "VIEW CHARTS" })
+                </div>
+                <div class="sections hidden" id="UserManagement">
+                    <div class="title float">
+                        <h2>TROUBLESHOOT ISSUES</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "TROUBLESHOOT ISSUES" })
+                </div>
+                <div class="sections hidden" id="RawData">
+                    <div class="title float">
+                        <h2>ACCESS TO RAW DATA</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "ACCESS TO RAW DATA" })
+                </div>
+                <div class="sections hidden" id="Contributions">
+                    <div class="title float">
+                        <h2>CONTRIBUTIONS</h2>
+                    </div>
+                    @Html.Action("GetQuestions", new { sectionName = "CONTRIBUTIONS" })
+                </div>
+            </div>
+        </div>
+    }
+
+    @section scripts
+{
+        <script type="text/javascript">
+            $("#Radio5").attr('checked', 'checked');
+
+            $("#sNav1").click(function () {
+                $(".show").addClass("hidden");
+                $("#General").removeClass("hidden");
+                $("#General").addClass("show");
+            });
+
+            $("#sNav2").click(function () {
+                $(".show").addClass("hidden");
+                $("#Stations").removeClass("hidden");
+                $("#Stations").addClass("show");
+            });
+
+            $("#sNav3").click(function () {
+                $(".show").addClass("hidden");
+                $("#ChartType").removeClass("hidden");
+                $("#ChartType").addClass("show");
+            });
+
+            $("#sNav4").click(function () {
+                $(".show").addClass("hidden");
+                $("#Registartion").removeClass("hidden");
+                $("#Registartion").addClass("show");
+            });
+
+            $("#sNav5").click(function () {
+                $(".show").addClass("hidden");
+                $("#StationManagement").removeClass("hidden");
+                $("#StationManagement").addClass("show");
+            });
+
+            $("#sNav6").click(function () {
+                $(".show").addClass("hidden");
+                $("#UserManagement").removeClass("hidden");
+                $("#UserManagement").addClass("show");
+            });
+
+            $("#sNav7").click(function () {
+                $(".show").addClass("hidden");
+                $("#RawData").removeClass("hidden");
+                $("#RawData").addClass("show");
+            });
+
+            $("#sNav8").click(function () {
+                $(".show").addClass("hidden");
+                $("#Contributions").removeClass("hidden");
+                $("#Contributions").addClass("show");
+            });
+
+        </script>
+    }

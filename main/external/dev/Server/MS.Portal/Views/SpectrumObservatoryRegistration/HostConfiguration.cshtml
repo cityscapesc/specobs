@@ -1,0 +1,34 @@
+﻿@model Microsoft.Spectrum.Portal.Models.StationRegistrationViewModel
+
+<div>
+    <div class="title">
+        <h2>Host Configuration</h2>
+    </div>
+
+    <div class="content manage-user">
+        <div class="info success">
+            Thank you for registering the station “@Model.SpectrumObservatoryName”
+        </div>
+
+        <p>To start the data upload to the cloud, copy the below Station Access Key to importer service config file</p>
+
+        <div class="access-key">
+            <div class="key">
+                <label title="Station Access Key">Station Access Key:</label>
+                <span>@Model.MeasurementStationId</span>
+            </div>
+            <button type="button" class="copy icon" title="Copy Access Key">Copy Access Key</button>
+        </div>
+
+        <ul class="noFloat">
+            <li>Step #1: Open Importer Service Config file from %ProgramFiles\SpectrumObvservatory\Importer</li>
+            <li>Step #2: Copy the above key and save the file</li>
+            <li>Step #3: Restart the Importer Service</li>
+        </ul>
+
+        <div class="note"><strong>Note:</strong> Make sure there is a file being scanned in the folder with the current time stamp. It will take few hours before you can see the data available from CityScape Spectrum Observatory site.</div>
+
+        <div class="info success">The pre-assembled station owners cannot do this step by themselves for now (Dec 2016). Please contact us <a href="mailto:spectrum-city-scape@googlegroups.com">here</a> to bring this station online.  This will be fixed in future releases.</div>
+
+    </div>
+</div>

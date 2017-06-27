@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+// Copyright (c) Microsoft Corporation
+//
+// All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance 
+// with the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+//
+// THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER
+// EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE,
+// FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
+//
+// See the Apache Version 2.0 License for specific language governing permissions and limitations under the License.
+-->
+<!--Change just the package version number for each new release-->
+<?define MSIPACKAGEVERSION=4.1.0.0?>
+<?define MSIPACKAGEUPGRADECODE=FED0FF10-862F-C27C-0E92-000373E128F9 ?>
+<?define MSIPACKAGEDESCRIPTION="(loc.ProductName)" $(var.MSIPACKAGEVERSION) ?>
+
+<?define SOLUTIONDIR="$(var.SolutionDir)" ?>
+
+<?define INSATLLERRESOURCESDIR="$(var.ProjectDir)" ?>
+
+<?define APPNAME=CityScape Spectrum Observatory ?>
+<?define PFILESDIR="ProgramFilesFolder" ?>
+
+<?define IMPORTSERVICEDIR="$(var.MS.Import.Service.TargetDir)" ?>
+<?define SCANNERSERVICEDIR="$(var.MS.Scanning.Service.TargetDir)" ?>
+<?define AUTOUPDATERSERVICEDIR="$(var.MS.AutoUpdate.Service.TargetDir)" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*"
+           Name="!(loc.ProductName)"
+           Language="!(loc.DefLang)"
+           Version="$(var.MSIPACKAGEVERSION)"
+           Manufacturer="Microsoft"
+           UpgradeCode="$(var.MSIPACKAGEUPGRADECODE)">
+
+    <Package Description="$(var.MSIPACKAGEDESCRIPTION)" Comments="!(loc.MSIPackageComments)"
+    InstallerVersion="200" Compressed="yes" />
+
+    <Upgrade Id="$(var.MSIPACKAGEUPGRADECODE)">
+      <UpgradeVersion Property='OLDVERFOUND' Minimum="0.0.0.0" IncludeMinimum="yes" Maximum='$(var.MSIPACKAGEVERSION)' IncludeMaximum='no'  RemoveFeatures="ALL" />
+      <UpgradeVersion OnlyDetect="yes" Property='NEWVERFOUND' Minimum='$(var.MSIPACKAGEVERSION)' />
+    </Upgrade>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+
+    <Icon Id="PackageIcon" SourceFile="$(var.INSATLLERRESOURCESDIR)\Images\pkgicon.ico"/>
+    <Property Id='ARPPRODUCTICON' Value='PackageIcon' />
+    <Property Id="ALLUSERS" Value="1" Admin="yes"/>
+
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.INSATLLERRESOURCESDIR)\EULA\License.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.INSATLLERRESOURCESDIR)\Images\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.INSATLLERRESOURCESDIR)\Images\dlgbmp.bmp" />
+    <WixVariable Id="WixUIExclamationIco" Value="$(var.INSATLLERRESOURCESDIR)\Images\exclamic.ico" />
+    <WixVariable Id="WixUIInfoIco" Value="$(var.INSATLLERRESOURCESDIR)\Images\Info.ico" />
+    <WixVariable Id="WixUINewIco" Value="$(var.INSATLLERRESOURCESDIR)\Images\New.ico" />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value ="1"/>
+    <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="!(loc.CongratualtionsText)" />
+    <Property Id="WixShellExecTarget" Value="[#FileReadmeTxt]" />
+
+    <CustomAction Id="LaunchFile"
+        BinaryKey="WixCA"
+        DllEntry="WixShellExec"
+        Impersonate="yes"/>
+    
+    <UI Id="SPECTRUMUI">
+      <UIRef Id="WixUI_Common" />
+      <UIRef Id="SpectrumWixUI_InstallDir" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+    </UI>
+
+    <Feature Id="ProductFeature" Title="MS.Spectrum.Setup" Level="1">
+      <ComponentGroupRef Id="ROOTFILES" />
+      <ComponentGroupRef Id="IMPORTERFOLDER" />
+      <ComponentGroupRef Id="SCANNERFOLDER" />
+      <ComponentGroupRef Id="AUTOUPDATERFOLDER"/>
+      <ComponentGroupRef Id="MANUALS" />
+      <ComponentGroupRef Id="PROGRAMMENUSHORTCUT"/>
+      <ComponentGroupRef Id="WINDOWSROOTFOLDER"/>
+      <ComponentGroupRef Id="SCANEMPTYFOLDER" />
+      <ComponentGroupRef Id="SETTINGSEMPTYFOLDER" />
+      <ComponentGroupRef Id="AUTOUPDATEEMPTYFOLDER" />
+      <ComponentGroupRef Id="ERRORSEMPTYFOLDER"/>
+      <ComponentGroupRef Id="REGISTRYENTRIES"/>
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="CityScape Spectrum Observatory">
+          <Directory Id="IMPORTBINARIES" Name="Importer" />
+          <Directory Id="SCANNERBINARIES" Name="Scanner" />
+          <Directory Id="AUTOUPDATERBINARIES" Name="AutoUpdater" />          
+          <Directory Id="DOCUMENTATION" Name="Docs" />
+        </Directory>
+      </Directory>
+
+      <Directory Id="WINDOWSVOLUME">
+        <Directory Id="WINDOWSROOT" Name="SpectrumData">
+          <Directory Id="SCANFOLDER" Name="scan" />
+          <Directory Id="ERRORSFOLDER" Name="errors" />
+          <Directory Id="AUTOUPDATEFOLDER" Name="autoupdate" />
+          <Directory Id="SETTINGSFOLDER" Name="settings" />
+        </Directory>   
+      </Directory>   
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <SetDirectory Id="WINDOWSVOLUME" Value="[WindowsVolume]"/>
+
+    <ComponentGroup Id="REGISTRYENTRIES" Directory="INSTALLFOLDER">
+      <Component Id="CMPRegistryEntries" Guid="0AA5E63D-59F5-5946-EDA7-45D9271BFF9C">
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\CityScape Spectrum Observatory">
+          <RegistryValue Name="installed" Value="1" Type="integer" />
+          <RegistryValue Name="SpectrumInstallerVersion" Value="$(var.MSIPACKAGEVERSION)" Type="string" />
+        </RegistryKey>
+      </Component>
+    </ComponentGroup>
+
+    <!-- program menu items -->
+    <ComponentGroup Id="PROGRAMMENUSHORTCUT" Directory="INSTALLFOLDER">
+      <Component Id="CMPApplicationStartMenuShortcut" Guid="13269471-FC6F-40E6-B7BF-02CDB3395A11" >
+        <Shortcut Id="UninstallDriver"
+						  Name="!(loc.Uninstall)"
+						  Description="!(loc.UninstallDescription)"
+						  Target="[System64Folder]msiexec.exe"
+						  Arguments="/x [ProductCode]"
+							Icon="PackageIcon" />
+        
+        <RemoveFolder Id="PROGRAMMENUDIR" On="uninstall"/>
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="ROOTFILES" Directory="INSTALLFOLDER">
+      <Component Id="CMPLicenseRtf" Guid="40F3778E-0230-4E8B-91E9-6665C2250206">
+        <File Id="FileLicenseRtf" Name="EULA.rtf" Source="$(var.INSATLLERRESOURCESDIR)\EULA\License.rtf" KeyPath="yes" />
+      </Component>
+      <!-- <Component Id="CMPReadMeTXT" Guid="299F0B6F-5388-92F8-391F-3133F146CA03">
+        <File Id="FileReadmeTxt" Name="Readme.txt" Source="$(var.INSATLLERRESOURCESDIR)\Docs\Readme.txt" KeyPath="yes" />
+      </Component>-->
+    </ComponentGroup>
+
+    <ComponentGroup Id="IMPORTERFOLDER" Directory="IMPORTBINARIES">
+      <Component Id="CMPMicrosoftPracticesUnityConfigurationDLL" Guid="E9983A59-8E88-4204-83AD-63D9DF17F424">
+        <File Id="FileMicrosoftPracticesUnityConfigurationDLL" Name="Microsoft.Practices.Unity.Configuration.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Practices.Unity.Configuration.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftPracticesUnityDLL" Guid="CDE6D0FB-21AF-471F-B0E2-D96E32D714CA">
+        <File Id="FileMicrosoftPracticesUnityDLL" Name="Microsoft.Practices.Unity.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Practices.Unity.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumCommonDLL" Guid="C1AA46ED-4D26-4AA5-9539-80FEBFB13BE1">
+        <File Id="FileMicrosoftSpectrumCommonDLL" Name="Microsoft.Spectrum.Common.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.Common.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumMeasurementStationSettingsDLL" Guid="F3AEE40E-2FDC-47DD-9894-77B84C7BAF22">
+        <File Id="FileMicrosoftSpectrumMeasurementStationSettingsDLL" Name="Microsoft.Spectrum.IO.MeasurementStationSettings.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.IO.MeasurementStationSettings.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumImportUploadClientDLL" Guid="6FDEB492-BCB0-4171-A860-D021A4A31210">
+        <File Id="FileMicrosoftSpectrumImportUploadClientDLL" Name="Microsoft.Spectrum.MeasurementStation.Client.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.MeasurementStation.Client.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumImportUploadContractDLL" Guid="246523B3-307D-42AE-8280-C604E0151992">
+        <File Id="FileMicrosoftSpectrumImportUploadContractDLL" Name="Microsoft.Spectrum.MeasurementStation.Contract.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.MeasurementStation.Contract.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumStorageBlobDLL" Guid="340F74FE-0B10-402C-81BE-3EE5F40640FE">
+        <File Id="FileMicrosoftSpectrumStorageBlobDLL" Name="Microsoft.Spectrum.Storage.Blob.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.Storage.Blob.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftWindowsAzureStorageDLL" Guid="EB2C7394-252F-41F9-9ECF-EFF1861DC520">
+        <File Id="FileMicrosoftWindowsAzureStorageDLL" Name="Microsoft.WindowsAzure.Storage.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.WindowsAzure.Storage.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumCommonAzureDLL" Guid="00734E2E-3134-4701-B7FC-029BEB1EDD0A">
+        <File Id="FileMicrosoftSpectrumCommonAzureDLL" Name="Microsoft.Spectrum.Common.Azure.dll" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.Common.Azure.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPProtobufNet2" Guid="C0398C98-061B-467E-9368-4085D2D72DBE">
+        <File Id="FileCMPProtobufNet2" Name="protobuf-net.dll" Source="$(var.IMPORTSERVICEDIR)\protobuf-net.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumImportServiceCONFIG" Guid="AA52BD6C-D243-42B3-959B-A3C3848195B2">
+        <File Id="FileMicrosoftSpectrumImportServiceCONFIG" Name="Microsoft.Spectrum.Import.Service.exe.config" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.Import.Service.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPINewtonsoftJsonDLL" Guid="A2E9892A-F938-4978-9F66-395C979C8782">
+        <File Id="FileINewtonsoftJsonDLL" Name="Newtonsoft.Json.dll" Source="$(var.IMPORTSERVICEDIR)\Newtonsoft.Json.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumImportServiceEXE" Guid="0A03DA36-CDD7-4577-BA44-2B5A807411E2">
+        <File Id="FileMicrosoftSpectrumImportServiceEXE" Name="Microsoft.Spectrum.Import.Service.exe" Source="$(var.IMPORTSERVICEDIR)\Microsoft.Spectrum.Import.Service.exe" KeyPath="yes" />
+              <ServiceInstall
+                Id="ImportServiceInstaller"
+                Type="ownProcess"
+                Vital="yes"
+                Name="SpectrumImportService"
+                DisplayName="CityScape Spectrum Observatory Import Service"
+                Description="Monitors the incoming data and imports the spectrum data for processing and upload"
+                Start="auto"
+                Account="LocalSystem"
+                ErrorControl="ignore"
+                Interactive="no" >
+        </ServiceInstall>
+        <ServiceControl Id="ImportService" Stop="both" Remove="uninstall" Name="SpectrumImportService" Wait="no" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="SCANNERFOLDER" Directory="SCANNERBINARIES">
+      <Component Id="CMPMicrosoftSpectrumFftwInteropDLL" Guid="DE0B3079-E362-4A6E-147B-894AFEE8FAF7">
+        <File Id="FileFftwInteropDLL" Name="Microsoft.Spectrum.FftwInterop.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.FftwInterop.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPlibfftw3DLL" Guid="A868F5ED-0D40-4ECA-9A85-6912E666176E">
+        <File Id="Filelibfftw3DLL" Name="libfftw3-3.dll" Source="$(var.SCANNERSERVICEDIR)\libfftw3-3.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPScanMicrosoftPracticesUnityConfigurationDLL" Guid="EE482450-7CBD-4431-A3BB-6342F332259C">
+        <File Id="FileScanMicrosoftPracticesUnityConfigurationDLL" Name="Microsoft.Practices.Unity.Configuration.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Practices.Unity.Configuration.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPScanMicrosoftPracticesUnityDLL" Guid="2C5B3DA3-6387-4754-8EF4-E875EBFB58DF">
+        <File Id="FileScanMicrosoftPracticesUnityDLL" Name="Microsoft.Practices.Unity.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Practices.Unity.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPScanMicrosoftSpectrumCommonDLL" Guid="CCE00E2C-B94C-4F86-A9A5-BE4B6F18FD9F">
+        <File Id="FileScanMicrosoftSpectrumCommonDLL" Name="Microsoft.Spectrum.Common.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.Common.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPScanMicrosoftSpectrumIOUsrpDLL" Guid="5993553F-86B1-4A68-8DFF-7C5350D5DB08">
+        <File Id="FileScanMicrosoftSpectrumIOUsrpDLL" Name="Microsoft.Spectrum.IO.ScanFile.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.IO.ScanFile.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPScanMicrosoftSpectrumIORawIqDLL" Guid="0B7DC869-92AD-47AA-8870-7667C3865962">
+        <File Id="FileScanMicrosoftSpectrumIORawIqDLL" Name="Microsoft.Spectrum.IO.RawIqFile.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.IO.RawIqFile.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumMeasurementStationSettingsDLL2" Guid="377058A3-8DA7-42FB-9BE9-4189E72378BA">
+        <File Id="FileMicrosoftSpectrumMeasurementStationSettingsDLL2" Name="Microsoft.Spectrum.IO.MeasurementStationSettings.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.IO.MeasurementStationSettings.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPProtobufNet" Guid="D0045E6B-DC97-4FA5-93D8-8A1B5B291963">
+        <File Id="FileCMPProtobufNet" Name="protobuf-net.dll" Source="$(var.SCANNERSERVICEDIR)\protobuf-net.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumScanningScannersDLL" Guid="45BD1C1C-6182-40B5-88A7-4001C6514B13">
+        <File Id="FileMicrosoftSpectrumScanningScannersDLL" Name="Microsoft.Spectrum.Scanning.Scanners.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.Scanning.Scanners.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPuhdDLL" Guid="90AB1672-D6B1-48B2-8917-FC8D136C96C4">
+        <File Id="FileuhdDLL" Name="uhd.dll" Source="$(var.SCANNERSERVICEDIR)\uhd.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPRFExplorerCommunicatorDLL" Guid="A684CC50-56E1-4B88-A862-234336A14AD1">
+        <File Id="FileRFExplorerCommunicatorDLL" Name="RFExplorerCommunicator.dll" Source="$(var.SCANNERSERVICEDIR)\RFExplorerCommunicator.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPNewtonsoftJsonDLL" Guid="B5BC8F40-5EBF-47C6-A387-791856161A8A">
+        <File Id="FileNewtonsoftJsonDLL" Name="Newtonsoft.Json.dll" Source="$(var.SCANNERSERVICEDIR)\Newtonsoft.Json.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoft.Spectrum.Devices.UsrpNativeInteropDLL" Guid="ED1280CC-1FAC-4822-E8EE-B189111240B3">
+        <File Id="FileMicrosoft.Spectrum.Devices.UsrpNativeInteropDLL" Name="Microsoft.Spectrum.Devices.UsrpNativeInterop.dll" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.Devices.UsrpNativeInterop.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumScanningServiceCONFIG" Guid="3BDBDF1D-5F31-476D-B8E4-5A9D8A853277">
+        <File Id="FileMicrosoftSpectrumScanningServiceCONFIG" Name="Microsoft.Spectrum.Scanning.Service.exe.config" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.Scanning.Service.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="CMPMicrosoftSpectrumScanningServiceEXE" Guid="CC3C43B1-1F6C-48BE-80F2-9F96A77BF753">
+        <File Id="FileMicrosoftSpectrumScanningServiceEXE" Name="Microsoft.Spectrum.Scanning.Service.exe" Source="$(var.SCANNERSERVICEDIR)\Microsoft.Spectrum.Scanning.Service.exe" KeyPath="yes" />
+              <ServiceInstall
+                Id="ScannerServiceInstaller"
+                Type="ownProcess"
+                Vital="yes"
+                Name="SpectrumScannerService"
+                DisplayName="CityScape Spectrum Observatory Scanner Service"
+                Description="Collects spectrum data from devices and stores it in files for upload to the cloud"
+                Start="auto"
+                Account="LocalSystem"
+                ErrorControl="ignore"
+                Interactive="no" >
+        </ServiceInstall>
+        <ServiceControl Id="ScannerService" Start="install" Stop="both" Remove="uninstall" Name="SpectrumScannerService" Wait ="no"/>
+    </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="AUTOUPDATERFOLDER" Directory="AUTOUPDATERBINARIES">
+        <Component Id="CMPMicrosoftPracticesUnityConfigurationDLL2" Guid="CD06E501-A6BA-1784-3DFB-A40F3BD53AA1">
+          <File Id="FileMicrosoftPracticesUnityConfigurationDLL2" Name="Microsoft.Practices.Unity.Configuration.dll" Source="$(var.AUTOUPDATERSERVICEDIR)\Microsoft.Practices.Unity.Configuration.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="CMPMicrosoftPracticesUnityDLL2" Guid="A59FDD5C-4B39-8816-3DA9-2AE7492ED189">
+          <File Id="FileMicrosoftPracticesUnityDLL2" Name="Microsoft.Practices.Unity.dll" Source="$(var.AUTOUPDATERSERVICEDIR)\Microsoft.Practices.Unity.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="CMPMicrosoftSpectrumAutoUpdateDLL" Guid="FA069C12-A0CE-D19D-4C9E-F077DC27D059">
+          <File Id="FileMicrosoft.Spectrum.AutoUpdateDLL" Name="Microsoft.Spectrum.AutoUpdate.dll" Source="$(var.AUTOUPDATERSERVICEDIR)\Microsoft.Spectrum.AutoUpdate.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="CMPMicrosoftSpectrumAutoUpdateServiceCONFIG" Guid="56741749-4D8B-D0AF-637B-946A4BB78965">
+          <File Id="FileMicrosoftSpectrumAutoUpdateServiceCONFIG" Name="Microsoft.Spectrum.AutoUpdate.Service.exe.config" Source="$(var.AUTOUPDATERSERVICEDIR)\Microsoft.Spectrum.AutoUpdate.Service.exe.config" KeyPath="yes" />
+        </Component>
+        <Component Id="CMPMicrosoftSpectrumCommonDLL2" Guid="21BB9020-E0B6-FCD8-4407-19E5BCCE3C9E">
+          <File Id="FileMicrosoftSpectrumCommonDLL2" Name="Microsoft.Spectrum.Common.dll" Source="$(var.AUTOUPDATERSERVICEDIR)\Microsoft.Spectrum.Common.dll" KeyPath="yes" />
+        </Component>
+        <Component Id="CMPMicrosoftSpectrumAutoUpdateServiceEXE" Guid="F2CE6253-9763-3A67-1072-B21302C9C7D5">
+          <File Id="FileMicrosoftSpectrumAutoUpdateServiceEXE" Name="Microsoft.Spectrum.AutoUpdate.Service.exe" Source="$(var.AUTOUPDATERSERVICEDIR)\Microsoft.Spectrum.AutoUpdate.Service.exe" KeyPath="yes" />
+                <ServiceInstall
+                  Id="AutoUpdateServiceInstaller"
+                  Type="ownProcess"
+                  Vital="yes"
+                  Name="SpectrumAutoUpdaterService"
+                  DisplayName="CityScape Spectrum Observatory AutoUpdater"
+                  Description="Downloads the latest spectrum observatory software and updates it automatically"
+                  Start="auto"
+                  Account="LocalSystem"
+                  ErrorControl="ignore"
+                  Interactive="no" >
+              </ServiceInstall>
+              <ServiceControl Id="AutoUpdaterService" Start="install" Stop="both" Remove="uninstall" Name="SpectrumAutoUpdaterService" Wait ="no"/>
+        </Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="MANUALS" Directory="DOCUMENTATION">
+    </ComponentGroup>
+
+    <ComponentGroup Id="WINDOWSROOTFOLDER" Directory="WINDOWSROOT">
+        <Component Id="CMPWindowsRootFolder" Guid="DCD1A42D-DEDC-D14A-1BA6-2F7E2DFB4BE5"
+          SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no" Win64="no" Location="either">
+          <CreateFolder/>      
+        </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="SCANEMPTYFOLDER" Directory="SCANFOLDER">
+        <Component Id="CMPScanEmptyFolder" Guid="5A05B721-DC3C-7E23-4E4E-0D0B2C061488"
+          SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no" Win64="no" Location="either">
+          <CreateFolder/>      
+        </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="SETTINGSEMPTYFOLDER" Directory="SETTINGSFOLDER">
+      <Component Id="CMPSettingsEmptyFolder" Guid="ECABF464-0C7F-4840-8C43-68BAB1BC7163"
+        SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no" Win64="no" Location="either">
+        <CreateFolder/>
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="ERRORSEMPTYFOLDER" Directory="ERRORSFOLDER">
+        <Component Id="CMPErrorsEmptyFolder" Guid="5B6A9F3C-878E-0024-594E-CD883EFCA193"
+          SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no" Win64="no" Location="either">
+          <CreateFolder/>      
+        </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="AUTOUPDATEEMPTYFOLDER" Directory="AUTOUPDATEFOLDER">
+      <Component Id="CMPAutoUpdateEmptyFolder" Guid="0105C399-86D4-C1C1-C557-539EAC64648A"
+        SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no" Win64="no" Location="either">
+        <CreateFolder/>
+      </Component>
+    </ComponentGroup>
+
+  </Fragment>
+</Wix>

@@ -1,0 +1,37 @@
+// Copyright (c) Microsoft Corporation
+//
+// All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance 
+// with the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+//
+// THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER
+// EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE,
+// FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
+//
+// See the Apache Version 2.0 License for specific language governing permissions and limitations under the License.
+
+namespace Microsoft.Spectrum.Scanning.Service
+{
+    using System;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses",
+        Justification = "Instantiated by Unity")]
+    internal class DisplayHelpCommand : IExecute
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)",
+            Justification = "We aren't localizing")]
+        public void Execute()
+        {
+            Console.WriteLine("Microsoft Spectrum Scanning Service");
+            Console.WriteLine();
+            Console.WriteLine("Usage:");
+            Console.WriteLine("Microsoft.Spectrum.Scanning.Service.exe");
+            Console.WriteLine(" Starts the spectrum scanning service as a Windows service in the background.");
+            Console.WriteLine();
+            Console.WriteLine("Microsoft.Spectrum.Scanning.Service.exe RunAsExe");
+            Console.WriteLine(" Runs the spectrum scanning service as a standalone executable. Press Enter to stop the executable.");
+            Console.WriteLine();
+        }
+    }
+}

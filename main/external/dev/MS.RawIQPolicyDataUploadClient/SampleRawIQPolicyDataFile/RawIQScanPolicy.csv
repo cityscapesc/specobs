@@ -1,0 +1,8 @@
+BandPriority,Category,DutycycleOnTimeInMilliSec,DutycycleTimeInMilliSec,FileDurationInSec,PolicyDetails,RetentionTimeInSec,StartFrequency,StopFrequency
+2,Default,100,1000,60,Testing,3600,0,0
+1,Black,400,1000,600,Testing,3600,40000000,70000000
+1,Black,100,1000,60,Testing,3600,150000000,200000000
+3,Gray,100,1000,60,Testing,3600,200000000,250000000
+3,Black,100,1000,60,Testing,3600,250000000,300000000
+2,White,100,1000,60,Testing,3600,300000000,400000000
+2,White,100,1000,60,Testing,3600,70000000,150000000

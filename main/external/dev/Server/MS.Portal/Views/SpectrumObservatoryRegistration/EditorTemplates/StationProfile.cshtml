@@ -1,0 +1,90 @@
+﻿@model Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+<div class="title">
+    <h3>Station Profile</h3>
+</div>
+
+<ul>
+    <li>
+        <label title="Station Name">Station Name</label>
+        <div class="input mandatory user">
+            @Html.TextBoxFor(m => m.StationName)
+            @Html.ValidationMessageFor(m => m.StationName)
+        </div>
+    </li>
+    <li>
+        <label title="Station Type">Station Type</label>
+        <div class="input antenna">
+            @Html.DropDownListFor(m => m.StationType, Model.StationTypes)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Address Line #1">Address Line #1</label>
+        <div class="input mandatory address">
+            @Html.TextBoxFor(m => m.Address.AddressLine1)
+            @Html.ValidationMessageFor(m => m.Address.AddressLine1)
+        </div>
+    </li>
+    <li>
+        <label title="Address Line #2">Address Line #2</label>
+        <div class="input address">
+            @Html.TextBoxFor(m => m.Address.AddressLine2)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Location">Location</label>
+        <div class="input mandatory location">
+            @Html.TextBoxFor(m => m.Address.Location)
+            @Html.ValidationMessageFor(m => m.Address.Location)
+        </div>
+    </li>
+    <li>
+        <label title="Country/ Region">Country/ Region</label>
+        <div class="input country">
+            @Html.DropDownListFor(m => m.Address.Country, Model.Countries)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li class="clear">
+        <label title="Description">Description</label>
+        <div class="input textarea">
+            @Html.TextAreaFor(m => m.Description)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li class="split">
+        <label title="GPS Coordinates (Latitude in Decimal Degrees)">GPS Coordinates (Lat Deg)</label>
+        <div class="col">
+            <div class="input mandatory location">
+                @Html.TextBoxFor(m => m.Gps.Latitude, new { @placeholder = "Latitude" })
+                @Html.ValidationMessageFor(m => m.Gps.Latitude)
+            </div>
+        </div>
+        </li>
+    <li class="split">
+        <label title="GPS Coordinates (Longitude in Decimal Degrees)">GPS Coordinates (Long Deg)</label>
+        <div class="col">
+            <div class="input mandatory location">
+                @Html.TextBoxFor(m => m.Gps.Longitude, new { @placeholder = "Longitude" })
+                @Html.ValidationMessageFor(m => m.Gps.Longitude)
+            </div>
+        </div>
+    </li>
+    <li>
+        <label title="Elevation In Feet (Above Sea Level)">Elevation In Ft (Above Sea Level)</label>
+        <div class="input elevation mandatory">
+            @Html.TextBoxFor(m => m.Gps.Elevation)
+            @Html.ValidationMessageFor(m => m.Gps.Elevation)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Radio Type">Radio Type</label>
+        <div class="input mobile mandatory">
+            @Html.TextBoxFor(m => m.RadioType, new { @id = "radioType" })
+            @Html.ValidationMessageFor(m => m.RadioType)
+        </div>
+    </li>
+</ul>

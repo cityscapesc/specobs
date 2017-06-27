@@ -1,0 +1,45 @@
+﻿@model Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+@using Microsoft.Spectrum.Portal.Models
+
+<div class="title float">
+    <h2>CityScape Spectrum Observatory Details</h2>
+</div>
+
+<div id="registrationForm">
+    @using (Html.BeginForm("SaveStationDetails", "Manage", FormMethod.Post, new { @id = "stationRegistration" }))
+    {
+        <div class="content manage-user">
+            @Html.Hidden("measurementStationId", this.ViewData["measurementStationId"])
+
+            @{Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/StationProfile.cshtml", Model);}
+
+            @{Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/ReadonlyTemplates/StationContact.cshtml", Model);}
+
+            <div class="title">
+                <h3>RF Sensor</h3>
+                @Ajax.ActionLink("Add", "AddRFSensor", "SpectrumObservatoryRegistration", new { htmlPrefixName = "RFSensorConfigurationEndToEnd" }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "rfSensors", OnSuccess = "SpectrumObservatory.Utils.StationRegistration.AjaxCallbacks.onSensorConfigurationAdded" }, new { @class = "add icon" })
+            </div>
+
+            <div id="rfSensors">
+                @if (Model.RFSensorConfigurationEndToEnd != null)
+                {
+                    foreach (RFSensorConfigurationEndToEndViewModel rfSensorConfig in Model.RFSensorConfigurationEndToEnd)
+                    {
+                        Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/RFSensorConfiguration.cshtml", rfSensorConfig);
+                    }
+                }
+            </div>
+            @{Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/RawIQConfiguration.cshtml", Model);}
+
+            @{Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/ClientAggregation.cshtml", Model);}            
+
+            @{Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/HealthStatusConfigSettings.cshtml", Model);}
+        </div>
+
+        <div class="end-stripe" id="transitionButtons">
+            <button type="button" class="next">Update</button>
+            <button type="button" class="preview prev">Cancel</button>
+        </div>
+                }
+</div>

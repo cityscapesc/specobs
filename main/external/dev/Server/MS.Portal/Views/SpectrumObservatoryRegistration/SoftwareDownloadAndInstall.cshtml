@@ -1,0 +1,11 @@
+﻿<div>
+    <div class="title float">
+        <h2>Software Download and Install</h2>
+    </div>
+
+    @* TODO: Html to display Software download and Install details *@
+    <div class="content manage-user">
+        <p>Please use the below link to download and install the CityScape Observatory software on the host PC. The software consists of two main services. The scanner service captures the data from an RF sensor and stores the data into files on the host PC. The importer service uploads the captured files onto to Microsoft Azure cloud storage for further processing. Before proceeding to the next step, please go-ahead and install the application on the host PC.</p>
+        @Html.ActionLink("Download App", "DownloadInstaller", null, new { @class = "download btn", @title = "Download App" })
+    </div>
+</div>

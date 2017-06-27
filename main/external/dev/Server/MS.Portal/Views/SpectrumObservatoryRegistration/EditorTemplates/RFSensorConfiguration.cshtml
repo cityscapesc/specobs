@@ -1,0 +1,68 @@
+﻿@model Microsoft.Spectrum.Portal.Models.RFSensorConfigurationEndToEndViewModel
+
+@using Microsoft.Spectrum.Portal.Models
+@using Microsoft.Spectrum.Portal.Helpers
+
+@{
+    string rfSensorCollectionName = ViewData.ContainsKey("PrefixName") ? ViewData["PrefixName"].ToString() : "RFSensorConfigurationEndToEnd";
+}
+
+<div>
+    @using (Html.BeginCollectionItem<RFSensorConfigurationEndToEndViewModel>(rfSensorCollectionName))
+    {
+        ViewDataDictionary childTemplatePrefixName = new ViewDataDictionary();
+        childTemplatePrefixName.Add("PrefixName", Html.ViewData.TemplateInfo.HtmlFieldPrefix);
+
+        if (Model.AllowRFSensorConfigEntryDelete)
+        {
+            <div class="title">
+                <h3><span class="count"></span> RF Sensor</h3>
+                <a class="delete add icon" onclick="$(this).parent().parent().remove();">Delete</a>
+            </div>
+        }
+
+        string antennaContainer = string.Format("{0}_antenna", childTemplatePrefixName["PrefixName"]);
+
+        <h4>Antenna</h4>
+        @Ajax.ActionLink("Add", "AddAntenna", "SpectrumObservatoryRegistration", new { htmlPrefixName = childTemplatePrefixName["PrefixName"] }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = antennaContainer, OnSuccess = "SpectrumObservatory.Utils.StationRegistration.AjaxCallbacks.onAntennaAdded" }, new { @class = "add icon" })
+
+        <div id="@antennaContainer">
+            @foreach (AntennaConfigurationViewModel antenna in Model.Antennas)
+            {
+            Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/AntennaConfiguration.cshtml", antenna, childTemplatePrefixName);
+            }
+        </div>
+
+        string cableContainer = string.Format("{0}_cables", childTemplatePrefixName["PrefixName"]);
+
+        <h4>Cable</h4>
+        @Ajax.ActionLink("Add", "AddCable", "SpectrumObservatoryRegistration", new { htmlPrefixName = childTemplatePrefixName["PrefixName"] }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = cableContainer, OnSuccess = "SpectrumObservatory.Utils.StationRegistration.AjaxCallbacks.onCableAdded" }, new { @class = "add icon" })
+
+        <div id="@cableContainer">
+            @if (Model.Cables != null)
+            {
+                foreach (CableConfigurationViewModel cable in Model.Cables)
+                {
+                    Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/CableConfiguration.cshtml", cable, childTemplatePrefixName);
+                }
+            }
+        </div>
+
+        string connectorContainer = string.Format("{0}_connectors", childTemplatePrefixName["PrefixName"]);
+
+        <h4>Connector</h4>
+        @Ajax.ActionLink("Add", "AddConnector", "SpectrumObservatoryRegistration", new { htmlPrefixName = childTemplatePrefixName["PrefixName"] }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = connectorContainer, OnSuccess = "SpectrumObservatory.Utils.StationRegistration.AjaxCallbacks.onConnectorAdded" }, new { @class = "add icon" })
+
+        <div id="@connectorContainer">
+            @if (Model.Connectors != null)
+            {
+                foreach (ConnectorConfigurationViewModel connector in Model.Connectors)
+                {
+                    Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/ConnectorConfiguration.cshtml", connector, childTemplatePrefixName);
+                }
+            }
+        </div>
+
+            Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/ScannerConfiguration.cshtml", Model);
+    }
+</div>

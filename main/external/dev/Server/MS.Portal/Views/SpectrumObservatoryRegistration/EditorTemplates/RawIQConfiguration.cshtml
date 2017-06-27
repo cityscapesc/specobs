@@ -1,0 +1,56 @@
+﻿@model  Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+<div class="title">
+    <h3>Experiment Type 1 - Raw IQ</h3>
+</div>
+
+<ul id="rawIqConfig">
+    <li>
+        <label title="Output Raw IQ Data">1.&nbsp; Output Raw IQ Data</label>
+        <div class="input scan radio" title="Used to determine if a RawIQ data files are written. The default value is ‘true’. This is only supported if the device supports this.
+Type: Boolean
+Value: True or False">
+            @Html.RadioButtonFor(m => m.RawIqDataConfiguration.OutputData, true, new { @class = "hidden", @id = "outputRawIq" })
+            <label for="outputRawIq" title="True">True</label>
+
+            @Html.RadioButtonFor(m => m.RawIqDataConfiguration.OutputData, false, new { @class = "hidden", @id = "donotOutRawIq" })
+            <label for="donotOutRawIq" title="False">False</label>
+        </div>
+    </li>
+    <li>
+        @*<label title="Output PSD Data In Off cycle">8.&nbsp; Output PSD Data In Off cycle</label>*@
+        @*<div class="input scan radio" title="Used to determine if a PSD data files are written during Off Cycle time. The default value is ‘true’. This is only supported if the device supports this. \nType: Boolean \nValue: true or false">*@
+            <span class="label">2.&nbsp;</span>
+            @Html.CheckBoxFor(m => m.RawIqDataConfiguration.OuputPSDDataInDutyCycleOffTime, new { @id = "outputPSDOffCycleData" })
+            <label for="outputPSDOffCycleData">Output PSD Data In Off cycle</label>
+            <span class="psd-info"><b>NOTE:</b> If scan pattern is Standard Scan, PSD scan will output using DCSpikeAdaptive Scan pattern.</span>
+        @*</div>*@
+    </li>
+    <div class="clear"></div>
+    <li class="split">
+        <label title="Start Frequency MHz">3.&nbsp; Start Frequency MHz</label>
+        <div class="col" title="Frequency, inclusive, at which device should start collecting data.
+Type: Int
+Value: frequency in MHz">
+            <div class="input tower mandatory">
+                @Html.TextBoxFor(m => m.RawIqDataConfiguration.StartFrequencyMHz)
+                @Html.ValidationMessageFor(m => m.RawIqDataConfiguration.StartFrequencyMHz)
+            </div>
+        </div>
+    </li>
+    <li class="split">
+        <label title="Stop Frequency MHz">
+            4.&nbsp; Stop Frequency MHz
+            <button type="button" id="loadIQPolicyBtn" title="Click to Load RAW IQ Scan Policy Settings" class="icon refresh">Refresh</button>
+        </label>
+        <div class="col" title="Frequency, inclusive, at which device should stop collecting data. <br>Type: Int</br> <br>Value: frequency in MHz</br>">
+            <div class="input tower mandatory">
+                @Html.TextBoxFor(m => m.RawIqDataConfiguration.StopFrequencyMHz)
+                @Html.ValidationMessageFor(m => m.RawIqDataConfiguration.StopFrequencyMHz)
+            </div>
+        </div>
+    </li>   
+
+    @{ Html.RenderPartial("~/Views/SpectrumObservatoryRegistration/EditorTemplates/RawIQScanPolicySettings.cshtml", Model);}
+</ul>
+

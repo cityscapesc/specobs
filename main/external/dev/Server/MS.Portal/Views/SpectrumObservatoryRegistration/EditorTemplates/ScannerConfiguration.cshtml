@@ -1,0 +1,171 @@
+﻿@model Microsoft.Spectrum.Portal.Models.RFSensorConfigurationEndToEndViewModel
+
+<h4>Scanner Configuration</h4>
+
+<ul>
+    <li>
+        <label title="Name">1.&nbsp; Device Name</label>
+        <div class="input location mandatory">
+            @Html.TextBoxFor(m => m.DescriptiveName, new { Title = "Name of the device. This is used for logging purposes only.\nType: String\nValue: Limit to 64 characters or less" })
+            @Html.ValidationMessageFor(m => m.DescriptiveName)
+        </div>
+    </li>
+    <li>
+        <label title="Device Type">2.&nbsp; Device Type</label>
+        <div class="input device mandatory">
+            @Html.DropDownListFor(m => m.DeviceType, Model.DeviceTypes, new { Title = "Type of the device to scan the data. The values are determined by devices that have been supported in the code base.\nType: String \nValue: USRP" })
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li class="split">
+        <label title="Min Start Frequency in MHz">3.&nbsp; Min Start Frequency in MHz</label>
+        <div class="col">
+            <div class="input tower mandatory">
+                @Html.TextBoxFor(m => m.MinPossibleStartFrequencyMHz, new { Title = "Frequency, inclusive, at which device should start collecting data. \nType: Int \nValue: 50 (WBX), 2200 (SBX)" })
+                @Html.ValidationMessageFor(m => m.MinPossibleStartFrequencyMHz)
+            </div>
+        </div>
+    </li>
+    <li class="split">
+        <label title="Max Stop Frequency in MHz">4.&nbsp; Max Stop Frequency in MHz</label>
+        <div class="col">
+            <div class="input tower mandatory">
+                @Html.TextBoxFor(m => m.MaxPossibleEndFrequencyMHz, new { Title = "Frequency, inclusive, at which device should stop collecting data. \nType: Int \nValue: 2200 (WBX), 4400 (SBX)" })
+                @Html.ValidationMessageFor(m => m.MaxPossibleEndFrequencyMHz)
+            </div>
+        </div>
+    </li>
+    <li>
+        <label title="Device Address">5.&nbsp; Device Address</label>
+        <div class="input address mandatory">
+            @Html.TextBoxFor(m => m.DeviceAddress, new { Title = "Address of the device that is being communicated with. \nType: String \nValue: 192.168.10.2" })
+            @Html.ValidationMessageFor(m => m.DeviceAddress)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li class="split">
+        <label title="Start Frequency in MHz">6.&nbsp; Start Frequency in MHz</label>
+        <div class="col">
+            <div class="input tower mandatory">
+                @Html.TextBoxFor(m => m.CurrentStartFrequencyMHz, new { Title = "Frequency, inclusive, at which device should start collecting data. \nType: Int \nValue: 50 (WBX), 2200 (SBX)" })
+                @Html.ValidationMessageFor(m => m.CurrentStartFrequencyMHz)
+            </div>
+        </div>
+    </li>
+    <li class="split">
+        <label title="Stop Frequency in MHz">7.&nbsp; Stop Frequency in MHz</label>
+        <div class="col">
+            <div class="input tower mandatory">
+                @Html.TextBoxFor(m => m.CurrentStopFrequencyMHz, new { Title = "Frequency, inclusive, at which device should stop collecting data. \nType: Int \nValue: 2200 (WBX), 4400 (SBX)" })
+                @Html.ValidationMessageFor(m => m.CurrentStopFrequencyMHz)
+            </div>
+        </div>
+    </li>
+    <li>
+        <label title="RX Gain">8.&nbsp; RX Gain</label>
+        <div class="input money mandatory">
+            @Html.TextBoxFor(m => m.Gain, new { Title = "To adjust the gain (dB) of the USRP. Only applies to USRPs.\nType: Int \nValue: 38" })
+            @Html.ValidationMessageFor(m => m.Gain)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="ntenna Port">9.&nbsp; Antenna Port</label>
+        <div class="input antenna mandatory">
+            @Html.TextBoxFor(m => m.AntennaPort, new { Title = "Antenna receiver port on the USRP.\nType: String \nValue: RX1 or RX2" })
+            @Html.ValidationMessageFor(m => m.AntennaPort)
+        </div>
+    </li>
+    <li>
+        <label title="Scan Pattern">10.&nbsp; Scan Pattern</label>
+        <div class="input scan mandatory">
+            @Html.DropDownListFor(m => m.ScanPattern, Model.ScanPatterns, new { Title = "Type: String \nValue: StandardScan or DCSpikeAdaptiveScan" })
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Communication Channel">11.&nbsp; Communication Channel</label>
+        <div class="input antenna mandatory">
+            @Html.TextBoxFor(m => m.CommunicationsChannel, new { Title = "String that specifies the communication channel being used.\nType: String \nValue: “addr” – IP based communications, “serial” – USB based communications." })
+        </div>
+    </li>
+    <li>
+        <label title="Locking Communication Channel">12.&nbsp; Locking Communication Channel</label>
+        <div title="Applies only if the hardware has a call to see if the sensor is locked after tuning to a new frequency. \nType: Boolean \nValue: N200 – true,B200 – false." class="input antenna radio">
+
+            @{
+                string idForLockingCommunicationChannelTrue = Guid.NewGuid().ToString();
+                string idForLockingCommunicationChannelFalse = Guid.NewGuid().ToString();
+            }
+
+            @Html.RadioButtonFor(m => m.LockingCommunicationsChannel, true, new { @class = "hidden", id = idForLockingCommunicationChannelTrue })
+            <label for="@idForLockingCommunicationChannelTrue" title="True">True</label>
+
+            @Html.RadioButtonFor(m => m.LockingCommunicationsChannel, false, new { @class = "hidden", id = idForLockingCommunicationChannelFalse })
+            <label for="@idForLockingCommunicationChannelFalse" title="False">False</label>
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Determines the effective sampling rate of the sensor and bandwidth of the filter (Hz).">13.&nbsp; Effective Sampling Rate (ESPS in Hz)</label>
+        <div class="input tower mandatory">
+            @Html.TextBoxFor(m => m.BandwidthHz, new { Title = "Determines the effective sampling rate of the sensor and bandwidth of the filter. Value entered should be in Hz.\nType: Int \nValue: 25000000" })
+            @Html.ValidationMessageFor(m => m.BandwidthHz)
+        </div>
+    </li>
+    <li>
+        <label title="Tune Sleep">14.&nbsp; PLL Flag Poll Delay</label>
+        <div class="input time mandatory">
+            @Html.TextBoxFor(m => m.TuneSleep, new { Title = "The duration of time to wait after tuning the USRP center frequency.\nType: Int \nValue: 0(in seconds)" })
+            @Html.ValidationMessageFor(m => m.TuneSleep)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Tune Sleep">15.&nbsp; Add. Tune Delay (msec.)</label>
+        <div class="input time mandatory">
+            @Html.TextBoxFor(m => m.AdditionalTuneDelayInMilliSecs, new { Title = "The duration of time to wait after additional delay after PLL lock.\nType: Int \nValue: 0(in milli seconds)" })
+            @Html.ValidationMessageFor(m => m.AdditionalTuneDelayInMilliSecs)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Samples Per Snapshot">16.&nbsp; Samples Per Snapshot</label>
+        <div class="input scan mandatory">
+            @Html.TextBoxFor(m => m.SamplesPerScan, new { Title = "Indicates number of samples to capture for each snapshot. \nType: Int \nValue: 512,1024,etc." })
+            @Html.ValidationMessageFor(m => m.SamplesPerScan)
+        </div>
+    </li>
+    <li>
+        <label title="Number of Samples to Throw Away">17.&nbsp; Number of Samples to Throw Away</label>
+        <div class="input scan mandatory">
+            @Html.TextBoxFor(m => m.NumberOfSampleBlocksToThrowAway, new { Title = "Number of snapshots to throw away after tuning the RF Sensor. \nType: Int \nValue: 0" })
+            @Html.ValidationMessageFor(m => m.NumberOfSampleBlocksToThrowAway)
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Number of Snapshots Per channel Visit">18.&nbsp; Number of Snapshots Per channel Visit</label>
+        <div class="input scan mandatory">
+            @Html.TextBoxFor(m => m.NumberOfSampleBlocksPerScan, new { Title = "Number of samples to take before retuning the RF sensor. \nType: Int \nValue: 1" })
+            @Html.ValidationMessageFor(m => m.NumberOfSampleBlocksPerScan)
+        </div>
+    </li>
+    <li>
+        <label title="GPS Enabled">18.&nbsp; GPS Enabled</label>
+        <div class="input antenna radio" title="This will output GPS data to the scan files and the raw IQ data files if the device supports GPS.
+Type: Boolean
+Value: true or false">
+            @{
+                string idGpsEnabledTrue = Guid.NewGuid().ToString();
+                string idGpsEnabledFalse = Guid.NewGuid().ToString();
+            }
+
+            @Html.RadioButtonFor(m => m.GpsEnabled, true, new { @class = "hidden", id = idGpsEnabledTrue })
+            <label for="@idGpsEnabledTrue" title="True">True</label>
+
+            @Html.RadioButtonFor(m => m.GpsEnabled, false, new { @class = "hidden", id = idGpsEnabledFalse })
+            <label for="@idGpsEnabledFalse" title="False">False</label>
+        </div>
+    </li>
+</ul>

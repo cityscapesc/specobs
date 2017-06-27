@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            outline: none;
+        }
+
+        body {
+            padding: 20px;
+            margin: 0;
+            font: normal 14px/18px 'Segoe UI', Helvetica, Arial;
+            color: #333;
+        }
+
+        h1, h2, h3, h4 {
+            padding: 0;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        h2 {
+            padding-bottom: 30px;
+        }
+
+        .subtitle {
+            overflow: hidden;
+            padding-bottom: 20px;
+            font-size: 18px;
+        }
+
+            .subtitle label {
+                display: block;
+                font-weight: bold;
+                float: left;
+                padding-right: 10px;
+            }
+
+            .subtitle span {
+                display: block;
+            }
+
+        table th {
+            text-align: left;
+            width: 25%;
+            background: #666;
+            border-bottom: 5px solid #ccc;
+            color: #fff;
+            padding: 10px;
+        }
+
+        table td {
+            text-align: left;
+            vertical-align: top;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+
+        table tr:nth-child(odd) td {
+            background: #fff;
+        }
+
+        table table td {
+            width: 50%;
+            padding: 0px 0 20px;
+        }
+
+        table table tr:nth-child(odd) td {
+            background: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>{HealthStatusTitleText}</h2>
+    <div class="subtitle">
+        <label>Duration:</label>
+        <span class="value">{Duration}</span>
+    </div>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <thead>
+            <tr>
+                <th>Spectrum Observatory Name</th>
+                <th>Status Message</th>
+                <th>Unprocessed Files</th>
+                <th>Error Details</th>
+                {DueFilesCountInWorkerQueueTitle}
+            </tr>
+        </thead>
+        <tbody>
+            {ObservatoriesHeathStatusTemplate}
+        </tbody>
+    </table>
+    {IssuesReportTemplate}
+    {UserFeedbackTemplate}
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿<%@ ServiceHost 
+    Language="C#" 
+    Debug="true" 
+    Service="Microsoft.Spectrum.MeasurementStation.Service.MeasurementStationService"
+    Factory="Microsoft.Spectrum.MeasurementStation.Service.MeasurementStationServiceHostFactory, Microsoft.Spectrum.MeasurementStation.Service"
+ %>

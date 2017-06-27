@@ -1,0 +1,45 @@
+﻿@model Microsoft.Spectrum.Portal.Models.AntennaConfigurationViewModel
+
+@using Microsoft.Spectrum.Portal.Models
+@using Microsoft.Spectrum.Portal.Helpers
+
+@{
+    string collectionName = ViewData.ContainsKey("PrefixName") ? string.Format("{0}.{1}", ViewData["PrefixName"].ToString(), "Antennas") : "Antennas";
+}
+
+@using (Html.BeginCollectionItem<AntennaConfigurationViewModel>(collectionName))
+{
+    <ul>
+        <li>
+            <label title="Antenna Type">Antenna Type</label>
+            <div class="input antenna mandatory">
+                @Html.TextBoxFor(m => m.AntennaType)
+                @Html.ValidationMessageFor(m => m.AntennaType)
+            </div>
+        </li>
+        <li class="split">
+            <label title="Antenna Height Above Ground Level (AGL) in Feet">Antenna Height (AGL in ft)</label>
+            <div class="col">
+                <div class="input measure mandatory">
+                    @Html.TextBoxFor(m => m.Height)
+                    @Html.ValidationMessageFor(m => m.Height)
+                </div>
+            </div>
+        </li>
+        <li class="split">
+            <label title="Antenna Azimuth Angle.  Degrees in True North">Direction (Degrees True North)</label>
+            <div class="col">
+                <div class="input degrees mandatory">
+                    @Html.TextBoxFor(m => m.DegreeDirection)
+                    @Html.ValidationMessageFor(m => m.DegreeDirection)
+                </div>
+            </div>
+        </li>
+        @if (Model.AllowAntennaEntryDelete)
+        {
+            <li>
+                <a href="#" title="Remove" onclick="$(this).parent().parent().remove();" class="icon delete">Remove</a>
+            </li>
+        }
+    </ul>
+}

@@ -1,0 +1,35 @@
+﻿@model  Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+<div class="title">
+    <h3>
+        Notification Configuration
+    </h3>
+</div>
+
+@{
+    string idNotificationEnabledTrue = Guid.NewGuid().ToString();
+    string idNotificationEnabledFalse = Guid.NewGuid().ToString();
+}
+<ul id="notification-config">
+    <li>
+        <label title="Enable Notification">1.&nbsp; Enable Notification</label>
+        <div class="input notification radio" title="Enable Measurement station health status notification. The default value is ‘true’. This is only supported if the device supports this.
+Type: Boolean
+Value: true or false">
+            @Html.RadioButtonFor(m => m.ReceiveHealthStatusNotifications, true, new { @class = "hidden", @id = idNotificationEnabledTrue })
+            <label for="@idNotificationEnabledTrue" title="True">True</label>
+
+            @Html.RadioButtonFor(m => m.ReceiveHealthStatusNotifications, false, new { @class = "hidden", @id = idNotificationEnabledFalse })
+            <label for="@idNotificationEnabledFalse" title="False">False</label>
+        </div>
+    </li>
+    <li>
+        <label title="Station Health Check Interval in Minutes">2.&nbsp; Station Health Check Interval in Minutes</label>
+        <div class="col" title="Measurement station healt status check interval">
+            <div class="input time mandatory">
+                @Html.TextBoxFor(m => m.ClientHealthStatusCheckIntervalInMin, new { @Value = Model.ClientHealthStatusCheckIntervalInMin == 0 ? 5 : Model.ClientHealthStatusCheckIntervalInMin })
+                @Html.ValidationMessageFor(m => m.ClientHealthStatusCheckIntervalInMin)
+            </div>
+        </div>
+    </li>
+</ul>

@@ -1,0 +1,162 @@
+﻿@using Microsoft.Web.WebPages.OAuth;
+@using Microsoft.Spectrum.Portal.Security;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Home | CityScape Spectrum Observatory</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @Styles.Render("~/Content/main")
+    @Styles.Render("~/Content/datepicker")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="left nav-stripe">
+            <ul>
+                <li>
+                    <input type="radio" class="hidden" id="Radio1" name="leftNavStripe" checked="checked" />
+                    <label for="Radio1">Home</label>
+                </li>
+                <li>
+                    <input type="radio" class="hidden" id="Radio20" name="leftNavStripe" />
+                    <label for="Radio20">Station Search</label>
+                </li>
+                @if (Request.IsAuthenticated)
+                {
+                    UserPrincipal principal = (UserPrincipal)this.User;
+                    if (principal.Role == Microsoft.Spectrum.Storage.Enums.UserRoles.SiteAdmin || principal.Role == Microsoft.Spectrum.Storage.Enums.UserRoles.StationAdmin)
+                    {
+                        <li>
+                            <input type="radio" class="hidden" id="Radio4" name="leftNavStripe" />
+                            <label for="Radio4">Manage</label>
+                        </li>
+                    }
+                }
+
+                <li>
+                    <input type="radio" class="hidden" id="Radio3" name="leftNavStripe" />
+                    <label for="Radio3">Station Registration</label>
+                </li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>
+                        <input type="radio" class="hidden" id="Radio7" name="leftNavStripe" />
+                        <label for="Radio7">Profile</label>
+                    </li>
+                }
+                <li>
+                    <input type="radio" class="hidden" id="Radio8" name="leftNavStripe" />
+                    <label for="Radio8">Contribution</label>
+                </li>
+                <li>
+                    <input type="radio" class="hidden" id="Radio5" name="leftNavStripe" />
+                    <label for="Radio5">FAQ</label>
+                </li>
+                <li>
+                    <input type="radio" class="hidden" id="Radio6" name="leftNavStripe" />
+                    <label for="Radio6">Feedback</label>
+                </li>
+
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="signout">
+                        @using (Html.BeginRouteForm("Default", new { controller = "Account", action = "LogOff" }, FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="radio" name="leftNavStripe" id="Radio9" class="hidden" />
+                            <label for="Radio9" onclick="javascript:document.getElementById('logoutForm').submit()">Sign Out</label>
+                            <span></span>
+                        }
+                    </li>
+                }
+                else
+                {
+                    <li class="signin">
+                        @using (Html.BeginRouteForm("Default", new { controller = "Account", action = "ExternalLogin" }, FormMethod.Post, new { returnUrl = ViewBag.ReturnUrl, id = "loginForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("provider", OAuthWebSecurity.RegisteredClientData.FirstOrDefault().AuthenticationClient.ProviderName)
+                            <input type="radio" name="leftNavStripe" id="Radio0" class="hidden" />
+                            <label for="Radio0" onclick="javascript: document.getElementById('loginForm').submit()">Sign In</label>
+
+                        }
+                    </li>
+                }
+
+            </ul>
+        </nav>
+        <input type="checkbox" class="hidden" id="Radio10" />
+        <label for="Radio10" title="Collapse/ Expand Left Pane" class="collapser">Collapse</label>
+        <div id="left-pane">
+            <header>
+                <div class="logo">
+                    <h1>
+                        <a href="~/Home/Index" title="CityScape Spectrum Observatory">
+                            <img src="~/Content/Images/logo.png" />
+                        </a>
+                        @*<a href="~/Home/Index" title="CityScape Spectrum Observatory" style="margin-left:12px">
+                            <img src="~/Content/Images/UWLOGO.png" width="50%"/>
+                        </a>*@
+                    </h1>
+                </div>
+            </header>
+            <div class="container">
+                @RenderSection("Left", true)
+            </div>
+        </div>
+
+        <div id="right-pane">
+            <div id="body">
+                <div class="container" id="rightPanePlaceholder">
+                    @RenderSection("Right", true)
+                </div>
+            </div>
+
+            <footer>
+                <nav>
+                    <ul>
+                        @*<li><a href="\Common\Privacy" title="Privacy">Privacy</a></li>
+                        <li><a href="\Common\TermsOfUse" title="Terms of Use">Terms of Use</a></li>*@
+                        <li><a href="\Common\ContactUs" title="Terms of Use">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="copyright">© @DateTime.UtcNow.Year Microsoft</div>
+                <ul class="logo">
+                    <li>
+                        <label title="Funded By:">Funded By:</label>
+                    </li>
+                    <li>
+                        <img src="~/Content/Images/nsf-logo.png" />
+                    </li>
+                    <li>
+                        <label title="Led By:">Led By:</label>
+                    </li>
+                    <li>
+                        <img src="~/Content/Images/uw-logo.png" />
+                    </li>
+                    <li>
+                        <img src="~/Content/Images/ssc-logo.png" />
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var SpectrumObservatory = {};
+    </script>
+
+    <script src="~/Scripts/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Application/Utils.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <div id="preloader" class="preloader hidden" style="display:block"></div>
+
+</body>
+</html>

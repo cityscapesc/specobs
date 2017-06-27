@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="CityScapeCloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="DataProcessorRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[Acount Name];AccountKey=[Acount Key]" />
+      <Setting name="WorkerThreadsCount" value="3" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="6647c722-015c-4ab4-936d-f595c352202e" />
+      <Setting name="StorageAccountConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[Acount Name];AccountKey=[Acount Key]" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="MS.MeasurementStation.Service">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[Acount Name];AccountKey=[Acount Key]" />
+      <Setting name="StorageAccountConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[Acount Name];AccountKey=[Acount Key]" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="6647c722-015c-4ab4-936d-f595c352202e" />
+      <Setting name="HealthStatusServieBusConnectionString" value="[add service bus connection string]" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="cityscape.cloudapp.net" thumbprint="67CB86E3BB83B7F17544E55EA4F36C1BFE9E66F8" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="MS.Portal">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[Acount Name];AccountKey=[Acount Key]" />
+      <Setting name="StorageAccountConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[Acount Name];AccountKey=[Acount Key]" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="6647c722-015c-4ab4-936d-f595c352202e" />
+      <Setting name="LiveClientId" value="000000004C0F90A4" />
+      <Setting name="LiveSecretClientId" value="EzcMn113hf4RZkbJdTSeDYKKXju-oCFZ" />
+      <Setting name="RequestScopes" value="wl.emails,wl.postal_addresses" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="cityscape.cloudapp.net" thumbprint="67CB86E3BB83B7F17544E55EA4F36C1BFE9E66F8" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="MS.StationHealthReportWorker">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[MyAccountName];AccountKey=[MyAccountKey]" />
+      <Setting name="HealthStatusServieBusConnectionString" value="Endpoint=sb://[name].servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=[Shared Access Key]" />
+      <Setting name="HighPriorityThreadCount" value="2" />
+      <Setting name="MediumPriorityThreadCount" value="1" />
+      <Setting name="LowPriorityThreadCount" value="1" />
+      <Setting name="StorageAccountConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[MyAccountName];AccountKey=[MyAccountKey]" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

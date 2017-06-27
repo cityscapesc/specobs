@@ -1,0 +1,64 @@
+﻿@model  Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+
+<div class="clear"></div>
+@if (!string.IsNullOrWhiteSpace(Model.RawIqDataConfiguration.RawIQScanPolicyCategory)
+                                                                                                    && !string.IsNullOrWhiteSpace(Model.RawIqDataConfiguration.RawIQPolicyDetails))
+{
+    <li>
+        <div class="balloon-info">@Model.RawIqDataConfiguration.RawIQScanPolicyCategory, Details: @Model.RawIqDataConfiguration.RawIQPolicyDetails</div>
+    </li>
+}
+<div class="clear"></div>
+<li class="" title="Duty Cycle">
+    <ul>
+        <li class="split">
+            <label title="ON Time in MilliSeconds">5.&nbsp; ON Time in MilliSeconds</label>
+            <div class="col" title="Defines how long data to be captured within a cycle.
+Type: Int
+Value: 1/60 secs">
+                <div class="input time mandatory">
+                    @Html.TextBoxFor(m => m.RawIqDataConfiguration.DutycycleOnTimeInMilliSec, new { @Value = Model.RawIqDataConfiguration.DutycycleOnTimeInMilliSec })
+                    @Html.ValidationMessageFor(m => m.RawIqDataConfiguration.DutycycleOnTimeInMilliSec)
+                </div>
+            </div>
+        </li>
+        <li class="split">
+            <label title="Cycle Time in MilliSeconds" class="col">6.&nbsp; Cycle Time in MilliSeconds</label>
+            <div class="col" title="Defines the length of cycle duration.
+Type: Int
+Value: 60000 milli secs">
+                <div class="input time mandatory">
+                    @Html.TextBoxFor(m => m.RawIqDataConfiguration.DutycycleTimeInMilliSec, new { @Value = Model.RawIqDataConfiguration.DutycycleTimeInMilliSec == 0 ? 1000 : Model.RawIqDataConfiguration.DutycycleTimeInMilliSec })
+                    @Html.ValidationMessageFor(m => m.RawIqDataConfiguration.DutycycleTimeInMilliSec)
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>
+<div class="clear"></div>
+<li class="split">
+    <label title="File Duration in Seconds" class="col">7.&nbsp; File Duration in Seconds</label>
+    <div class="col" title="Seconds of data written to a file before creating another one.
+Type: Int
+Value: 300 secs (for 5 mins)">
+        <div class="input time mandatory read-only">
+            @Html.TextBoxFor(m => m.RawIqDataConfiguration.SecondsOfDataPerFile, new { @Value = Model.RawIqDataConfiguration.SecondsOfDataPerFile, @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.RawIqDataConfiguration.SecondsOfDataPerFile)
+        </div>
+    </div>
+</li>
+<li class="split">
+    <label title="Retention Seconds">8.&nbsp; Retention Seconds</label>
+    <div class="col" title="Duration that a Raw IQ data file (.dsor) can be retained on the host PC (time to live), If it has not been uploaded by uploader.
+Type: Int
+Value: 3600 secs (for 1 hour)">
+        <div class="input time mandatory read-only">
+            @Html.TextBoxFor(m => m.RawIqDataConfiguration.RetentionSeconds, new { @Value = Model.RawIqDataConfiguration.RetentionSeconds, @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.RawIqDataConfiguration.RetentionSeconds)
+        </div>
+    </div>
+</li>
+<li class="img float">
+    <img src="~/Content/Images/sample-image.png" />
+</li>

@@ -1,0 +1,242 @@
+﻿@model Microsoft.Spectrum.IO.MeasurementStationSettings.MeasurementStationConfigurationEndToEnd
+
+<div>
+    <h2>RF Sensor Configurations</h2>
+    <table>
+        @foreach (var rfSensor in Model.RFSensorConfigurations)
+        {
+            if (Model.RFSensorConfigurations.Count() > 1)
+            {
+                <tr>
+                    <td colspan="2">
+                        <h3>Rf Sensor Configuration @Model.RFSensorConfigurations[Model.RFSensorConfigurations.IndexOf(rfSensor)].DescriptiveName</h3>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2">
+                    <label title="Currently Configured Start Frequency (Hz)">Currently Configured Start Frequency (Hz)</label>
+                    <span>@rfSensor.CurrentStartFrequencyHz</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Currently Configured Stop Frequency (Hz)">Currently Configured Stop Frequency (Hz)</label>
+                    <span>@rfSensor.CurrentStopFrequencyHz</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Minimum Possible Start Frequency (Hz)">Minimum Possible Start Frequency (Hz)</label>
+                    <span>@rfSensor.MinPossibleStartFrequencyHz</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Maximum Possible End Frequency (Hz)">Maximum Possible End Frequency (Hz)</label>
+                    <span>@rfSensor.MaxPossibleEndFrequencyHz</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Cabling</h4>
+                </td>
+            </tr>
+            foreach (var cable in rfSensor.Cables)
+            {
+                <tr class="split">
+                    <td>
+                        <label title="Cable Type">Cable Type</label>
+                        <span>@cable.CableType</span>
+                    </td>
+                    <td>
+                        <label title="Cable Length (Ft)">Cable Length (Ft)</label>
+                        <span>@cable.LengthInFeet</span>
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td>
+                    <h4>Connectors</h4>
+                </td>
+            </tr>
+            foreach (var connector in rfSensor.Connectors)
+            {
+                <tr>
+                    <td colspan="2">
+                        <label title="Connector Type">Connector Type</label>
+                        <span>@connector.ConnectorType</span>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <h4>Antennas</h4>
+                </td>
+            </tr>
+            foreach (var antenna in rfSensor.Antennas)
+            {
+                <tr class="split">
+                    <td>
+                        <label title="Antenna Type">Antenna Type</label>
+                        <span>@antenna.AntennaType</span>
+                    </td>
+                    <td>
+                        <label title="Degree Direction">Degree Direction</label>
+                        <span>@antenna.DegreeDirection</span>
+                    </td>
+                    <td>
+                        <label title="Height (Ft)">Height AGL (Ft)</label>
+                        <span>@antenna.HeightInFeet</span>
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="2">
+                    <label title="Descriptive Name">Descriptive Name</label>
+                    <span>@rfSensor.DescriptiveName</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Device Type">Device Type</label>
+                    <span>@rfSensor.DeviceType</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Device Address">Device Address</label>
+                    <span>@rfSensor.DeviceAddress</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <label title="RX Gain">Gain</label>
+                    <span>@rfSensor.Gain</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Antenna Port">Antenna Port</label>
+                    <span>@rfSensor.AntennaPort</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Scan Pattern">Scan Pattern</label>
+                    <span>@rfSensor.ScanPattern</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Communications Channel">Communications Channel</label>
+                    <span>@rfSensor.CommunicationsChannel</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Locking Communications Channel">Locking Communications Channel</label>
+                    <span>@rfSensor.LockingCommunicationsChannel</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Bandwidth (Hz)">Bandwidth (Hz)</label>
+                    <span>@rfSensor.BandwidthHz</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Wait Time Between Tuning (ms)">Wait Time Between Tuning (ms)</label>
+                    <span>@rfSensor.TuneSleep</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Samples Per Scan">Samples Per Scan</label>
+                    <span>@rfSensor.SamplesPerScan</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Sample Blocks To Throw Away After Tuning">Sample Blocks To Throw Away After Tuning</label>
+                    <span>@rfSensor.NumberOfSampleBlocksToThrowAway</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Sample Blocks Between Tuning">Sample Blocks Between Tuning</label>
+                    <span>@rfSensor.NumberOfSampleBlocksPerScan</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label title="Gps Enabled">Gps Enabled</label>
+                    <span>@rfSensor.GpsEnabled</span>
+                </td>
+            </tr>
+        }
+    </table>
+    <h2>Client Aggregation Configuration</h2>
+    <table>
+        <tr>
+            <td colspan="2">
+                <label title="Single Scan">Single Scan</label>
+                <span>@Model.AggregationConfiguration.SingleScan</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <label title="Seconds Of Data Per Sample">Seconds Of Data Per Sample</label>
+                <span>@Model.AggregationConfiguration.SecondsOfDataPerSample</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <label title="Minutes Of Data Per Scan File">Minutes Of Data Per Scan File</label>
+                <span>@Model.AggregationConfiguration.MinutesOfDataPerScanFile</span>
+            </td>
+        </tr>
+    </table>
+    <h2>Raw Iq Data Configuration</h2>
+    <table>
+        @if(Model.RawIqConfiguration.OutputData == true)
+        {
+        <tr>
+            <td colspan="2">
+                <label title="Output Data">Output Data</label>
+                <span>@Model.RawIqConfiguration.OutputData</span>
+            </td>
+        </tr>
+        }
+        <tr>
+            <td colspan="2">
+                <label title="Start Frequency (Hz)">Start Frequency (Hz)</label>
+                <span>@Model.RawIqConfiguration.StartFrequencyHz</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label title="Stop Frequency (Hz)">Stop Frequency (Hz)</label>
+                <span>@Model.RawIqConfiguration.StopFrequencyHz</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label title="Seconds Of Data Per File">Seconds Of Data Per File</label>
+                <span>@Model.RawIqConfiguration.SecondsOfDataPerFile</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label title="Retention Seconds">Retention Seconds</label>
+                <span>@Model.RawIqConfiguration.RetentionSeconds</span>
+            </td>
+        </tr>
+    </table>
+</div>

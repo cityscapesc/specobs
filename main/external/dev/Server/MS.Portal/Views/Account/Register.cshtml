@@ -1,0 +1,141 @@
+﻿@using Microsoft.Spectrum.Portal.Helpers;
+@model Microsoft.Spectrum.Portal.Models.RegisterExternalLoginModel
+
+@{
+    ViewBag.Title = "UserRegistration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>UserRegistration</h2>
+@section Left{
+    <div class="content">
+    <section>
+        <div class="title">
+            <h2>
+                User Registration
+            </h2>
+        </div>
+        <p>Thank you registering with the CityScape Observatory.  As a last step in registration, please fill out as much information as possible in the form. </p>
+        <p>Welcome to CityScape Spectrum Observatory Site.  Once this final step in registration is completed, you’ll have access to “Register a New Spectrum Station”, “Reporting a problem within a Station” and “Become a Station Administrator”.</p>
+    </section>
+</div>
+}
+@section Right{
+
+    <div class="title"><h2>User Registration</h2></div>
+    <div class="content">
+        @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <ul>
+                <li class="name">
+                    @Html.TextFieldsFor(m => m.FirstName, false)
+                </li>
+
+                <li class="name">
+                   @Html.TextFieldsFor(m => m.LastName, false)
+                </li>
+
+                <li class="country">
+                   @Html.DropDownListFieldsFor(model => model.PhoneCountryCode, "PhoneCountryCode")
+                </li>
+
+                <li class="phone">
+                    @Html.TextFieldsFor(m => m.Phone, false)
+                </li>
+
+                <li class="email">
+                    @Html.TextFieldsFor(m => m.PreferredEmail, false)
+                </li>
+
+                <li class="email">
+                    @Html.TextFieldsFor(m => m.AccountEmail, true)
+                </li>
+
+                <li class="notification">
+                    <label title="Subscribe Notifications">Subscribe Notifications</label>
+                    <div class="input scan radio" title="Enable Measurement station health status notification. The default value is ‘true’. This is only supported if the device supports this. \nType: Boolean \nValue: true or false">
+                        @Html.RadioButtonFor(m => m.SubscribeNotifications, true, new { @class = "hidden", @id = "od1" })
+                        <label for="od1" title="True">True</label>
+
+                        @Html.RadioButtonFor(m => m.SubscribeNotifications, false, new { @class = "hidden", @id = "od2" })
+                        <label for="od2" title="False">False</label>
+                    </div>
+                </li>              
+            </ul>
+
+            <div class="title"><h2>Location Info</h2></div>
+            <ul>
+                <li class="home">
+                    @Html.MandatoryLabelFor(m => m.Address1)
+                    <div class="input mandatory">
+                        @Html.TextBoxFor(m => m.Address1, new { @id = "Address1" })
+                    </div>
+                    <span class="min-info">Street Name, P. O. Box, Company Name etc.,</span>
+                    @Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "mandatory" })                    
+                </li>
+
+                <li class="home">
+                    @Html.MandatoryLabelFor(m => m.Address2)
+                    <div class="input">
+                        @Html.TextBoxFor(m => m.Address2, new { @id = "Address2" })
+                    </div>
+                    <span class="min-info">Suit, Unit, Building etc.,</span>
+                </li>
+
+                <li class="location">
+                    @Html.TextFieldsFor(m => m.City, false)
+                </li>
+
+                <li class="location">
+                    @Html.TextFieldsFor(m => m.State, false)
+                </li>
+
+                <li class="zip">
+                    @Html.TextFieldsFor(m => m.ZipCode, false)
+                </li>
+
+                <li class="location">                   
+                    @Html.DropDownListFieldsFor(model => model.Country)
+                </li>
+
+                <li class="country zone">
+                    @Html.DropDownListFieldsFor(model => model.TimeZone)
+                </li>               
+            </ul>
+
+            <div class="end-stripe">
+                <div class="acceptance"><input type="checkbox" id="accept" /><label for="accept">Agree to <a href="#" title="Privacy Plicy" role="link">Privacy</a> & <a href="#" role="link" title="Terms and Conditions">Terms and Conditions</a></label></div>
+                <button type="submit" title="Register" role="button" class="submit" id="btnsubmit" disabled="disabled">Submit</button>
+                <button type="button" title="Cancel" role="button" class="cancel" id="btnCancel">Cancel</button>
+            </div>
+            @Html.HiddenFor(m => m.UserName)
+            @Html.HiddenFor(m => m.ExternalLoginData)
+        }
+    </div>
+}
+
+@section scripts{
+    @*<script src="~/Scripts/jquery-2.1.3.min.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        $("#accept").change(function () {
+            if (this.checked) {
+                $("#btnsubmit")[0].disabled = false;                
+            }
+            else {
+                $("#btnsubmit")[0].disabled = true;
+            }
+        });
+
+        $("#btnCancel").click(function () {
+            window.location.href = "/Home/Index";
+        });
+    </script>
+}
+
+
+
+
+

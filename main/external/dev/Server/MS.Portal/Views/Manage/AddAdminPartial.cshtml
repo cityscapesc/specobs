@@ -1,0 +1,23 @@
+﻿@using Microsoft.Spectrum.Portal.Helpers
+@model Microsoft.Spectrum.Portal.Models.AddAdminViewModel
+
+<div class="title">
+    @Ajax.ActionLink("Back", "ManageUser", "Manage", new { stationId = Model.StationId }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @class = "back icon" })
+    <h2>Add New Admin</h2>
+</div>
+
+<div class="content">
+    @using (Ajax.BeginForm("AddAdmin", "Manage", new { stationId = ViewBag.StationId }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }))
+    {
+        <ul>
+            <li class="row">
+                @Html.TextFieldsFor(m => m.Email, false)
+                @Html.HiddenFor(x => x.StationId)
+            </li>
+        </ul>
+        <div class="end-stripe">
+            <button type="submit" class="submit" name="ButtonType" title="Add" value="Add">Add</button>
+            <button type="submit" class="cancel" name="ButtonType" title="Cancel" value="Cancel">Cancel</button>
+        </div>
+        <div class="info float warning">@Html.DisplayFor(x => x.ErrorMessage)</div>
+    }

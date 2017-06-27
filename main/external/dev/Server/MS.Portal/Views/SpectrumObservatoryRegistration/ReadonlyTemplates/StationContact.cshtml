@@ -1,0 +1,36 @@
+﻿@model  Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+<div class="title">
+    <h3>Station Contacts</h3>
+</div>
+<ul>
+    <li>
+        <label title="Name">Name</label>
+        <div class="input mandatory read-only">
+            @Html.TextBoxFor(m => m.ContactInfo.PrimaryContactName, new { @readonly = "readonly" })
+        </div>
+    </li>
+    <div class="clear"></div>
+    <li>
+        <label title="Phone">Phone</label>
+        @if (string.IsNullOrWhiteSpace(Model.ContactInfo.PrimaryContactPhone))
+        {
+            <div class="input phone mandatory">
+                @Html.TextBoxFor(m => m.ContactInfo.PrimaryContactPhone)
+            </div>
+        }
+        else
+        {
+            <div class="input phone mandatory read-only">
+                @Html.TextBoxFor(m => m.ContactInfo.PrimaryContactPhone, new { @readonly = "readonly" })
+            </div>
+        }
+    </li>
+    <li>
+        <label title="Email">Email</label>
+        <div class="input mail mandatory read-only">
+            @Html.TextBoxFor(m => m.ContactInfo.PrimaryContactEmail, new { @readonly = "readonly" })
+        </div>
+    </li>
+    @Html.HiddenFor(m => m.ContactInfo.PrimaryContactUserId, Model.ContactInfo.PrimaryContactUserId)
+</ul>

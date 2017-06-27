@@ -1,0 +1,4 @@
+SettingType,Category,Name,Value
+string,AdminNotificationService,FromEmailAddress,whitespn@microsoft.com
+string,AdminNotificationService,SmptHost,smtp.office365.com
+string,AdminNotificationService,SenderPassword,

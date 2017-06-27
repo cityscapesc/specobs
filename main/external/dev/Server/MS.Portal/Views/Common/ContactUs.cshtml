@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ContactUs</h2>
+
+@section Left{
+    <section>
+        <div class="title">
+            @*<a href="#" onclick="history.go(-1)" title="back" role="link" class="back icon"></a>*@
+            <h3>Contact Us</h3>
+        </div>
+    </section>
+}
+
+@section Right{
+    <div class="content">
+    <div class="title float">
+        <h2>Contact Us</h2>
+    </div>
+    <section class="rightContentArea">
+        <p>
+            For any inquiries about the CityScape Spectrum Observatory project, questions and suggestions please email us at <a href="mailto:spectrum-city-scape@googlegroups.com">spectrum-city-scape@googlegroups.com</a>
+        </p>
+    </section>
+</div>
+}
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#wrapper').addClass("inner");
+        });
+</script>
+}

@@ -1,0 +1,9 @@
+﻿@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    /* IE10+ specific styles go here */
+    #right-pane .search button {
+        margin-top: 1px;
+    }
+    input[type="text"], textarea, input[type="email"]{
+        padding-bottom:8px;
+    }
+}

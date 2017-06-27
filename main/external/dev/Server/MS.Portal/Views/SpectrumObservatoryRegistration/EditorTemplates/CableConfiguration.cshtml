@@ -1,0 +1,36 @@
+﻿@model Microsoft.Spectrum.Portal.Models.CableConfigurationViewModel
+
+@using Microsoft.Spectrum.Portal.Models
+@using Microsoft.Spectrum.Portal.Helpers
+
+@{
+    string collectionName = ViewData.ContainsKey("PrefixName") ? string.Format("{0}.{1}", ViewData["PrefixName"].ToString(), "Cables") : "Cables";
+}
+
+@using (Html.BeginCollectionItem<CableConfigurationViewModel>(collectionName))
+{
+    <ul>
+        <li>
+            <label title="Cable Type">Cable Type</label>
+            <div class="input cable mandatory">
+                @Html.TextBoxFor(m => m.CableType)
+                @Html.ValidationMessageFor(m => m.CableType)
+            </div>
+        </li>
+        <li class="split">
+            <label title="Cable Length (Ft)">Cable Length (Ft)</label>
+            <div class="col">
+                <div class="input measure mandatory">
+                    @Html.TextBoxFor(m => m.Length)
+                    @Html.ValidationMessageFor(m => m.Length)
+                </div>
+            </div>
+        </li>
+        @if (Model.AllowCableEntryDelete)
+        {
+            <li>
+                <a href="#" title="Remove" onclick="$(this).parent().parent().remove();" class="icon delete">Remove</a>
+            </li>
+        }
+    </ul>
+}

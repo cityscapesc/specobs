@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Microsoft.Spectrum.Portal.Models.StationViewModel>
+
+@using Microsoft.Spectrum.Portal.Security;
+
+
+@if (Model.Count() > 0)
+{
+    <div id="SearchList">
+        <ul>
+            @foreach (var station in Model)
+            {
+                <li class="station" id="@station.StationId">
+                    <div>
+                        <header>
+                            <span class="stat @station.Availability">@station.Availability</span>
+                            <h2><a onclick='showStationInfo("@station.StationId", "stationInfo")'>@station.StationName</a></h2>
+                            <button type="button" class="icon" title="Locate Station on Map" onclick="LocateStation('@station.Latitude','@station.Longitude')">Locate Station on Map</button>
+                        </header>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <label title="Address">Address</label>
+                                        <span>@station.Address</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label title="Latitude">Latitude</label>
+                                        <span class="lat">@station.Latitude</span>
+                                    </td>
+                                    <td>
+                                        <label title="Longitude">Longitude</label>
+                                        <span class="lon">@station.Longitude</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label title="Radio Type">Radio Type</label>
+                                        <span>@station.RadioType</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a onclick='showStationInfo("@station.StationId","chart")' title="PSD Chart" class="btn-style">View PSD Chart</a>
+                        <a onclick='showStationInfo("@station.StationId","rawdata")' title="Raw IQ Download" class="right btn-style">RAW IQ Download</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}

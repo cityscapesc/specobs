@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ServiceInstaller>  
+  <Version>2.0.0.0</Version>
+  <DownloadUrl>https://csmaster20161201t0759.blob.core.windows.net/msidownload/InstallerConfiguration.xml</DownloadUrl>
+  <CreatedOn>2014-11-07T04:55:00</CreatedOn>
+</ServiceInstaller>

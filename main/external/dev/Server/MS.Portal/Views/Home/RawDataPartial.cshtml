@@ -1,0 +1,42 @@
+﻿@using Microsoft.Spectrum.Common;
+@using Microsoft.Spectrum.Portal.Helpers;
+@using Microsoft.Spectrum.Portal.Models;
+@model IEnumerable<Microsoft.Spectrum.Storage.Models.ScanFileInformation>
+
+<div class="title">
+    <h2>Raw Data Download</h2>
+</div>
+
+<div class="content">
+    <p>
+        The files below all contain either aggregated data or raw IQ data that is stored in a custom format. 
+        If you download these files, you will need to get either the ScanFile parser or the RawIQFile parser from 
+        the source code, which is available at http://spectrumobservatory.codeplex.com/. The parsers are located
+        under Integration-branch\external\dev\Common and are named MS.IO.RawIQFile and MS.IO.ScanFile. These parsers
+        are available in C# and provide functionality to both read and write these file types.
+    </p>
+    <br />
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <thead>
+            <tr>
+                <th width="20%">Time</th>
+                <th width="20%">Start Frequency (Hz)</th>
+                <th width="30%">End Frequency (Hz)</th>
+                <th class="center">Link to Data</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rawDataFile in Model)
+            {
+                <tr>
+                    <td>@rawDataFile.TimeStart</td>
+                    <td>@rawDataFile.StartFrequency</td>
+                    <td>@rawDataFile.EndFrequency</td>
+                    <td class="center"><a href="@rawDataFile.BlobUri">Download File</a></td>                    
+                </tr>
+            }
+        </tbody>        
+    </table>
+
+</div>

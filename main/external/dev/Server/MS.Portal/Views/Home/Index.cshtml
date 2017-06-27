@@ -1,0 +1,161 @@
+﻿@model IEnumerable<Microsoft.Spectrum.Portal.Models.StationViewModel>
+
+@section Left{
+    <style>
+        ol li:before {
+            counter-increment: item;
+            position: absolute;
+            text-align: justify;
+            padding-right: 4px;
+        }
+
+        ol li {
+            margin: 0 0 0 17px;
+        }
+    </style>
+
+    <div id="homeLPane" class="content" style="text-align:justify">
+        <div class="title">
+            <span>Welcome to CityScape</span>
+            <h2>Spectrum Observatory</h2>
+        </div>
+        <content>
+            <p>The CityScape Spectrum Observatory interface is an enhanced version of the original <a href="https://observatory.microsoftspectrum.com/">interface</a>, funded by NSF, the goal is to produce a research-grade Spectrum Monitoring infrastructure. Led by U. Washington and Shared Spectrum Co. with continuing support from Microsoft; it seeks to provide a persistent, metro-scale distributed RF spectrum monitoring infrastructure using commodity Software Defined Radios such as USRPs, in conjunction with a robust web interface to enable acquisition of reliable I-Q and spectrum usage information. The stations continually upload RF sensor data (using current instrument settings) that is stored on public cloud such as Microsoft Azure. Station data - both time-averaged power spectrum density (p.s.d) charts (past 2 years) and raw I-Q (past week) is available for viewing/download by the spectrum engineering research community.</p>
+        </content>
+        <content>
+            <p>On the map each pushpin represents a spectrum station location and current status.  The left panel provides links to the following features:</p>
+            <h6>Search Stations:</h6>
+            <p>Provides a list of all stations and their current settings.</p>
+            <h6>RAW IQ Data Download:</h6>
+            <p>RAW IQ data download feature lets users download the raw IQ data for a station locally.  RAW IQ download option is available from station search page and station details page.</p>
+            <h6>Register a New Station:</h6>
+            <p>Allows newly deployed local station to be registered and/or brought online within the Observatory.  For details, see the Observatory Installation Guide <a href="https://somaster20160625t2204.blob.core.windows.net/msidownload/Spectrum%20Observatory%20Station%20Deployment%20Guide.pdf">here</a>.</p>
+            <h6>Administer a Station:</h6>
+            <p>Enables station administrator to update settings and add new administrators</p>
+            <h6>FAQ:</h6>
+            <p>Useful overview information regarding Spectrum CityScape features.</p>
+        </content>
+    </div>
+
+
+
+    <div id="StationList" class="hidden content">
+        <div class="title">
+            <h2>Stations</h2>
+        </div>
+        <div class="station-list">
+            @Html.Partial("StationResultsPartial", @Model)
+        </div>
+    </div>
+
+    <div class="hidden content" id="stationInfo">
+        @Html.Partial("StationInfoPartial")
+    </div>
+}
+
+@section Right{
+    <div id="rightPaneContainer">
+        <div class="map-controls" id="map-controls">
+            <button data-zoom="in" class="map-controls-btn top" onclick="ZoomIn()">+</button>
+            <button data-zoom="out" class="map-controls-btn" onclick="ZoomOut()">-</button>
+        </div>
+
+        <div class="search" id="SearchBox">
+            <input type="text" placeholder="Enter Location, Latitude/ Longitude" id="location" />
+            <button type="button" title="Search" id="searchLocation" onclick="FindLocation()">Search</button>
+        </div>
+
+        <div id="mapSpace">
+            <div id="map">
+                @Html.Partial("MapPartial")
+            </div>
+
+            <div class="map">
+                <div class="legend">
+                    <ul>
+                        <li class="online">Online</li>
+                        <li class="offline">Offline</li>
+                        <li class="decommissioned">Decommissioned</li>
+                        <li class="upcoming">Upcoming</li>
+                        <li class="maintenance">Down for Maintenance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="chartSpace" class="hidden">
+            <div id="chartContainer" class="hidden">
+                <div class="title">
+                    <h2>
+                        <span id="siTitle"></span>
+                    </h2>
+                </div>
+                <span id="xlegends"></span>
+                <div id="psdLegends"></div>
+                <div class="chartTitle">Power Spectral Density (PSD) Average Data Chart</div>
+                <div id="MetaData">
+                    <ul>
+                        <li>
+                            <label title="Station Name">Station : </label><span id="mdStationName"></span>
+                        </li>
+                        <li>
+                            <label title="GPS Details">GPS : </label><span id="mdGPSDetails"></span>
+                        </li>
+                        <li>
+                            <label title="Frequency">Frequency:</label><span id="mdFrequency"></span>
+                            <label title="FFT bin width">FFT bin width:</label><span id="fftBinWidth"></span>
+                        </li>
+                        <li>
+                            <label title="Time Range">Time Range (UTC):</label><span id="mdTimeRange"></span>
+                        </li>
+                    </ul>
+                </div>
+                <span id="occupancyYLegend">Occupancy (%)</span>
+                <span id="psdYLegend">Power Spectral Density (dBm/FFT bin)</span>
+                <div id="PSDChartdiv" style="width:500px"></div>
+                <span id="frequencyLegend">Frequency (MHz)</span>
+                <div id="psdReadingKind">
+                    @*<div id="psdMinContainer">
+                            <input type="checkbox" value="minimum" id="psdMinimumCheckbox" checked="checked" class="hidden" /><label for="psdMinimumCheckbox">Minimum</label>
+                        </div>*@
+                    @*<div id="psdAvgContainer">
+                            <input type="checkbox" value="average" id="psdAverageCheckbox" checked="checked" class="hidden" /><label for="psdAverageCheckbox">Average</label>
+                        </div>*@
+                    @*<div id="psdMaxContainer">
+                            <input type="checkbox" value="maximum" id="psdMaximumCheckbox" checked="checked" class="hidden" /><label for="psdMaximumCheckbox">Maximum</label>
+                        </div>*@
+                </div>
+            </div>
+
+            <div id="psdErrorBlock" class="noDataErrorMessage hidden">
+                <span class="icon account">There is no data currently available for the current selection. Please choose another date and/or frequency range and try again.</span>
+            </div>
+        </div>
+        <div id="problemSpace" class="hidden">
+            @Html.Partial("ReportProblemPartial")
+        </div>
+        <div id="stationDetailsFull" class="hidden">
+            <div id="stationContainer" class="hidden">
+            </div>
+        </div>
+        <div id="rawDataSpace" class="hidden">
+            <div id="rawData" class="container">
+            </div>
+        </div>
+    </div>
+    <div class="hidden">
+        @Html.Partial("InfoboxPartial", @Model)
+    </div>
+}
+
+
+@section scripts{
+    <script src="~/Scripts/jquery-ui-1.11.2.js"></script>
+    <script src="~/Scripts/StationSearch.js"></script>
+    <script src="~/Scripts/Charts.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="~/Scripts/flot/jquery.flot.navigate.js"></script>
+    <script type="text/javascript" src="~/Scripts/flot/jquery.flot.crosshair.js"></script>
+    <script type="text/javascript" src="~/Scripts/flot/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="~/Scripts/flot/jquery.flot.canvas.js"></script>
+}

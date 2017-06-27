@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Contribute";
+}
+
+@section Left
+    {
+    <div class="content">
+    <div class="title">
+        <h2>Contributions</h2>
+    </div>
+    <nav class="sub-nav">
+        <ul>
+            <li>
+                <input type="radio" class="hidden" id="sNav1" name="subNavigation" checked="checked">
+                <label for="sNav1" title="SET UP YOUR OWN STATION">SET UP YOUR OWN STATION</label>
+            </li>
+            <li>
+                <input type="radio" class="hidden" id="sNav2" name="subNavigation">
+                <label for="sNav2" title="RESEARCH AND ANALYSIS">RESEARCH AND ANALYSIS</label>
+            </li>
+            <li>
+                <input type="radio" class="hidden" id="sNav3" name="subNavigation">
+                <label for="sNav3" title="IDEAS AND FEEDBACK">IDEAS AND FEEDBACK</label>
+            </li>
+            <li>
+                <input type="radio" class="hidden" id="sNav4" name="subNavigation">
+                <label for="sNav4" title="CREATE NEW FEATURES">CREATE NEW FEATURES</label>
+            </li>
+        </ul>
+    </nav>
+</div>
+    }
+
+@section  Right{
+    <div class="container">
+    <div class="content">
+        <div class="sections show" id="OwnStation">
+            <div class="title float">
+                <h2>SET UP YOUR OWN STATION</h2>
+            </div>
+            @Html.Action("GetQuestions", new { sectionName = "SET UP YOUR OWN STATION" })
+        </div>
+        <div class="sections hidden" id="Research">
+            <div class="title float">
+                <h2>RESEARCH AND ANALYSIS</h2>
+            </div>
+            @Html.Action("GetQuestions", new { sectionName = "RESEARCH AND ANALYSIS" })
+        </div>
+        <div class="sections hidden" id="Ideas">
+            <div class="title float">
+                <h2>IDEAS AND FEEDBACK</h2>
+            </div>
+            @Html.Action("GetQuestions", new { sectionName = "IDEAS AND FEEDBACK" })
+        </div>
+        <div class="sections hidden" id="NewFeatures">
+            <div class="title float">
+                <h2>CREATE NEW FEATURES</h2>
+            </div>
+            @Html.Action("GetQuestions", new { sectionName = "CREATE NEW FEATURES" })
+        </div>        
+    </div>
+</div>
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        $("#Radio8").attr('checked', 'checked');
+
+        $("#sNav1").click(function () {
+            $(".show").addClass("hidden");
+            $("#OwnStation").removeClass("hidden");
+            $("#OwnStation").addClass("show");
+        });
+
+        $("#sNav2").click(function () {
+            $(".show").addClass("hidden");
+            $("#Research").removeClass("hidden");
+            $("#Research").addClass("show");
+        });
+
+        $("#sNav3").click(function () {
+            $(".show").addClass("hidden");
+            $("#Ideas").removeClass("hidden");
+            $("#Ideas").addClass("show");
+        });
+
+        $("#sNav4").click(function () {
+            $(".show").addClass("hidden");
+            $("#NewFeatures").removeClass("hidden");
+            $("#NewFeatures").addClass("show");
+        });
+
+    </script>
+}

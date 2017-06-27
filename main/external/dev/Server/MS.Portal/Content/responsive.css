@@ -1,0 +1,121 @@
+﻿/* Width 1920 */
+
+@media only screen and (max-width: 1920px) {
+}
+
+/* Width 1680 */
+
+@media only screen and (max-width: 1680px) {
+}
+
+/* Width 1366 */
+
+@media only screen and (max-width: 1366px) {
+}
+
+/* Width 1280 */
+
+@media only screen and (max-width: 1280px) {
+    #chartContainer #MetaData{
+        font-size:12px;
+        padding-top:19px;
+        padding-bottom:19px;
+    }
+}
+
+/* Width 1024 */
+
+@media only screen and (max-width: 1024px) {
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
+
+/* Height 1200 */
+
+@media only screen and (max-height: 1200px) {
+    .accordion > input:checked ~ section{
+        max-height:862px;
+    }
+}
+
+/* Height 10250 */
+
+@media only screen and (max-height: 1050px) {
+    .accordion > input:checked ~ section{
+        max-height:724px;
+    }
+}
+
+/* Height 1024 */
+
+@media only screen and (max-height: 1024px) {
+    .accordion > input:checked ~ section{
+        max-height:698px;
+    }
+}
+
+/* Height 900 */
+
+@media only screen and (max-height: 900px) {
+    .accordion > input:checked ~ section{
+        max-height:523px;
+    }
+    .accordion.charts > input:checked ~ section{
+        max-height:513px;
+    }
+}
+
+/* Height 800 */
+
+@media only screen and (max-height: 800px) {
+    .accordion > input:checked ~ section{
+        max-height:563px;
+    }
+}
+@media only screen and (max-height: 800px) and (max-width:1400px){
+    .accordion.charts > input:checked ~ section{
+        max-height:393px;
+    }
+}
+
+/* Height 768 */
+
+@media only screen and (max-height: 768px) {
+    .accordion > input:checked ~ section{
+        max-height:391px;
+    }
+}
+@media only screen and (max-height: 720px) {
+    .accordion > input:checked ~ section{
+        max-height:341px;
+    }
+}
+@media only screen and (max-height: 800px) and (max-width:1300px){
+    .accordion.charts > input:checked ~ section{
+        max-height:418px;
+    }
+}
+@media only screen and (max-height: 700px) and (max-width:1300px){
+    .accordion.charts > input:checked ~ section{
+        max-height:348px;
+    }
+}
+@media only screen and (max-height: 768px) and (max-width:1024px){
+    .accordion.charts > input:checked ~ section{
+        max-height:388px;
+    }
+}
+@media only screen and (max-width:980px){
+    footer > *{
+        padding:5px 10px;
+    }
+    footer .logo li img{
+        max-width:100px;
+    }
+    footer .logo{
+        padding-top:0;
+    }
+    #right-pane .container .end-stripe{
+        bottom:37px;
+    }
+}

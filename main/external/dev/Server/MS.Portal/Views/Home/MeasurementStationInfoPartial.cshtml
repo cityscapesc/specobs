@@ -1,0 +1,97 @@
+﻿@using Microsoft.Spectrum.Portal.Helpers;
+@model Microsoft.Spectrum.Storage.Models.MeasurementStationInfo
+
+<div class="title">
+    <h2><span id="siStationName">@Model.StationDescription.StationName</span></h2>
+</div>
+<div class="station-info accordion station-list" id="StationInfoAccordian" onclick="ShowStationDetails()">
+    <input type="radio" id="Accordion1" name="stInfo" class="hidden" checked="checked" value="StationInfoAccordian" onclick="AdjustAccordianHeight('StationInfoAccordian')" />
+    <label class="h3" for="Accordion1" title="Station Info">Station Info</label>
+    <section>
+        <p>The this information describes the end to end configuration of the measurement station selected. This includes the current location of the station, the RF sensor(s) configuration, the cabling used, the antenna attached to the RF sensor(s), any connectors used, and the aggregation and raw data output settings. This information can provide additional context when analyzing the data presented for this station.</p>
+        <ul>
+            <li>
+                <h3>Data Availability</h3>
+                <div class="col start-frq">
+                    <label title="Start Date">PSD Start Date (UTC)</label>
+                    @if (Model.PSDDataAvailabilityStartDate.HasValue)
+                    {
+                        <span id="siStartFrequency" class="readonly"> @Html.FormattedDate(Model.PSDDataAvailabilityStartDate.Value)</span>
+                    }
+                    else
+                    {
+                        <span id="siStartFrequency" class="readonly">NA</span>
+                    }
+                </div>
+                <div class="col start-frq">
+                    <label title="Latest Date">PSD Latest Date (UTC)</label>
+                    @if (@Model.PSDDataAvailabilityEndDate.HasValue)
+                    {
+                        <span id="siStopFrequency" class="readonly">@Html.FormattedDate(Model.PSDDataAvailabilityEndDate.Value)</span>
+                    }
+                    else
+                    {
+                        <span id="siStopFrequency" class="readonly">NA</span>
+                    }
+                </div>
+                <div class="col start-frq">
+                    <label title="Latest Date">RawIQ Start Date (UTC)</label>
+                    @if (@Model.RawIQDataAvailabilityEndDate.HasValue)
+                    {
+                        <span id="siStopFrequency" class="readonly">@Html.FormattedDate(Model.RawIQDataAvailabilityStartDate.Value)</span>
+                    }
+                    else
+                    {
+                        <span id="siStopFrequency" class="readonly">NA</span>
+                    }
+                </div>
+                <div class="col start-frq">
+                    <label title="Latest Date">RawIQ Latest Date (UTC)</label>
+                    @if (@Model.RawIQDataAvailabilityEndDate.HasValue)
+                    {
+                        <span id="siStopFrequency" class="readonly">@Html.FormattedDate(Model.RawIQDataAvailabilityEndDate.Value)</span>
+                    }
+                    else
+                    {
+                        <span id="siStopFrequency" class="readonly">NA</span>
+                    }
+                </div>
+                <input type="hidden" id="siStorageAccountName" value="@Model.Identifier.StorageAccountName" />
+                <input type="hidden" id="siStationId" value="@Model.Identifier.Id" />
+                <div id="mapInput" class="hidden">
+                    <span id="siDescription">@Model.StationDescription.Description</span>
+                    <span id="siAddress">@Html.GetStationAddress(@Model)</span>
+                    <span id="siLatitude">@Model.GpsDetails.Latitude</span>
+                    <span id="siLongitude">@Model.GpsDetails.Longitude</span>
+                </div>
+            </li>
+            @*<table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tbody>
+                        <tr class="split">
+                            <td>
+                                <label title="Start Date">PSD Start Date</label>
+                                <span id="siStartFrequency">@Html.FormattedDate(Model.PSDDataAvailabilityStartDate)</span>
+                            </td>
+                            <td>
+                                <label title="Latest Date">PSD Latest Date</label>
+                                <span id="siStopFrequency">@Html.FormattedDate(Model.PSDDataAvailabilityEndDate)</span>
+                                <label title="Latest Date">RawIQ Latest Date</label>
+                                <span id="siStopFrequency">@Html.FormattedDate(Model.RawIQDataAvailabilityEndDate)</span>
+                                <label title="Latest Date">RawIQ Latest Date</label>
+                                <span id="siStopFrequency">@Html.FormattedDate(Model.RawIQDataAvailabilityEndDate)</span>
+
+                                <input type="hidden" id="siStorageAccountName" value="@Model.Identifier.StorageAccountName" />
+                                <input type="hidden" id="siStationId" value="@Model.Identifier.Id" />
+                                <div id="mapInput" class="hidden">
+                                    <span id="siDescription">@Model.StationDescription.Description</span>
+                                    <span id="siAddress">@Html.GetStationAddress(@Model)</span>
+                                    <span id="siLatitude">@Model.GpsDetails.Latitude</span>
+                                    <span id="siLongitude">@Model.GpsDetails.Longitude</span>
+                                </div>
+                            </td>
+                    </tbody>
+                </table>*@
+        </ul>
+    </section>
+</div>
+

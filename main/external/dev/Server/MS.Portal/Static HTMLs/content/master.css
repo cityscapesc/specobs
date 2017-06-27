@@ -1,0 +1,1138 @@
+﻿-@charset "utf-8";
+/* CSS Document */
+
+/* Font */
+
+@font-face {
+    src: url(fonts/seguisym.eot);
+    src: url(fonts/seguisym.ttf);
+    font-family: "Symbol";
+}
+
+/* Common */
+
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+body {
+    background:#f6f6f6;
+    font-family: 'Segoe UI';
+    font-size: 14px;
+    color: #111;
+    overflow-y: auto;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Segoe UI";
+    font-weight: normal;
+    color: rgba(88, 97, 156, 1);
+    text-transform: uppercase;
+}
+
+:before, :after {
+    font-family: 'Segoe UI Symbol', 'Symbol';
+}
+
+h1 {
+}
+
+h2 {
+    font: normal 26px/26px "Segoe UI";
+}
+
+h3 {
+    font: normal 30px/30px "Segoe UI";
+}
+
+h4 {
+    font: normal 24px/24px "Segoe UI";
+}
+
+h5 {
+    font: bold 18px/18px "Segoe UI";
+}
+
+a {
+    color: #58619c;
+    text-decoration: none;
+    outline: none;
+}
+
+    a:hover {
+        text-decoration: none;
+        color: #9b4f96;
+        background:none !important;
+    }
+
+    a img {
+        outline: none;
+        border: none;
+    }
+
+p {
+    font: normal 14px/22px 'Segoe UI';
+}
+
+ul li {
+    list-style: none;
+}
+
+.left {
+    float: left !important;
+}
+
+.right {
+    float: right !important;
+}
+
+.noFollow {
+    float: none !important;
+}
+
+.clear {
+    clear: both !important;
+}
+
+.noPad {
+    padding: 0 !important;
+}
+
+.noMarg {
+    margin: 0 !important;
+}
+
+.noBorder {
+    border: none !important;
+}
+
+.relative {
+    position: relative !important;
+}
+.hidden {
+    display:none !important;
+}
+
+select {
+    border: 1px solid #d4d5d4;
+    padding: 9px 10px;
+    background-repeat: no-repeat;
+    color: rgba(52, 73, 94, 0.5);
+    width: 310px;
+}
+
+td select {
+    border: 1px solid #d4d5d4;
+    width: 300px;
+}
+
+input[type="text"], textarea, input[type="email"] {
+    padding: 10px;
+    border: 1px solid #d4d5d4;
+    color: rgba(52, 73, 94, 0.5);
+    width: 250px;
+}
+textarea {
+    height:100px;
+    resize:none;
+}
+input[type="date"] {
+    padding:8px 10px;
+}
+
+    input[type="text"]:hover, input[type="date"]:hover, input[type="email"]:hover, textarea:hover {
+        border-color: rgba(52, 73, 94, 0.7);
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, input[type="date"]:focus, textarea:focus {
+        border-color: rgba(52, 73, 94, 0.7);
+        color: rgba(52, 73, 94, 1);
+    }
+
+.input {
+        border:1px solid #d4d5d4;
+        background:#fff;
+}
+    .input:before {
+        content:'';
+        display:block;
+        float:left;
+        border-right:1px solid #d4d5d4;
+        margin:5px;
+        font-size:20px;
+        padding:0 5px 0 0;
+        color:#ccc;
+    }
+    .input input {
+        background:none;
+    }
+    .input select {
+        border:none;
+        width:270px;
+    }
+    .input.double.select select {
+        width:600px;
+    }
+    .read-only .input{
+        background:#eee;
+    }
+    .input.mail:before {
+        content:'';
+    }
+    .input.phone:before {
+        content:'';
+    }
+    .input.book:before {
+        content:'📕';
+    }
+    .input.textarea:before {
+        content:'';
+    }
+    .input.location:before {
+        content:'';
+    }
+    .input.country:before {
+        content:'';
+    }
+.input input, .input textarea {
+    border:none;
+}
+.input.textarea{
+    float:left;
+}
+
+.mandatory, .error {
+    color: red;
+}
+
+.error {
+    font-size: 11px;
+}
+.no-border {
+    border:none !important;
+}
+
+.wrap .error {
+    float: none;
+    clear: both;
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+table th {
+    font: normal 100% "Segoe UI";
+    text-align: left;
+}
+
+button {
+    display: block;
+    text-transform: uppercase;
+    border: none;
+    padding: 0 10px 0 0;
+    background: #58619c;
+    position:relative;
+    /*-o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;*/
+    line-height:36px;
+    color:#fff;
+}
+    button:disabled {
+        background: rgba(52, 73, 94, 0.5);
+    }
+
+button:before {
+    content:'';
+    font:normal 18px/14px 'Segoe UI Symbol', 'Symbol';
+    float:left;
+    background:rgba(0,0,0,0.05);
+    padding:10px 8px;
+    margin-right:10px;
+}
+    button.icon {
+        font-size:0;
+        padding:0;
+        background:none;
+    }
+        button.icon:hover {
+            background:none;
+        }
+        button.icon:before {
+            display:block;
+            font-size:24px;
+            color:#ccc;
+            background:none;
+        }
+        button.icon.back:before {
+            content:'';
+        }
+        button.icon.add-admin:before {
+            content:'';
+        }
+        button.icon.back:hover:before {
+            color:#9b4f96;
+        }
+.noSiblings:before, .noSiblings:after {
+    display:none !important;l
+}
+button.noSiblings {
+    padding-left:20px;
+    padding-right:20px;
+}
+    button.submit, button.done {
+        background-color:#1aa85c;
+    }
+    button.edit {
+        background-color:#f79a67;
+    }
+    button.cancel:hover, button.delete:hover {
+        background-color:#e73340;
+    }
+button.sync:before {
+    content:'';
+    top:12px;
+}
+    button.cancel {
+        background:rgba(0,0,0,0.3);
+    }
+button.cancel:before {
+    content:'';
+}
+button.edit:before {
+    content:'';
+}
+
+    button:hover, a:hover {
+        cursor: pointer;
+        background-color:#9b4f96;
+    }
+a.cancel{
+    color:red;
+}
+
+    button.submit:before {
+        content:'';
+    }
+    button.preview:before {
+        content:'';
+    }
+    button.next:after {
+        content: "";
+        font-size: 18px;
+        padding-left: 15px;
+    }
+
+    button.next:hover {
+        color: #fff;
+    }
+table {
+}
+    table th {
+        padding:10px 15px;
+        background:#4e526e;
+        color:#fff;
+        text-align:left;
+        font:bold 12px/16px 'Segoe UI';
+        border-bottom:5px solid #bfbfbf;
+    }
+        table th.center, table td.center {
+            text-align:center;
+        }
+    table tbody td:first-of-type {
+        border-left:1px solid rgba(191,191,191,0.2);
+    }
+    table tbody td:last-of-type {
+        border-right:1px solid rgba(191,191,191,0.2);
+    }
+    table tbody tr:last-child td {
+        border-bottom:1px solid rgba(191,191,191,0.2);
+    }
+    table td {
+        padding:10px 15px;
+    }
+    table tbody td {
+        background:#fff;
+    }
+        table td.action {
+            width:94px;
+        }
+        .manage-user table td.action {
+            width:30px;
+        }
+    table tr:nth-child(2n+2) td {
+        background:rgba(255,255,255,0.5);
+    }
+    table tbody tr:hover td {
+        background:#1eb8f1;
+        color:#fff;
+    }
+        table td.action ul li {
+            float:left;
+            padding-left:5px;
+        }
+            table td.action ul li a {
+                display:block;
+                font-size:0;
+            }
+                table td.action ul li a:before {
+                    display:block;
+                    border-radius:25px;
+                    background:#eee;
+                    color:#999;
+                    content:'';
+                    font-size:14px;
+                    text-align:center;
+                    padding:5px 0;
+                    width:28px;
+                }
+                table td.action ul li a:hover:before {
+                    background:#ff8c00;
+                    color:#fff;
+                }
+                table td.action ul li a[title="Edit"]:before {
+                    content:'';
+                }
+                table td.action ul li a[title="Edit"]:hover:before {
+                    background:#4185f4;
+                }
+                table td.action ul li a[title="Decomissioned"]:before {
+                    content:'';
+                }
+                table td.action ul li a[title="Decomissioned"]:hover:before {
+                    background:#e73340;
+                }
+                table td.action ul li a[title="Delete"]:before {
+                    content:'';
+                }
+                table td.action ul li a[title="Delete"]:hover:before {
+                    background:#e73340;
+                }
+    table tfoot td .total-number-of-pages {
+        float:left;
+    }
+    table tfoot td .page-slider {
+        float:right;
+    }
+        table tfoot td .page-slider li {
+            float:left;
+            padding-left:10px;
+        }
+        table tfoot td .page-slider li a{
+            display:block;
+            font-size:0;
+        }
+    table tfoot td {
+        padding:10px 0;
+    }
+            table tfoot td .page-slider li a:before {
+                background:#eee;
+                box-shadow:0 10px 10px rgba(255,255,255,1) inset;
+                content:'';
+                color:#ccc;
+                border:1px solid #eee;
+                width:35px;
+                text-align:center;
+                padding:3px 0;
+                display:block;
+                font-size:12px;
+            }
+        table tfoot td .page-slider li a:hover:before {
+            background:#9b4f96;
+            color:#fff;
+            box-shadow:none;
+        }
+        table tfoot td .page-slider li a[title="Next"]:before {
+            content:'';
+        }
+
+/* Left Navigation Stripe */
+
+.nav-stripe {
+    background:#58619c;
+    box-shadow:-2px 0 3px rgba(0,0,0,0.15) inset;
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:99;
+    height:100%;
+}
+    .nav-stripe ul li {
+        padding:2px 0;
+    }
+        .nav-stripe ul li:first-child {
+            padding-top:0;
+        }
+        .nav-stripe ul li label {
+            display:block;
+            font-size:0;
+            position:relative;
+            cursor:pointer;
+        }
+            .nav-stripe ul li label:before {
+                content:'';
+                display:block;
+                font-size:24px;
+                line-height:32px;
+                padding:10px 9px;
+                color:#fff;
+                text-shadow:2px 2px 1px rgba(0,0,0,0.3);
+                background-position:center 10px;
+                background-repeat:no-repeat;
+            }
+            .nav-stripe ul li label:hover:before {
+                background-color:#9b4f96;
+            }
+            .nav-stripe ul li label[for="Radio1"]:before {
+                background-color:rgba(0,0,0,0.1);
+                color:rgba(0,0,0,0.25);
+                text-shadow:none;
+            }
+            .nav-stripe ul li label[for="Radio1"]:hover:before {
+                background-color:#9b4f96;
+                color:#fff;
+                text-shadow:2px 2px 1px rgba(0,0,0,0.3);
+            }
+            .nav-stripe ul li label[for="Radio2"]:before {
+                content:'';
+                background-image:url(images/search-station-icon.png);
+                height:32px;
+            }
+            .nav-stripe ul li label[for="Radio2"]:hover:before {
+                background-position: center -106px;
+            }
+            .nav-stripe ul li input:checked + label[for="Radio2"]:hover:before {
+                background-position: center 10px;
+            }
+            .nav-stripe ul li label[for="Radio3"]:before {
+                content:'';
+            }
+            .nav-stripe ul li label[for="Radio4"]:before {
+                content:'';
+                font-size:26px;
+            }
+            .nav-stripe ul li label[for="Radio5"]:before {
+                content:'';
+            }
+            .nav-stripe ul li label[for="Radio6"]:before {
+                content:'';
+            }
+            .nav-stripe ul li label[for="Radio7"]:before {
+                content:'';
+            }
+            .nav-stripe ul li label[for="Radio8"]:before {
+                content:'👋';
+                font-size:30px;
+            }
+            .nav-stripe ul li label[for="Radio20"]:before {
+                content:'🔍';
+                font-size:30px;
+            }
+            .nav-stripe ul li label[for="Radio9"]:before {
+                content:'';
+                background-image:url(images/signout.png);
+                height:32px;
+                background-position: center 15px;
+            }
+        .nav-stripe ul li:last-child {
+            position:absolute;
+            bottom:0px;
+        }
+            .nav-stripe ul li label[for="Radio10"]:before {
+                content: '';
+                font-size:26px;
+            }
+            .nav-stripe ul li label:after {
+                content:'Home';
+                -o-transition: .5s;
+                -ms-transition: .5s;
+                -moz-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+                text-transform:uppercase;
+                color:#fff;
+                display:block;
+                font:normal 18px/18px 'Segoe UI';
+                position:absolute;
+                top:0;
+                left:-250px;
+                opacity:0;
+                background:#9b4f96;
+                border-top-right-radius:30px;
+                border-bottom-right-radius:30px;
+                padding:17px 20px 17px 5px;
+                white-space:nowrap;
+            }
+            .nav-stripe ul li label:hover:after {
+                left:50px;
+                opacity:1;
+            }
+            .nav-stripe ul li label[for="Radio20"]:after {
+                content:'Station Search';
+            }
+            .nav-stripe ul li label[for="Radio3"]:after {
+                content:'Station Registration';
+            }
+            .nav-stripe ul li label[for="Radio4"]:after {
+                content:'Manage';
+            }
+            .nav-stripe ul li label[for="Radio5"]:after {
+                content:'FAQ';
+            }
+            .nav-stripe ul li label[for="Radio6"]:after {
+                content:'Feedback';
+            }
+            .nav-stripe ul li label[for="Radio7"]:after {
+                content:'Profile';
+            }
+            .nav-stripe ul li label[for="Radio8"]:after {
+                content:'Contributions';
+            }
+            .nav-stripe ul li label[for="Radio9"]:after {
+                content:'Signout';
+            }
+            .nav-stripe ul li label[for="Radio10"]:after {
+                content:'Collapse Pane';
+            }
+        .nav-stripe ul li input:checked + label:after {
+            width: 0;
+            height: 0;
+            border-right: 8px solid #fff;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            left: 44px;
+            opacity: 1;
+            content: '';
+            border-radius: 0;
+            background: none;
+            padding: 0;
+            -o-transition: 0s;
+            -ms-transition: 0s;
+            -moz-transition: 0s;
+            -webkit-transition: 0s;
+            transition: 0s;
+            top:10px;
+        }
+        .nav-stripe ul li input:checked + label:hover:before {
+            background-color:transparent;
+            cursor:default;
+        }
+
+/* Left Pane */
+
+#left-pane {
+    position:fixed;
+    left:50px;
+    top:0;
+    background:#fff;
+    width:350px;
+    z-index:98;
+    height:100%;
+    box-shadow:2px 0 5px rgba(0,0,0,0.1);
+    border-right:1px solid rgba(0,0,0,0.1);
+}
+header {
+    padding:7px 20px;
+    background:#f9f9f9;
+    overflow:hidden;
+}
+    header .logo {
+        float:left;
+    }
+    header .userName {
+        float:right;
+        padding-top:10px;
+    }
+#left-pane .container {
+    padding:15px 20px;
+    height:calc(100% - 85px);
+    overflow:hidden;
+    overflow-y:auto;
+}
+    #left-pane .container.noflow {
+        overflow:hidden;
+    }
+    #left-pane .container .title {
+        padding-bottom:20px;
+    }
+        #left-pane .container .title h2 {
+            text-transform:uppercase;
+            font:normal 25px/25px 'Segoe UI';
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+    #left-pane .container > p {
+        padding-bottom:20px;
+    }
+
+/* Right Pane */
+
+#right-pane {
+    margin-left:400px;
+    position:relative;
+}
+    #right-pane .search {
+        position:absolute;
+        top:20px;
+        right:20px;
+        border:1px solid rgba(0,0,0,0.1);
+        background:#fff;
+        width:398px;
+    }
+        #right-pane .search input:focus {
+            color:#58619c;
+        }
+        #right-pane .search input {
+            border:none;
+            float:left;
+            width:300px;
+        }
+        #right-pane .search button {
+            font-size:0;
+            padding:0;
+            -o-transition: 0s;
+            -ms-transition: 0s;
+            -moz-transition: 0s;
+            -webkit-transition: 0s;
+            transition: 0s;
+                border-radius:0;
+        }
+            #right-pane .search button:before {
+                content:'🔍';
+                margin:0;
+                color:#fff;
+                display:block;
+                background:#58619c;
+                padding-left:30px;
+                padding-right:30px;
+            }
+            #right-pane .search button:hover:before {
+                background:#9b4f96;
+            }
+    #right-pane footer {
+        position:fixed;
+        font-size:11px;
+        bottom:0;
+        width:calc(100% - 400px);
+        left:400px;
+        background:rgba(255,255,255,0.5);
+    }
+    #right-pane .title {
+        margin:10px 20px 0;
+        border-bottom:1px solid #ddd;
+        padding-bottom:10px;
+        overflow:hidden;
+    }
+    #right-pane .content .title {
+        margin:20px 0;
+    }
+        #right-pane .title * {
+            float:left;
+            line-height:34px;
+        }
+        #right-pane .title button.right {
+            line-height:18px;
+        }
+        #right-pane .title button.add-admin:before {
+            background:#1aa85c;
+            border-radius:25px;
+            font-size:14px;
+            color:#fff;
+            float:left;
+            margin:0;
+                -o-transition: .5s;
+                -ms-transition: .5s;
+                -moz-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+        }
+        #right-pane .title button.add-admin:hover:before {
+            border-radius:0px;
+            border-top-left-radius:2px;
+            border-bottom-left-radius:2px;
+            background:#9b4f96;
+        }
+        #right-pane .title button.add-admin:after {
+            content:'Add New Admin';
+            border-top-right-radius:2px;
+            border-bottom-right-radius:2px;
+            float:left;
+            white-space:nowrap;
+            color:#fff;
+            text-transform:uppercase;
+            background:#1aa85c;
+            opacity:0;
+                -o-transition: .5s;
+                -ms-transition: .5s;
+                -moz-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+                display:block;
+            padding:8px 10px 8px 0px;
+            font-size:14px;
+            margin-right:-200px;
+        }
+        #right-pane .title button.add-admin:hover:after {
+            background:#9b4f96;
+            opacity:1;
+            margin:0;
+        }
+    #right-pane .content {
+        padding:20px;
+    }
+        #right-pane .content section {
+            padding-bottom:30px;
+        }
+            #right-pane .content section h3 {
+                font:bold 18px/18px 'Segoe UI';
+                padding-bottom:10px;
+                color:#444;
+                text-transform:none;
+            }
+            #right-pane .content section p {
+                padding-bottom:10px;
+            }
+        #right-pane .content ul {
+            overflow:hidden;
+        }
+            #right-pane .content ul li {
+                float:left;
+                padding:0 20px 20px 0;
+            }
+        #right-pane .content td ul li {
+            padding:0 0 0 5px;
+        }
+            #right-pane .content td ul li:first-child {
+                padding:0;
+            }
+        #right-pane .content ul li label{
+            display:block;
+            text-transform:uppercase;
+            font-size:11px;
+            padding-bottom:5px;
+        }
+        #right-pane .content .end-stripe {
+            position:fixed;
+            bottom:25px;
+            background:rgba(255,255,255,0.75);
+            padding:10px;
+            right:0;
+            width:100%;
+        }
+            #right-pane .content .end-stripe button {
+                float:right;
+                margin-left:10px;
+            }
+.map .legend {
+    position:fixed;
+    bottom:40px;
+    left:420px;
+}
+    .map .legend ul li {
+        float:left;
+        font:bold 12px/12px 'Segoe UI';
+        padding-right:10px;
+        color:#363636;
+    }
+        .map .legend ul li:before {
+            content:'📡';
+            padding-right:5px;
+            font-size:20px;
+            color:#a2a1a1;
+            font-weight:normal;
+        }
+        .map .legend ul li.online:before {
+            color:#3de397;
+        }
+        .map .legend ul li.decommissioned:before {
+            color:#7d85f4;
+        }
+        .map .legend ul li.upcoming:before {
+            color:#00a9e0;
+        }
+        .map .legend ul li.maintenance:before {
+            color:#f7941d;
+        }
+footer > * {
+    padding:5px 10px;
+}
+footer nav {
+    float:left;
+}
+    footer nav ul li {
+        float:left;
+        padding-right:10px;
+        border-right:1px solid #999;
+        margin-right:10px;
+    }
+        footer nav ul li:last-child {
+            border:none;
+            padding-right:0;
+            margin-right:0;
+        }
+        footer nav ul li a:hover {
+            background:none;
+            text-decoration:underline;
+        }
+footer .copyright {
+    float:right;
+}
+
+/* Nearby Stations */
+
+.station-list {
+    width:calc(100% + 40px);
+    margin-left:-20px;
+}
+    .station-list ul li {
+        padding:20px;
+        border-top:1px solid #e5e5e5;
+    }
+#nearbyStations .station-list ul li:hover {
+    background:rgba(0,0,0,0.025);
+    cursor:pointer;
+}
+    .station-list form ul li {
+        border:none;
+        padding:10px 0;
+    }
+        .station-list ul li header {
+            overflow:hidden;
+            padding:0;
+            background:none;
+        }
+            .station-list ul li header > * {
+                float:left;
+                display:block;
+            }
+            .station-list ul li header .stat {
+                font-size:0;
+                padding-right:10px;
+            }
+                .station-list ul li header .stat:before {
+                    content:'📡';
+                    font-size:22px;
+                    line-height:20px;
+                    color:#a2a1a1;
+                }
+            .station-list ul li header h2 {
+                text-transform:uppercase;
+                font:normal 20px/20px 'Segoe UI';
+                color:#58619c;
+            }
+            .station-list ul li header button {
+                float:right;
+                font-size:0;
+                background:none;
+                -o-transition: 0s;
+                -ms-transition: 0s;
+                -moz-transition: 0s;
+                -webkit-transition: 0s;
+                transition: 0s;
+                padding:0;
+            }
+                .station-list ul li header button:hover:before {
+                    color:#000;
+                    background:rgba(0,0,0,0.1);
+                }
+                .station-list ul li header button:before {
+                    content:'';
+                    border-radius:25px;
+                    color:#0054a6;
+                    font-size:14px;
+                    margin:0;
+                }
+        .station-list ul li table td {
+            padding:5px 0;
+        }
+        .station-list ul li table td > * {
+            display:block;
+            font-size:18px;
+            color:rgba(0,0,0,0.9);
+        }
+        .station-list ul li table td label, .accordion ul li label {
+            text-transform:uppercase;
+            font-size:11px;
+            color:rgba(0,0,0,0.7);
+            display:block;
+            padding-bottom:5px;
+        }
+
+/* Station Info */
+
+.accordion {
+    position:relative;
+}
+.accordion section {
+    padding:0px 20px;
+    width:calc(100% - 40px);
+    height:calc(100% - 156px);
+    overflow-y:auto;
+                -o-transition: .5s;
+                -ms-transition: .5s;
+                -moz-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+}
+    .accordion ul li {
+        padding:15px 0;
+        position:relative;
+        overflow:hidden;
+    }
+        .accordion ul li.end-stripe button {
+            float:right;
+            padding:10px 20px;
+            line-height:18px;
+        }
+        .accordion ul li .option {
+            position:absolute;
+            right:0;
+            top:15px;
+        }
+            .accordion ul li .option * {
+                float:left;
+                font-size:11px;
+                text-transform:none;
+                margin-left:5px;
+            }
+    .accordion ul li:first-child {
+        border:none;
+        padding-top:10px;
+    }
+    .accordion .timeScale ul {
+        overflow:hidden;
+        border:1px solid #e5e5e5;
+    }
+    .accordion .timeScale ul li {
+        float:left;
+        border:none;
+        padding:0;
+        width:calc(100%/4);
+    }
+        .accordion .timeScale ul li label {
+            display:block;
+            cursor:pointer;
+            text-align:center;
+            padding:10px;
+            border-right:1px solid #e5e5e5;
+            background:#fff;
+            box-shadow:0 -30px 50px rgba(0,0,0,0.05) inset;
+            font:normal 14px/14px 'Segoe UI';
+            text-transform:none;
+                -o-transition: .5s;
+                -ms-transition: .5s;
+                -moz-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+        }
+            .accordion .timeScale ul li label:hover {
+            box-shadow:0 -30px 50px rgba(0,0,0,0.15) inset;
+            }
+        .accordion .timeScale ul li:last-child label {
+            border:none;
+        }
+        .accordion .timeScale ul li input:checked + label {
+            background:#9b4f96;
+            color:#fff;
+        }
+.accordion > label {
+    text-transform:uppercase;
+    display:block;
+    cursor:pointer;
+    padding:10px 0;
+                -o-transition: .5s;
+                -ms-transition: .5s;
+                -moz-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+    bottom:0;
+    background:#fff;
+    box-shadow:0 -30px 50px rgba(0,0,0,0.1) inset, 0 0 2px rgba(0,0,0,0.1) inset;
+    width:calc(350px - 40px);
+    left:50px;
+    padding:10px 20px;
+}
+    .accordion > label:hover {
+    box-shadow:0 -30px 50px rgba(88,97,156,0.3) inset, 0 0 2px rgba(0,0,0,0.1) inset;
+    }
+    .accordion > input:checked + label {
+        position:static;
+        background:none;
+        box-shadow:none;
+        padding:10px 20px;
+        width:auto;
+        color:#58619c;
+    }
+        .accordion > input:checked + label:before {
+            content:'';
+            width:350px;
+            height:1px;
+            background:#e5e5e5;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+    .accordion > label:after {
+        content:'';
+        display:block;
+        float:right;
+        font-size:16px;
+        margin-top:-4px;
+    }
+    .accordion > input:checked + label:after {
+        content:'';
+    }
+    .accordion ul li h3 {
+        font:normal 14px/14px 'Segoe UI';
+        color:#000;
+        padding-bottom:10px;
+        text-transform:uppercase;
+    }
+    .accordion > section {
+        max-height:0px;
+        overflow:hidden;
+        overflow-y:auto;
+    }
+    .accordion > input:checked ~ section {
+        max-height:485px;
+    }
+nav.sub-nav {
+    position:absolute;
+    left:50px;
+    top:110px;
+    z-index:99;
+    border-bottom:1px solid #dedede;
+}
+    nav.sub-nav ul li {
+        border-top:1px solid #dedede;
+    }
+    nav.sub-nav ul li label{
+        display:block;
+        padding:20px;
+        text-transform:uppercase;
+        width:310px;
+        cursor:pointer;
+        background:#fff;
+    }
+        nav.sub-nav ul li label:hover {
+            background:rgba(0,0,0,0.01);
+        }
+        nav.sub-nav ul li input:checked + label {
+            background:#f6f6f6;
+            position:relative;
+            box-shadow:3px 3px 5px rgba(0,0,0,0.1) inset;
+        }
+            nav.sub-nav ul li input:checked + label:after {
+                display:block;
+                content:'';
+                width:10px;
+                height:60px;
+                background:#f6f6f6;
+                position:absolute;
+                right:-10px;
+                top:0;
+            }

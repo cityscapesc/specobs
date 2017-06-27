@@ -1,0 +1,38 @@
+﻿@model  Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+<div class="title">
+    <h3>Experiment type 2 - Time Averaged PSD</h3>
+</div>
+
+<ul id="psdConfig">
+    <li>
+        <label title="Output PSD Data">1.&nbsp; Output PSD Data</label>
+        <div class="input scan radio" title="Used to determine if a PSD data files are written. The default value is ‘true’. This is only supported if the device supports this. 
+Type: Boolean 
+Value: true or false">
+            @Html.RadioButtonFor(m => m.ClientAggregationConfiguration.OutputData, true, new { @class = "hidden", @id = "outputPsd" })
+            <label for="outputPsd" title="True">True</label>
+
+            @Html.RadioButtonFor(m => m.ClientAggregationConfiguration.OutputData, false, new { @class = "hidden", @id = "donotOutputPsd" })
+            <label for="donotOutputPsd" title="False">False</label>
+        </div>
+    </li>    
+    <li class="split">
+        <label title="Minutes of Data Per Upload">1.&nbsp; Minutes of Data Per Upload</label>
+        <div class="col">
+            <div class="input time mandatory">
+                @Html.TextBoxFor(m => m.ClientAggregationConfiguration.MinutesOfDataPerScanFile,new { Title = "Interval (in minutes) for upload of dsox file to the cloud server. This value must be greater than or equal to 60. \nType: Int \nValue: 60" })
+                @Html.ValidationMessageFor(m => m.ClientAggregationConfiguration.MinutesOfDataPerScanFile)
+            </div>
+        </div>
+    </li>
+    <li class="split">
+        <label title="Seconds of Data Per Sample">2.&nbsp; Seconds of Data Per Sample</label>
+        <div class="col">
+            <div class="input time mandatory">
+                @Html.TextBoxFor(m => m.ClientAggregationConfiguration.SecondsOfDataPerSample,new { Title = "Period of time-averaging interval for PSD report. A maximum, minimum and average will be calculated for this time period. \nType: Int \nValue: 60(in seconds)" })
+                @Html.ValidationMessageFor(m => m.ClientAggregationConfiguration.SecondsOfDataPerSample)
+            </div>
+        </div>
+    </li>
+</ul>

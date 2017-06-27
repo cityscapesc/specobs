@@ -1,0 +1,17 @@
+﻿<div id="mapDiv" class="map-area" ></div>
+
+<script charset="UTF-8" type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.js"></script>
+<script charset="UTF-8" type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1"></script>
+
+<script type="text/javascript" src="~/Scripts/BingMap.js"></script>
+
+<script type="text/javascript">   
+
+    var credentials = "Ajxmil0JzEFPSydd1fNepnCkK9NynZcFENUWGZWzWhsy_zg8UC3Jx1GSJx9yJgrH";
+    var mapControl = $("#mapDiv")[0];
+    var bingMap = new BingMap(credentials, mapControl);
+   
+    $(window).unload(function () {
+        bingMap.UnloadMap();
+    })
+</script>

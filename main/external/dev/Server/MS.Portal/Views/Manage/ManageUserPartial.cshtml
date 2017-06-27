@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Microsoft.Spectrum.Storage.User>
+
+<div class="title">
+
+    @Ajax.ActionLink("Back", "BackToManage", "Manage", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @class = "back icon" })
+
+
+    <h2>Manage User @this.ViewBag.StationName</h2>
+
+    @Ajax.ActionLink("Add New Admin", "GetAddAdminView", "Manage", new { stationId = this.ViewBag.StationId }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @class = "right add-admin icon" })
+
+</div>
+
+<div class="content manage-user">
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.AccountEmail</td>
+                    <td class="action">
+                        <ul>
+                            <li>
+                                @if (Model.Count() > 1)
+                                {
+                                    @Ajax.ActionLink("Delete", "DeleteAdmin", "Manage", new { stationId = this.ViewBag.StationId, userId = @user.UserId }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @class = "icon delete" })
+                                }
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        @*<tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="total-number-of-pages">
+                            <span class="current-page-number">8</span>
+                            <span>of</span>
+                            <span class="total-page-number">36</span>
+                        </div>
+                        <div class="page-slider">
+                            <ul>
+                                <li><a href="#" title="Previous">Previous</a></li>
+                                <li><a href="#" title="Next">Next</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>*@
+    </table>
+</div>
+

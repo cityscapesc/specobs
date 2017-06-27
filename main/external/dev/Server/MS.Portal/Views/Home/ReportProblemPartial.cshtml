@@ -1,0 +1,67 @@
+﻿<div class="title">
+    <h2>Contact Station Admin</h2>
+</div>
+
+<div class="content" id="problemInput">
+    <ul>
+        <li>
+            <label title="FirstName">FirstName</label>
+            <div class="mandatory input">
+                <input type="text" id="rpFirstName" />
+            </div>
+            <span id="errrpFirstName" class="err mandatory hidden">Required</span>
+        </li>
+        <li>
+            <label title="Last Name">Last Name</label>
+            <div class="input">
+                <input type="text" id="rpLastName" />
+            </div>
+        </li>
+        <li>
+            <div class="clear"></div>
+        </li>
+        <li>
+            <label title="Email">Email</label>
+            <div class="input mandatory mail">
+                <input type="text" id="rpEmail" />
+            </div>
+            <span id="errrpEmail" class="err mandatory hidden">Required</span>
+        </li>
+        <li>
+            <label title="Phone">Phone</label>
+            <div class="input phone">
+                <input type="text" id="rpPhone" />
+            </div>
+        </li>
+    </ul>
+    <div class="title">
+        <h2>Problem Description</h2>
+    </div>
+    <ul>
+        <li>
+            <label title="Subject">Subject</label>
+            <div class="input mandatory book">
+                <input type="text" id="rpSubject" />
+            </div>
+            <span id="errrpSubject" class="err mandatory hidden">Required</span>
+        </li>
+        <li>
+            <div class="clear"></div>
+        </li>
+        <li class="noFollow clear">
+            <label title="Your Comment">Your Comment</label>
+            <div class="input textarea mandatory">
+                <textarea id="rpComment"></textarea>
+            </div>
+            <span id="errrpComment" class="err mandatory hidden">Required</span>
+        </li>
+    </ul>
+
+    <span id="message"></span>
+
+    <div class="end-stripe">
+        <button type="button" title="Submit" class="submit noSiblings" onclick="ReportProblem()">Submit</button>
+        <button type="button" title="Cancel" class="cancel noSiblings" id="cancel">Cancel</button>
+    </div>
+</div>
+

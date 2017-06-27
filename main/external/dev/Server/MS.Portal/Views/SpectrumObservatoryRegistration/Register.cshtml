@@ -1,0 +1,43 @@
+﻿@model Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+@using Microsoft.Spectrum.Portal.Models
+
+<div id="registrationForm">
+    @using (Html.BeginForm("Register", "SpectrumObservatoryRegistration", FormMethod.Post, new { @id = "stationRegistration" }))
+    {
+        <div class="title float">
+            <h2>Registration</h2>
+        </div>
+
+        <div class="content manage-user">
+
+            @{Html.RenderPartial("EditorTemplates/StationProfile", Model);}
+
+            @{Html.RenderPartial("ReadonlyTemplates/StationContact", Model);}
+
+            <div class="title">
+                <h3>RF Sensor</h3>
+                @Ajax.ActionLink("Add", "AddRFSensor", "SpectrumObservatoryRegistration", new { htmlPrefixName = "RFSensorConfigurationEndToEnd" }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "rfSensors", OnSuccess = "SpectrumObservatory.Utils.StationRegistration.AjaxCallbacks.onSensorConfigurationAdded" }, new { @class = "add icon" })
+            </div>
+
+            <div id="rfSensors">
+                @if (Model.RFSensorConfigurationEndToEnd != null)
+                {
+                    foreach (RFSensorConfigurationEndToEndViewModel rfSensorConfig in Model.RFSensorConfigurationEndToEnd)
+                    {
+                        Html.RenderPartial("EditorTemplates/RFSensorConfiguration", rfSensorConfig);
+                    }
+                }
+            </div>
+
+            @{Html.RenderPartial("EditorTemplates/RawIQConfiguration", Model);}
+
+            @{Html.RenderPartial("EditorTemplates/ClientAggregation", Model);}            
+            
+            @{Html.RenderPartial("EditorTemplates/HealthStatusConfigSettings", Model);}                               
+        </div>
+    }
+    <div>
+        @Html.ValidationSummary()
+    </div>
+</div>

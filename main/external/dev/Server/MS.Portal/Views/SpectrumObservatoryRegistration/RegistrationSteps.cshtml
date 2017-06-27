@@ -1,0 +1,56 @@
+﻿@model Microsoft.Spectrum.Portal.Models.StationRegistrationInputs
+
+@{
+    ViewBag.Title = "CityScape Spectrum Observatory Registration";
+}
+
+@section scripts
+{
+    <script src="~/Scripts/Application/SpectrumObservatoryRegistrationCommon.js"></script>
+    <script src="~/Scripts/Application/SpectrumObservatoryRegistration.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/Application/jquery.validate.unobtrusive.extension.js"></script>
+}
+
+@section Left
+{<div class="content">
+    <div class="title">
+        <h2>Station Registration</h2>
+    </div>
+    <ul class="wizard">
+        <li>
+            <input type="radio" class="hidden" id="wiz1" />
+            <label for="wiz1" title="Overview">Overview</label>
+        </li>
+        <li>
+            <input type="radio" class="hidden" id="wiz2" />
+            <label for="wiz2" title="Device Setup">Device Setup</label>
+        </li>
+        <li>
+            <input type="radio" class="hidden" id="wiz3" />
+            <label for="wiz3" title="Software Download & Install">Software Download & Install</label>
+        </li>
+        <li>
+            <input type="radio" class="hidden" id="wiz4" />
+            <label for="wiz4" title="Registration">Registration</label>
+        </li>
+    </ul>
+</div>
+}
+
+@section Right
+{
+    <div id="registrationSteps">
+        @{Html.RenderPartial("Overview");}
+        @{Html.RenderPartial("DeviceSetup");}
+        @{Html.RenderPartial("SoftwareDownloadAndInstall");}
+        @{Html.RenderPartial("Register", Model);}
+    </div>
+
+    <div class="end-stripe" id="transitionButtons">
+        <button type="button" class="next">Device Setup</button>
+        <button type="button" class="preview prev" style="display:none"></button>
+    </div>
+}

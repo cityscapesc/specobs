@@ -1,0 +1,92 @@
+﻿@using Microsoft.Spectrum.Common;
+@using Microsoft.Spectrum.Portal.Helpers;
+@using Microsoft.Spectrum.Portal.Security;
+
+@model IEnumerable<Microsoft.Spectrum.Storage.Models.MeasurementStationInfo>
+
+
+<div class="title">
+    <h2>Stations List</h2>
+</div>
+
+<div class="content">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <thead>
+            <tr>
+                <th width="20%">Station Name</th>
+                <th width="20%">Location &amp; Country/ Region</th>
+                <th width="30%">Email</th>
+                <th class="center">Frequency Range (MHz)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var station in Model)
+            {
+                <tr>
+                    <td>@station.Identifier.Name</td>
+                    <td>@Html.GetStationAddress(station)</td>
+                    <td>@station.PrivateData.PrimaryContactEmail</td>
+                    <td class="center"> @Html.GetFrequencyRangesinMHz(station.DeviceDescription.StartFrequency, station.DeviceDescription.StopFrequency) </td>
+                    <td class="action">
+                        <ul>
+                            <li>@Ajax.ActionLink("Manage", "ManageUser", "Manage", new { stationId = @station.Identifier.Id, stationName = @station.StationDescription.StationName }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @title = "Manage User" })</li>
+                            <li>@Ajax.ActionLink("Edit", "EditStationDetails", new { measurementStationId = station.Identifier.Id }, new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.StationRegistrationDetails.AjaxCallbacks.onEditCallBegin", OnComplete = "SpectrumObservatory.Utils.StationRegistrationDetails.AjaxCallbacks.onEditCallCompleted", OnSuccess = "SpectrumObservatory.Utils.StationRegistrationDetails.AjaxCallbacks.onEditSpectrumObservatoryDetails" }, new { @title = "Edit" })</li>
+
+                            @if (Request.IsAuthenticated)
+                            {
+                                UserPrincipal principal = this.User as UserPrincipal;
+                                if (principal != null
+                                    && (principal.Role == Microsoft.Spectrum.Storage.Enums.UserRoles.SiteAdmin))
+                                {
+                                    if (station.StationAvailability != (int)Microsoft.Spectrum.Storage.Enums.StationAvailability.Decommissioned)
+                                    {
+                                        <li>
+                                            @Ajax.ActionLink("Decomission Station", "DecomissionStation", "Manage", new { stationId = @station.Identifier.Id, pageIndex = this.ViewBag.PageIndex }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @title = "Decommission Station" })
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            @Ajax.ActionLink("Bring Station Online", "BringStationOnline", "Manage", new { stationId = @station.Identifier.Id, pageIndex = this.ViewBag.PageIndex }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @title = "Bring Station Online" })
+                                        </li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <div class="total-number-of-pages">
+                        <span class="current-page-number">@Html.PaginationString((int)this.ViewBag.PageIndex, (int)this.ViewBag.TotalCount)</span>
+                    </div>
+                    <div class="page-slider">
+                        <ul>
+                            @if (this.ViewBag.PageIndex > 0)
+                            {
+                                <li>@Ajax.ActionLink("Previous", "Previous", "Manage", new { pageIndex = this.ViewBag.PageIndex }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @title = "Previous", @Disable = true })</li>
+                            }
+                            else
+                            {
+                                <li><a href="#" title="Previous" class="disable">Previous</a></li>
+                            }
+                            @if (((this.ViewBag.PageIndex + 1) * Constants.PageSize) < this.ViewBag.TotalCount)
+                            {
+                                <li>@Ajax.ActionLink("Next", "Next", "Manage", new { pageIndex = this.ViewBag.PageIndex }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "rightPanePlaceholder", OnBegin = "SpectrumObservatory.Utils.preloader.show()", OnComplete = "SpectrumObservatory.Utils.preloader.hide()" }, new { @title = "Next", @Disable = true })</li>
+                            }
+                            else
+                            {
+                                <li><a href="#" title="Next" class="disable">Next</a></li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>

@@ -1,0 +1,143 @@
+﻿@using Microsoft.Spectrum.Portal.Security;
+
+<div id="stationDetails">
+</div>
+<div class="charts accordion station-list" id="ChartAccordian" onclick="ShowChart()">
+    <input type="radio" id="Accordion2" name="stInfo" class="hidden" value="ChartAccordian" onclick="AdjustAccordianHeight('ChartAccordian')" />
+    <label class="h3" for="Accordion2" title="Charts">p.s.d Charts</label>
+    <section>
+        <ul>
+            <li>
+                <label title="Chart Types">Chart Types</label>
+                <select id="chartType">
+                    <option>Power Spectral Density</option>
+                    @*<option>Occupancy</option>*@
+                </select>
+            </li>
+            <li class="timeScale">
+                <label title="Time Scale">Time Scale</label>
+                <ul id="timeScaleSelector">
+                    <li>
+                        <input type="radio" class="hidden" id="tsHourly" name="timeScale" value="0" checked="checked" />
+                        <label for="tsHourly" title="Hourly">Hourly</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="tsDaily" name="timeScale" value="1" />
+                        <label for="tsDaily" title="Daily">Daily</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="tsWeekly" name="timeScale" value="2" />
+                        <label for="tsWeekly" title="Weekly">Weekly</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="tsMonthly" name="timeScale" value="3" />
+                        <label for="tsMonthly" title="Monthly">Monthly</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="mandatory">
+                    <label title="Date(UTC)">Date and Time (UTC)</label>
+                    <span class="error hidden" id="errdate">Required</span>
+                    <input type="text" id="date" placeholder="YYYY-MM-DD" />
+                </div>
+            </li>
+            <li id="liSpinner">
+                <div class="f-row date-range-spinner">
+                    <input type="text" value="00:00 Hr" id="amount" class="" onfocus="this.blur()" name="timeRange" readonly="readonly" />
+                    <div class="slider-container bClear">
+                        <button type="button" class="decrement">Decrement</button>
+                        <div id="slider-range-min" style="width: 250px; float: left; width: 188px;"></div>
+                        <button type="button" class="increment">Increment</button>
+                    </div>
+                </div>
+            </li>
+            <li class="split">
+                <div class="col start-frq">
+                    <div class="mandatory">
+                        <label for="StartFrequency" title="Start Frequency (MHz)">Start Frequency (MHz)</label>
+                        <span class="error hidden" id="errStartFrequency">Required</span>
+                        <input id="StartFrequency" type="text" placeholder="Start Freq in MHz" />
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mandatory">
+                        <label for="EndFrequency" title="Stop Frequency (MHz)">Stop Frequency (MHz)</label>
+                        <span class="error hidden" id="errEndFrequency">Required</span>
+                        <input id="EndFrequency" type="text" placeholder="Stop Freq in MHz" />
+                    </div>
+                </div>
+            </li>
+            <li class="hidden">
+                <div class="col">
+                    <div class="mandatory">
+                        <label for="OutlierPercentage" title="Outlier Percentage (%)">Outlier Percentage (%)</label>
+                        <span class="error hidden" id="errOutlierPercentage">Required</span>
+                        <input id="OutlierPercentage" type="text" value="0.1" />
+                    </div>
+                </div>
+            </li>
+            <li class="end-stripe">
+                <button type="button" title="View Chart" class="noSiblings" id="ViewChart">View Chart</button>
+            </li>
+        </ul>
+    </section>
+</div>
+<div class="raw data accordion station-list" id="RawDataAccordian" onclick="ShowRawData()">
+    <input type="radio" id="Accordion4" name="stInfo" class="hidden" value="RawDataAccordian" onclick="AdjustAccordianHeight('RawDataAccordian')" />
+    <label class="h3" for="Accordion4" title="Raw Data">Raw Data</label>
+    <section>
+        <ul>
+            <li>
+                <label title="Raw Data Types">Raw Data Types</label>
+                <select id="rawDataType">
+                    <option value="0">Aggregated ScanFile Data</option>
+                    <option value="1">Raw IQ Data</option>
+                </select>
+            </li>
+            <li>
+                <p>Please select a time range for which you would like to downlaod raw data. Both aggregated data, which gives a max, min and average power over a configured time peroid as well as raw IQ data are available. The aggregated data is available for up to two years and the raw IQ data is available for up to seven days.</p>
+            </li>
+            <li class="timeScale">
+                <label title="Time Scale">Time Scale</label>
+                <ul id="rawDataTimeScaleSelector" class="no-border no-padding">
+                    <li>
+                        <input type="radio" class="hidden" id="tsHourlyRawData" name="rawDataTimeScale" value="0" checked="checked" />
+                        <label for="tsHourlyRawData" title="Hourly">Hour</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="hidden" id="tsDailyRawData" name="rawDataTimeScale" value="1" />
+                        <label for="tsDailyRawData" title="Daily">Day</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="mandatory">
+                    <label title="Date (UTC)">Date (UTC)</label>
+                    <span class="error hidden" id="errRawDataDate">Required</span>
+                    <input type="text" id="dateRawData" placeholder="YYYY-MM-DD" />
+                </div>
+            </li>
+            <li id="liRawDataSpinner">
+                <div class="f-row date-range-spinner">
+                    <input type="text" value="00:00 Hr" id="amountRawData" class="" onfocus="this.blur()" name="rawDataTimeRange" readonly="readonly" />
+                    <div class=rawDataSlider-container bClear">
+                        <button type="button" class="rawDataDecrement">Decrement</button>
+                        <div id="rawDataslider-range-min" style="width: 250px; float: left; width: 188px;"></div>
+                        <button type="button" class="rawDataIncrement">Increment</button>
+                    </div>
+                </div>
+            </li>
+            <li class="end-stripe">
+                <button type="button" title="View Data" class="noSiblings" id="ViewRawData">View Data</button>
+            </li>
+        </ul>
+    </section>
+</div>
+<div class="problem accordion station-list" id="ProblemAccordian" onclick="ShowReportForm()">
+    <input type="radio" id="Accordion3" name="stInfo" class="hidden" value="ProblemAccordian" onclick="AdjustAccordianHeight('ProblemAccordian')" />
+    <label class="h3" for="Accordion3" title="Report Problem">Contact Station Admin</label>
+    <section>
+        <p>If you experience an issues with this station or wanted to get in touch with the administrator for this station, please fill the form on the right and click submit. This information will be sent directly to the station administrator for a response.</p>
+    </section>
+</div>

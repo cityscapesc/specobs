@@ -1,0 +1,105 @@
+﻿@using Microsoft.Spectrum.Portal.Helpers
+@model Microsoft.Spectrum.Portal.Models.FeedbackViewModel
+
+@*@{
+            ViewBag.Title = "FeedbackView";
+            Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+@section Left
+    {
+    <div id="homeLPane" class="content">
+        <div class="title">
+            <h2>Feedback</h2>
+        </div>
+
+        <p>Please use the form on the right to send your feedback for any of the below:</p>
+        <ul class="bulletin">
+            <li>Submit your feedback on CityScape Spectrum Observatory</li>
+            <li>Report a bug</li>
+            <li>Suggest a change or share your ideas</li>
+            <li>Ask a Question</li>
+        </ul>
+    </div>
+}
+
+@section  Right{
+
+    <div class="title">
+        <h2>Fill Your Info</h2>
+    </div>
+
+    <div class="content">
+
+        @using (Html.BeginForm("SaveFeedback", "Common", FormMethod.Post))
+        {
+            <ul>
+                <li>
+                    @Html.TextFieldsFor(x => x.FirstName, false)
+                </li>
+                <li>
+                    @Html.TextFieldsFor(x => x.LastName, false)
+                </li>
+                <div class="clear"></div>
+                <li>
+                    <label title="Email">Email</label>
+                    <div class="input mandatory mail">
+                        @Html.TextBoxFor(x => x.Email)
+                        @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "mandatory" })
+                    </div>
+                </li>
+                <li>
+                    @Html.TextFieldsFor(x => x.Phone, false)
+                </li>
+            </ul>
+            <div class="title">
+                <h2>Your Feedback</h2>
+            </div>
+            <ul>
+                <li>
+                    <label title="Subject">Subject</label>
+                    <div class="input mandatory book">
+                        @Html.TextBoxFor(x => x.Subject)
+                        @Html.ValidationMessageFor(m => m.Subject, string.Empty, new { @class = "mandatory" })
+                    </div>
+                </li>
+                <div class="clear"></div>
+                <li class="clear">
+                    <label title="Your Comment">Your Comment</label>
+                    <div class="input textarea mandatory">
+                        @Html.TextAreaFor(x => x.Comment)
+                        @Html.ValidationMessageFor(m => m.Comment, string.Empty, new { @class = "mandatory mandatorytextarea" })
+                    </div>
+                </li>
+            </ul>
+
+            <div class="info float warning">@ViewBag.Success</div>
+
+            <div class="end-stripe">
+                <button type="submit" title="Add" class="submit noSiblings">Submit</button>
+                <button type="button" title="Cancel" class="cancel noSiblings" id="cancel">Cancel</button>
+            </div>
+        }
+
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        $("#Radio6").attr('checked', 'checked');
+
+        $("#cancel").click(function () {
+            $("#FirstName").val("");
+            $("#LastName").val("");
+            $("#Email").val("");
+            $("#Phone").val("");
+            $("#Subject").val("");
+            $("#Comment").val("");
+        });
+
+    </script>
+}
+

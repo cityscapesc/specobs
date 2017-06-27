@@ -1,0 +1,202 @@
+﻿@using Microsoft.Spectrum.Portal.Helpers;
+@model Microsoft.Spectrum.Portal.Models.RegisterExternalLoginModel
+@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Left{
+    <div class="content">
+    <section>
+        <div class="title">
+            <h2>
+                Profile
+            </h2>
+        </div>
+        <p>
+            This is your user profile page. By default, the initial settings here are captured at the time of user registration with the CityScape Observatory. These settings can be updated anytime by clicking on the edit profile button on the right bottom.
+        </p>
+        <p>
+            The information provided here will be used for spectrum station registrations, reporting issues to a station administrator and receiving emails from users if you are a station administrator.
+        </p>
+    </section>
+</div>
+}
+
+@section Right{
+    <div class="title"><h2>User Info</h2></div>
+    <div class="content">
+        @using (Html.BeginForm("Update", "Profile", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <ul class="read-only" id="ulRegistration">
+                <li class="name">
+                    @Html.TextFieldsFor(m => m.FirstName, true)
+                </li>
+
+                <li class="name">
+                    @Html.TextFieldsFor(m => m.LastName, true)
+                </li>
+                <div class="clear"></div>
+                <li class="country">
+                    @Html.LabelFor(m => m.PhoneCountryCode)
+                    <div class="input country">
+                        @Html.DropDownList("PhoneCountryCode", null, new { @id = "PhoneCountryCode", @class = "hidden" })
+                        @Html.TextBoxFor(m => m.PhoneCountryCode, new { @id = "txtPhoneCountryCode", @readonly = true })
+                    </div>
+                </li>
+
+                <li class="phone">
+                    @Html.TextFieldsFor(m => m.Phone, true)
+                </li>
+                <div class="clear"></div>
+
+                <li class="email">
+                    @Html.TextFieldsFor(m => m.PreferredEmail, true)
+                </li>
+
+                <li class="email">
+                    @Html.TextFieldsFor(m => m.AccountEmail, true)
+                </li>
+                <div class="clear"></div>
+
+                <li class="notification">
+                    <label title="Subscribe Notifications">Subscribe Notifications</label>
+                    <div class="input scan radio" title="Enable Measurement station health status notification. The default value is ‘true’. This is only supported if the device supports this. \nType: Boolean \nValue: true or false">
+                        @Html.RadioButtonFor(m => m.SubscribeNotifications, true, new { @class = "hidden", @id = "od1" })
+                        <label for="od1" title="True">True</label>
+
+                        @Html.RadioButtonFor(m => m.SubscribeNotifications, false, new { @class = "hidden", @id = "od2" })
+                        <label for="od2" title="False">False</label>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="title"><h2>Location Info</h2></div>
+            <ul class="read-only" id="ulLocation">
+                <li class="address">
+                    <label title="@Html.MandatoryLabelFor(m => m.Address1)">@Html.MandatoryLabelFor(m => m.Address1)</label>
+                    <div class="input mandatory">
+                        @Html.TextBoxFor(m => m.Address1, new { @id = "Address1", @readonly = true })
+                    </div>
+                    <span class="min-info">Street Name, P. O. Box, Company Name etc.,</span>
+                    @Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "mandatory" })
+                </li>
+
+                <li class="address">
+                    <label title="@Html.MandatoryLabelFor(m => m.Address2)">@Html.MandatoryLabelFor(m => m.Address2)</label>
+                    <div class="input">
+                        @Html.TextBoxFor(m => m.Address2, new { @id = "Address2", @readonly = true })
+                    </div>
+                    <span class="min-info">Suit, Unit, Building etc.,</span>
+                </li>
+                <div class="clear"></div>
+
+                <li class="location">
+                    @Html.TextFieldsFor(m => m.City, true)
+                </li>
+
+                <li class="location">
+                    @Html.TextFieldsFor(m => m.State, true)
+                </li>
+                <div class="clear"></div>
+
+                <li class="country">
+                    @Html.LabelFor(model => model.Country)
+                    <div class="input mandatory">
+                        @Html.DropDownList("Country", null, new { @id = "Country", @class = "hidden" })
+                        @Html.TextBoxFor(m => m.Country, new { @id = "txtCountry", @readonly = true })
+                    </div>
+                </li>
+
+                <li class="country">
+                    @Html.TextFieldsFor(m => m.ZipCode, true)
+                </li>
+                <div class="clear"></div>
+
+                <li class="country">
+                    @Html.LabelFor(model => model.TimeZone)
+                    <div class="input">
+                        @Html.DropDownList("TimeZone", null, new { @id = "TimeZone", @class = "hidden" })
+                        @Html.TextBoxFor(m => m.TimeZone, new { @id = "txtTimeZone", @readonly = true })
+                    </div>
+                </li>
+            </ul>
+
+            <div class="end-stripe">
+                <button type="button" title="Edit Profile" class="edit" id="btnEdit">Edit Profile</button>
+                <button type="button" title="Cancel" role="button" class="cancel hidden" id="btnCancel">Cancel</button>
+                <button type="submit" title="Update" role="button" class="submit hidden" id="btnsubmit">Update</button>
+            </div>
+        }
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+
+        $("#Radio7").attr('checked', 'checked');
+
+        $("#btnEdit").click(function () {
+            $("ul").removeClass("read-only");
+
+            $("#btnCancel").removeClass("hidden");
+            $("#btnsubmit").removeClass("hidden");
+            $("#btnEdit").addClass("hidden");
+
+            toggleReadability(false);
+            toggleInputs(true);
+        });
+
+        $("#btnCancel").click(function () {
+            $("ul").addClass("read-only");
+
+            $("#btnCancel").addClass("hidden");
+            $("#btnsubmit").addClass("hidden");
+            $("#btnEdit").removeClass("hidden");
+
+            toggleReadability(true);
+            toggleInputs(false);
+        });
+
+        function toggleReadability(isReadOnly) {
+            $('#FirstName').attr('readonly', isReadOnly);
+            $('#LastName').attr('readonly', isReadOnly);
+            $('#PhoneCountryCode').attr('readonly', isReadOnly);
+            $('#Phone').attr('readonly', isReadOnly);
+            $('#PreferredEmail').attr('readonly', isReadOnly);
+            $('#Address1').attr('readonly', isReadOnly);
+            $('#Address2').attr('readonly', isReadOnly);
+            $('#City').attr('readonly', isReadOnly);
+            $('#State').attr('readonly', isReadOnly);
+            $('#ZipCode').attr('readonly', isReadOnly);
+            $('#Country').attr('readonly', isReadOnly);
+            $('#TimeZone').attr('readonly', isReadOnly);
+        }
+
+        function toggleInputs(isSelectable) {
+            if (isSelectable) {
+                $("#PhoneCountryCode").removeClass("hidden");
+                $("#Country").removeClass("hidden");
+                $("#TimeZone").removeClass("hidden");
+
+                $("#txtPhoneCountryCode").addClass("hidden");
+                $("#txtCountry").addClass("hidden");
+                $("#txtTimeZone").addClass("hidden");
+            }
+            else {
+                $("#PhoneCountryCode").addClass("hidden");
+                $("#Country").addClass("hidden");
+                $("#TimeZone").addClass("hidden");
+
+                $("#txtPhoneCountryCode").removeClass("hidden");
+                $("#txtCountry").removeClass("hidden");
+                $("#txtTimeZone").removeClass("hidden");
+            }
+        }
+
+    </script>
+}
+

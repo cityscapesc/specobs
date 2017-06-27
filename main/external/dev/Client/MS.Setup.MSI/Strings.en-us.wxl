@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+// Copyright (c) Microsoft Corporation
+//
+// All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance 
+// with the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+//
+// THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER
+// EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE,
+// FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
+//
+// See the Apache Version 2.0 License for specific language governing permissions and limitations under the License.
+-->
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="DefLang">1033</String>
+  <String Id="ProductName">CityScape Spectrum Observatory</String>
+
+  <String Id="SpectrumObservatoryName">Spectrum Observatory Importer</String>
+  <String Id="SpectrumObservatoryDesc">Spectrum Observatory Importer application allows upload of spectrum data to the cloud database for analysis</String>
+
+  <String Id="AppShortcut">Spectrum Observatory Importer</String>
+
+  <String Id="Help">Help</String>
+
+  <String Id="ImporterServiceTitle">Importer Service</String>
+  <String Id="ImporterAppTitle">Importer Application</String>
+
+  <String Id="LaunchSpectrumObservatoryName">  Launch Readme.txt</String>
+  <String Id="CongratualtionsText">Thank you for installing Spectrum Observatory Software.</String> 
+
+  <String Id="Uninstall">Uninstall</String>
+  <String Id="UninstallDescription">Uninstalls the Spectrum Observatory Components</String>
+  <String Id="LicenseRtf" Overridable="yes">\License.rtf</String>
+
+  <String Id="SetupTypeDlgTypicalButton">&amp;Typical</String>
+  <String Id="SetupTypeDlgTypicalButtonTooltip">Importer Service Installation</String>
+  <String Id="SetupTypeDlgCustomButton">C&amp;ustom</String>
+  <String Id="SetupTypeDlgCustomButtonTooltip">Custom Installation</String>
+  <String Id="SetupTypeDlgCompleteButton">C&amp;omplete</String>
+  <String Id="SetupTypeDlgCompleteButtonTooltip">Importer Service and Application Installation</String>
+
+  <String Id="MaintenanceTypeDlgChangeText">Lets you change the way Spectrum Observatory features are installed.</String>
+  <String Id="MaintenanceTypeDlgRepairText">Repairs errors in the most recent installation by fixing missing and corrupt files and shortcuts.</String>
+
+  <String Id="MSIPackageComments">CityScape Spectrum Observatory Importer Service and Importer Application Setup</String>
+  <String Id="SetupTypeDlgDescription">Choose the setup type that best suits your needs </String>
+  <String Id="SetupTypeDlgTypicalText">Installs Spectrum Observatory Importer Service</String>
+  <String Id="SetupTypeDlgCustomText">Allows users to choose the features to install </String>
+  <String Id="SetupTypeDlgCompleteText">Installs both Spectrum Observatory Importer Service and Application</String>
+</WixLocalization>
