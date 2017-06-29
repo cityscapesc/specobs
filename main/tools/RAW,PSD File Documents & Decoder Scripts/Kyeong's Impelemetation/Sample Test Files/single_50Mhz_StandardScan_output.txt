@@ -1,0 +1,275 @@
+Decompressed: single_50Mhz_StandardScan.bin.dsor
+Done. Normal exit
+
+ 
+ 
+ 
+ -----------------CONFIG BLOCK-----------------
+Time_stamp {
+  value: 14682354328198658
+  scale: TICKS
+}
+HardwareConfiguration: "DumpDevices...
+	
+	Single USRP:
+	  Device: USRP2 / N-Series Device
+	  Mboard 0: N200r4
+	  RX Channel: 0
+	    RX DSP: 0
+	    RX Dboard: A
+	    RX Subdev: WBXv4 RX+GDB
+	  TX Channel: 0
+	    TX DSP: 0
+	    TX Dboard: A
+	    TX Subdev: WBXv4 TX+GDB
+	
+	usrp.get_num_mboards(): 1
+	usrp.get_mboard_name(mboard[0]): N200r4
+	usrp.get_time_sources(mboard[0])...
+		none
+		external
+		_external_
+		mimo
+	usrp.get_time_source(mboard[0]): none
+	usrp.get_time_synchronized(): True
+	usrp.get_clock_sources(mboard[0])...
+		internal
+		external
+		mimo
+	usrp.get_clock_source(mboard[0]): internal
+	usrp.get_mboard_sensor_names(mboard[0])...
+		Name: mimo_locked
+		usrp.get_mboard_sensor(name[mimo_locked], mboard[0]): Name: MIMO, Value: true, Unit: locked
+		Name: ref_locked
+		usrp.get_mboard_sensor(name[ref_locked], mboard[0]): Name: Ref, Value: true, Unit: locked
+	usrp.get_rx_subdev_spec(mboard[0])...
+		subdev_spec_pair_t.db_name: A	subdev_spec_pair_t.sd_name: 0
+	
+	usrp.get_rx_num_channels(): 1
+	usrp.get_rx_subdev_name(channel[0]): WBXv4 RX+GDB
+	usrp.get_rx_rate(channel[0]): 25000000
+	usrp.get_fe_rx_freq_range(channel[0])...
+		Start: 25000000, Stop: 2200000000, Step: 0
+	usrp.get_rx_freq_range(channel[0])...
+		Start: 12500000, Stop: 2212500000, Step: 0.023283064365387
+	usrp.get_rx_freq(channel[0]): 1112500000
+	usrp.get_rx_gain_names(channel[0])...
+		Name: ADC-digital	Start: 0, Stop: 38, Step: 0.05
+		Actual: 0
+		Name: ADC-fine	Start: 0, Stop: 38, Step: 0.05
+		Actual: 0
+		Name: PGA0	Start: 0, Stop: 38, Step: 0.05
+		Actual: 20
+	usrp.get_rx_gain_range(channel[0])...
+		Range: Start: 0, Stop: 38, Step: 0.05
+	usrp.get_rx_gain(channel[0]): 20
+	usrp.get_rx_antennas(channel[0])...
+		TX/RX
+		RX2
+		CAL
+	usrp.get_rx_antenna(channel[0]): RX2
+	usrp.get_rx_bandwidth_range(channel[0])...
+		Start: 40000000, Stop: 40000000, Step: 0
+	usrp.get_rx_bandwidth(channel[0]): 25000000
+	usrp.get_rx_sensor_names(channel[0])...
+		Name: lo_locked	usrp.get_rx_sensor(name[lo_locked], channel[0]): Name: LO, Value: false, Unit: unlocked
+	
+	
+	DumpDevices...
+	
+	Single USRP:
+	  Device: USRP2 / N-Series Device
+	  Mboard 0: N200r4
+	  RX Channel: 0
+	    RX DSP: 0
+	    RX Dboard: A
+	    RX Subdev: WBXv4 RX+GDB
+	  TX Channel: 0
+	    TX DSP: 0
+	    TX Dboard: A
+	    TX Subdev: WBXv4 TX+GDB
+	
+	usrp.get_num_mboards(): 1
+	usrp.get_mboard_name(mboard[0]): N200r4
+	usrp.get_time_sources(mboard[0])...
+		none
+		external
+		_external_
+		mimo
+		gpsdo
+	usrp.get_time_source(mboard[0]): gpsdo
+	usrp.get_time_synchronized(): True
+	usrp.get_clock_sources(mboard[0])...
+		internal
+		external
+		mimo
+		gpsdo
+	usrp.get_clock_source(mboard[0]): internal
+	usrp.get_mboard_sensor_names(mboard[0])...
+		Name: gps_gpgga
+		usrp.get_mboard_sensor(name[gps_gpgga], mboard[0]): Name: GPS_GPGGA, Value: $GPGGA,190522.00,0000.0000,N,00000.0000,E,0,99,1.0,0.0,M,0.0,M,,*51, Unit: 
+		Name: gps_gprmc
+		usrp.get_mboard_sensor(name[gps_gprmc], mboard[0]): Name: GPS_GPRMC, Value: $GPRMC,190522.00,V,0000.0000,N,00000.0000,E,0.0,0.0,120106,,*2D, Unit: 
+		Name: gps_time
+		usrp.get_mboard_sensor(name[gps_time], mboard[0]): Name: GPS epoch time, Value: 1137092722, Unit: seconds
+		Name: gps_locked
+		usrp.get_mboard_sensor(name[gps_locked], mboard[0]): Name: GPS lock status, Value: false, Unit: unlocked
+		Name: gps_servo
+		usrp.get_mboard_sensor(name[gps_servo], mboard[0]): Name: GPS servo status, Value: 06-01-12 0 0 0.00 1.00E-08 0 0 1 0x238, Unit: 
+		Name: mimo_locked
+		usrp.get_mboard_sensor(name[mimo_locked], mboard[0]): Name: MIMO, Value: true, Unit: locked
+		Name: ref_locked
+		usrp.get_mboard_sensor(name[ref_locked], mboard[0]): Name: Ref, Value: true, Unit: locked
+	usrp.get_rx_subdev_spec(mboard[0])...
+		subdev_spec_pair_t.db_name: A	subdev_spec_pair_t.sd_name: 0
+	
+	usrp.get_rx_num_channels(): 1
+	usrp.get_rx_subdev_name(channel[0]): WBXv4 RX+GDB
+	usrp.get_rx_rate(channel[0]): 25000000
+	usrp.get_fe_rx_freq_range(channel[0])...
+		Start: 25000000, Stop: 2200000000, Step: 0
+	usrp.get_rx_freq_range(channel[0])...
+		Start: 12500000, Stop: 2212500000, Step: 0.023283064365387
+	usrp.get_rx_freq(channel[0]): 1112500000
+	usrp.get_rx_gain_names(channel[0])...
+		Name: ADC-digital	Start: 0, Stop: 38, Step: 0.05
+		Actual: 0
+		Name: ADC-fine	Start: 0, Stop: 38, Step: 0.05
+		Actual: 0
+		Name: PGA0	Start: 0, Stop: 38, Step: 0.05
+		Actual: 20
+	usrp.get_rx_gain_range(channel[0])...
+		Range: Start: 0, Stop: 38, Step: 0.05
+	usrp.get_rx_gain(channel[0]): 20
+	usrp.get_rx_antennas(channel[0])...
+		TX/RX
+		RX2
+		CAL
+	usrp.get_rx_antenna(channel[0]): RX2
+	usrp.get_rx_bandwidth_range(channel[0])...
+		Start: 40000000, Stop: 40000000, Step: 0
+	usrp.get_rx_bandwidth(channel[0]): 25000000
+	usrp.get_rx_sensor_names(channel[0])...
+		Name: lo_locked	usrp.get_rx_sensor(name[lo_locked], channel[0]): Name: LO, Value: false, Unit: unlocked
+	
+	
+	"
+EndToEndConfiguration {
+  RFSensorConfigurations {
+    Cables {
+      CableType: "LMR-400"
+      LengthInFeet: 30.0
+    }
+    Connectors {
+      ConnectorType: "Mini Circuits Splitter ZX10R-14-S+"
+    }
+    Antennas {
+      AntennaType: "MultiPolarized Super-M Ultra Base Station (25MHz to 6GHz)"
+      HeightInFeet: 50.0
+      DegreeDirection: 45
+    }
+    DescriptiveName: "UW USRP WBX"
+    DeviceType: "Usrp"
+    MinPossibleStartFrequencyHz: 50000000.0
+    MaxPossibleEndFrequencyHz: 2200000000.0
+    DeviceAddress: "192.168.10.2"
+    CurrentStartFrequencyHz: 50000000.0
+    CurrentStopFrequencyHz: 2200000000.0
+    Gain: 20.0
+    AntennaPort: "RX2"
+    ScanPattern: "StandardScan"
+    CommunicationsChannel: "addr"
+    LockingCommunicationsChannel: true
+    BandwidthHz: 25000000.0
+    TuneSleep: 10000
+    SamplesPerScan: 1024
+    NumberOfSampleBlocksPerScan: 1
+  }
+  RFSensorConfigurations {
+    Cables {
+      CableType: "LMR-400"
+      LengthInFeet: 30.0
+    }
+    Connectors {
+      ConnectorType: "Mini Circuits Splitter ZX10R-14-S+"
+    }
+    Antennas {
+      AntennaType: "MultiPolarized Super-M Ultra Base Station (25MHz to 6GHz)"
+      HeightInFeet: 50.0
+      DegreeDirection: 45
+    }
+    DescriptiveName: "UW USRP SBX"
+    DeviceType: "Usrp"
+    MinPossibleStartFrequencyHz: 2200000000.0
+    MaxPossibleEndFrequencyHz: 4400000000.0
+    DeviceAddress: "192.168.20.2"
+    CurrentStartFrequencyHz: 2200000000.0
+    CurrentStopFrequencyHz: 4400000000.0
+    Gain: 20.0
+    AntennaPort: "RX2"
+    ScanPattern: "StandardScan"
+    CommunicationsChannel: "addr"
+    LockingCommunicationsChannel: true
+    BandwidthHz: 25000000.0
+    TuneSleep: 10000
+    SamplesPerScan: 1024
+    NumberOfSampleBlocksPerScan: 1
+  }
+  AggregationConfiguration {
+    MinutesOfDataPerScanFileImpl: 60.0
+    SecondsOfDataPerSampleImpl: 60.0
+  }
+  RawIqConfiguration {
+    OutputData: true
+    StartFrequencyHz: 926000000.0
+    StopFrequencyHz: 950000000.0
+    SecondsOfDataPerFile: 60
+    RetentionSeconds: 14400
+  }
+  LastModifiedTime {
+    value: 14682602542732786
+    scale: TICKS
+  }
+  Name: "UW-USRP-N200"
+  Latitude: 47.654839
+  Longitude: -122.306728
+  Description: "USRP N200 Spectrum Station on Sieg Hall Roof, University of Washington"
+  Location: "University of Washington, Seattle 98105"
+  AddressLine1: "Sieg Hall"
+  Country: "United States"
+}
+
+---------------CONFIG BLOCK END---------------
+ 
+ 
+ 
+
+--------------DATA BLOCK SUMMARY--------------
+Block 1 : 
+	 timestamp : Mon Jul 11 11:09:21 2016
+	 Start Freq : 925.0Mhz
+	 Stop Freq : 950.0Mhz
+	 Center Freq : 937.5Mhz
+	 NmeaGpggaLocation : 
+	 Data count : 2048
+Block 2 : 
+	 timestamp : Mon Jul 11 11:09:21 2016
+	 Start Freq : 950.0Mhz
+	 Stop Freq : 975.0Mhz
+	 Center Freq : 962.5Mhz
+	 NmeaGpggaLocation : 
+	 Data count : 2048
+
+---------SUMMARY---------------
+
+min_time : Mon Jul 11 11:09:21 2016
+max_time : Mon Jul 11 11:09:21 2016
+min starting freq : 925.0Mhz
+max stoping freq : 975.0Mhz
+Total IQ Data points #: 4096
+Total IQ Data points (in bytes): 32768Bytes (0.03125MiB)
+
+-------------------------------
+
+------------DATA BLOCK SUMMARY END------------ 
+ 

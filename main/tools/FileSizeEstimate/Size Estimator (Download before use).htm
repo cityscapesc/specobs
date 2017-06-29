@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title> CityScape Uploaded File Size Estimator </title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<!-- The main script (Calculate / Calculation Result Clear)-->
+		<script language="JavaScript">
+			<!--
+			var SensorCnt = 0;
+			
+			//TODO : Support multiple sensor. (I haven't done js for a while, so it is confusing me..)
+			/*
+			function addSensor() { 
+				SensorCnt++;
+				var SensorDiv = document.getElementById('RFSensor');
+				SensorDiv.innerHTML = SensorDiv.innerHTML + "Sensor #"+SensorCnt + "<br>";
+				SensorDiv.innerHTML = SensorDiv.innerHTML + "field<input type=\"text\" name=\"field"+SensorCnt+"\"> <br>";
+				SensorDiv.innerHTML = SensorDiv.innerHTML + "<hr>";
+			}
+			*/
+			
+			function calculate() {
+				
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//Variables
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				
+				var result = "";
+				
+				//Scanner
+				var MinFreq1 = parseInt(document.getElementById("MinFreq1").value) * 1000 * 1000;	//MHz to Hz
+				var MaxFreq1 = parseInt(document.getElementById("MaxFreq1").value) * 1000 * 1000;	//MHz to Hz
+				var ScanPattern1 = document.getElementById("ScanPattern1").value;	//spikeAdaptive or standard 
+				var CommLock1 = document.getElementById("CommLock1").value;	//true or false (str)
+				var Bandwidth1 = parseInt(document.getElementById("Bandwidth1").value);
+				var TuneSleep1 = parseInt(document.getElementById("TuneSleep1").value);
+				var SamplesPerSnapshot1 = parseInt(document.getElementById("SamplesPerSnapshot1").value);
+				var SnapshotsThrowAway1 = parseInt(document.getElementById("SnapshotsThrowAway1").value);
+				var SnapshotsUse1 = parseInt(document.getElementById("SnapshotsUse1").value);
+				
+				//Experiment Mode
+				var ExpMode = document.getElementById("ExpMode").value;	//IQ or PSD
+				var PSDOffCycle = document.getElementById("PSDOffCycle").value;	//true or false (str)
+							
+				//RAW IQ
+				var RAWIQStartFreq = parseInt(document.getElementById("RAWIQStartFreq").value) * 1000 * 1000;
+				var RAWIQStopFreq = parseInt(document.getElementById("RAWIQStopFreq").value) * 1000 * 1000;
+				var OnTime = parseInt(document.getElementById("OnTime").value);
+				var CycleTime = parseInt(document.getElementById("CycleTime").value);
+				var SecRAWFile = parseInt(document.getElementById("SecRAWFile").value);
+				var RawIQComp_percent = parseInt(document.getElementById("RawIQComp").value);
+				var RawIQcompressionFactor = 1/(RawIQComp_percent/100);  //(compressed size / original size)
+				
+				//PSD
+				var MinPSDUpload = parseInt(document.getElementById("MinPSDUpload").value);
+				var SecPSDSample = parseInt(document.getElementById("SecPSDSample").value);
+				var PSDComp_percent = parseInt(document.getElementById("PSDComp").value);				
+				var PSDcompressionFactor = 1/(PSDComp_percent/100); //(compressed size / original size)
+				
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//PSD Calcualation				
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				
+				//Estimate Total PSD Samples.
+				//If ExpMode == 'IQ' && PSDOffCycle == false, it is zero. If ExpMode == 'IQ' && PSDOffCycle == true, MaxFreq and MinFreq are overriden.
+				
+				
+				var estimatedPSDSamples;
+				
+				//PSD Experiment mode
+				if (ExpMode === "PSD") {
+					estimatedPSDSamples = Math.ceil((MaxFreq1-MinFreq1)/Bandwidth1) * SamplesPerSnapshot1 * 3 * ((MinPSDUpload*60)/SecPSDSample);
+				} 
+				//IQ + No offcycle PSD collection
+				else if(PSDOffCycle === "false"){
+					MaxFreq1 = RAWIQStopFreq;
+					MinFreq1 = RAWIQStartFreq;
+					estimatedPSDSamples = 0;
+				}
+				//IQ + offcycle PSD collection
+				else{
+					MaxFreq1 = RAWIQStopFreq;
+					MinFreq1 = RAWIQStartFreq;
+					estimatedPSDSamples = Math.ceil((RAWIQStopFreq-RAWIQStartFreq)/Bandwidth1) * SamplesPerSnapshot1 * 3 * ((MinPSDUpload*60)/SecPSDSample);
+				}
+				
+				var estimatedFileSize = estimatedPSDSamples * 3; //Each point can take up to 3bytes (variable, 1-3bytes but most likely in 3 bytes).
+				var estimatedFileSize_compressed = (estimatedFileSize * PSDcompressionFactor); //Apply compression.
+				var PSDNetworkUsage_uncompressed = estimatedFileSize / (MinPSDUpload * 60);
+				var PSDNetworkUsage_compressed =  estimatedFileSize_compressed / (MinPSDUpload * 60);
+				//Output Results.
+				result = result + "<h3> PSD File Size </h3> ";
+				result = result + "<p>Equation: Upper Bound of File Size = Approx. 3 * ceil((stop freq – start freq)/samp_rate) * “SAMPLES PER SNAPSHOT” * 3 * (“MINUTES OF DATA PER UPLOAD” * 60)/(“SECONDS OF DATA PER SAMPLE”) bytes. </p>";
+				result = result + "<p> Calculated Results: <br>";
+				result = result + "Number of Points per a file = "+ estimatedPSDSamples + "<br>";
+				result = result + "Estimated Upper Bound of an Uncompressed File = "+ estimatedFileSize + " bytes. <br>";
+				result = result + "Estimated Compressed File Size (assuming " + PSDcompressionFactor*100 +"% of the original size) = "+ estimatedFileSize_compressed / (1024*1024) + " MiB. <br>";
+				
+				result = result + "(one file per "+MinPSDUpload+" minutes.)<br>";
+				result = result + "<b>*Tune Sleep property ignored due to a bug (Bug # 14). That means that this calculation result ignores the (unlikely but existing) possiblity that the sweeping speed of the station can fall behind the 'SECONDS OF DATAPER SAMPLE' property. </b> </p>";
+				
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//RAW IQ Calculation
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				
+				//Time cost per each snapshot
+				var SnapshotCost;
+				if (CommLock1 === "false") {
+					//var retuneDelay = 1.216e-3; //***THIS IS A MEASURED VALUE, BUT DOES SEEMS TO VARY OVER TIME SOMEHOW. (MAY NEED CHANGES)
+					var retuneDelay = 1.20e-3; //***THIS IS A MEASURED VALUE, BUT DOES SEEMS TO VARY OVER TIME SOMEHOW. (MAY NEED CHANGES)
+					
+					if((ExpMode === "IQ") &&  (PSDOffCycle === "true") && ScanPattern1 === "standard") {	//Scan is slower when Experiment mode is #1  (I-Q) and scan parttern is "standard" but PSD output on off cylce is true (due to the algorithm used).
+						retuneDelay = 2.40e-3;
+					}
+
+					SnapshotCost = retuneDelay + (SamplesPerSnapshot1/Bandwidth1) + TuneSleep1/1000;
+				} 
+				else if(CommLock1 === "true"){
+					//var retuneDelay = 1.456e-3;//***THIS IS A MEASURED VALUE, BUT DOES SEEMS TO VARY OVER TIME SOMEHOW. (MAY NEED CHANGES)
+					var retuneDelay = 1.9e-3;//***THIS IS A MEASURED VALUE, BUT DOES SEEMS TO VARY OVER TIME SOMEHOW. (MAY NEED CHANGES)
+					if((ExpMode === "IQ") &&  (PSDOffCycle === "true") && ScanPattern1 === "standard") {	//Scan is slower when Experiment mode is #1  (I-Q) and scan parttern is "standard" but PSD output on off cylce is true (due to the algorithm used).
+						retuneDelay = 3.80e-3;
+					}
+
+					SnapshotCost = retuneDelay + (SamplesPerSnapshot1/Bandwidth1) + TuneSleep1/1000;
+					//seems to not happen when using UBX board
+					//if (retuneDelay < (TuneSleep1/1000)){
+					//		SnapshotCost = TuneSleep1/1000 + (SamplesPerSnapshot1/Bandwidth1);
+					//}
+				}
+				else{
+					alert('debugPoint1-CommLock');
+				}
+				
+				//number of snapshots saved into a file per each full sweep
+				var numSnapshotsPerScan;
+				
+				//Running a simple simulation to determine this. (Can be done with equations, but to avoid possible IEE754 round-off errors.)
+				var i;
+				var cnt = 0;
+				for (i = MinFreq1; i < MaxFreq1; i = i + Bandwidth1) { 
+					if (ScanPattern1 === "standard"){
+						if ((i >= RAWIQStartFreq && i <= RAWIQStopFreq) || (i + Bandwidth1 >= RAWIQStartFreq && i + Bandwidth1 <= RAWIQStopFreq)){
+							cnt = cnt + 1;
+						}
+					}
+					else if(ScanPattern1 === "spikeAdaptive"){
+						if ((i >= RAWIQStartFreq && i <= RAWIQStopFreq) || (i + Bandwidth1 >= RAWIQStartFreq && i + Bandwidth1 <= RAWIQStopFreq)){
+							cnt = cnt + 1;
+						}						
+                        if ((i + (Bandwidth1 / 3) >= RAWIQStartFreq && i + (Bandwidth1 / 3) <= RAWIQStopFreq) || (i + (Bandwidth1 * 4 / 3) >= RAWIQStartFreq && i + (Bandwidth1 * 4 / 3) <= RAWIQStopFreq)){
+							cnt = cnt + 1;
+						}
+					}
+				}
+				numSnapshotsPerScan = cnt;
+				
+				//time cost per each full sweep
+				var SingleSweepDelay;
+				if (ScanPattern1 === "standard") {
+					SingleSweepDelay = SnapshotCost * Math.ceil((MaxFreq1-MinFreq1) / Bandwidth1);
+				} 
+				else if(ScanPattern1 === "spikeAdaptive"){
+					SingleSweepDelay = SnapshotCost * Math.ceil((MaxFreq1-MinFreq1) / Bandwidth1) * 2;
+				}
+				else{
+					alert('debugPoint1-ScanPattern');
+				}
+				
+				
+				//sum up
+				var numEstimatedSnapshots = (SecRAWFile/SingleSweepDelay)*numSnapshotsPerScan;
+				
+				//Apply duty cycle.
+				numEstimatedSnapshots  = numEstimatedSnapshots  * (OnTime / CycleTime);
+				
+				//Zero it out if RAW I-Q data generation is turned off.
+				if (ExpMode === "PSD") {
+					numEstimatedSnapshots = 0;
+				} 
+				
+				var UncompressedFileSize = 2 * 8 * SamplesPerSnapshot1 * numEstimatedSnapshots;
+				var CompressedFileSize = UncompressedFileSize * RawIQcompressionFactor;
+				
+				var IQNetworkUsage_uncompressed = UncompressedFileSize / SecRAWFile;
+				var IQNetworkUsage_compressed =  CompressedFileSize / SecRAWFile;
+				
+				result = result + "<h3> RAW IQ File Size </h3> <p>";
+				result = result + SnapshotCost + " Seconds per each snapshot + retune. <br>";
+				result = result + numSnapshotsPerScan + " Snapshots stored per a sweep. <br>";
+				result = result + "Full  sweep per every " + SingleSweepDelay + "Seconds. <br>";
+				result = result + "Approx " + numEstimatedSnapshots + " Snapshots per a file. <br>";
+				result = result + "Uncompressed File Size :"+UncompressedFileSize/(1024*1024)+"MiB<br>";
+				result = result + "Compressed File Size, assuming " + RawIQcompressionFactor * 100 + "% of the original size (*it varies):"+(CompressedFileSize)/(1024*1024)+"MiB<br>";
+				result = result + "(one file per "+SecRAWFile+" seconds.)<br>";
+				result = result + "<b>* “NUMBER OF SNAPSHOTS PER VISIT” and “MULTIPLES OF SAMPLES PER SNAPSHOT TO THROW AWAY” properties are ignored due to known bugs that are affecting their (file-size related) behaviors.</b></p>";
+
+								
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//Network usage
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				//----------------------------------------------------------------------------------------------------------------------------------------------------
+				
+				var NetworkUsage_uncompressed = IQNetworkUsage_uncompressed + PSDNetworkUsage_uncompressed;
+				var NetworkUsage_compressed = IQNetworkUsage_compressed + PSDNetworkUsage_compressed;
+				
+				result = result + "<h3> Network Usage </h3> <p>";
+				result = result + "Assuming worst case compression rate (uncompressed) : <br>";
+				result = result + (NetworkUsage_uncompressed*8)/(1024*1024)+" Mbit/s (in avg)<br>";
+				result = result + "Assuming typical compression rate: <br>";
+				result = result + (NetworkUsage_compressed*8)/(1024*1024)+" Mbit/s (in avg) <br>";
+				
+				document.getElementById("ResultBody").innerHTML = result;
+				document.getElementById("jsForm").style.display="none";
+				document.getElementById("Result").style.display="inline";
+			}
+
+			function ret() {
+				document.getElementById("jsForm").style.display="inline";
+				document.getElementById("Result").style.display="none";
+			}
+			
+			//-->  
+		</script>
+
+		<!--Overall CSS Style-->
+		<style>
+			td{ border: 1px solid black; 
+			}.
+		</style>
+	</head>
+
+	<body>
+		<h1>PSD / RAW IQ File Size Estimator</h1>
+		*As of 16 Jan 2017 (may not apply for older or newer station software versions).
+		<!-- Main Configuration Form -->
+		<form id="jsForm">
+			<!-- <input type="button" value="Add a sensor" onclick="addSensor()"> -->
+			<hr>
+			<!-- Sensor -->
+			<div id="RFSensor">
+				<h3> RF Sensor (Combined) </h3>
+					(* Support for multiple sensors with different configurations is to be added.)
+				<table><tr>
+					<td>Scan Start Freq in MHz <input type="text" id="MinFreq1" name="MinFreq1" value="50"> </td>
+					<td>Scan Stop Freq in MHz <input type="text" id="MaxFreq1" name="MaxFreq1" value="6000"> </td></tr>
+					<tr><td>Scan Pattern <select name="ScanPattern1" id = "ScanPattern1"><option value="spikeAdaptive">DC Spike Adaptive Scan</option> <option value="standard">Standard Scan</option> </select></td>
+					<td>Locking Comm Channel <select name="CommLock1" id = "CommLock1"><option value="true">True</option> <option value="false">False</option> </select></td></tr>
+					<tr><td>Eff. Samp. Rate <input type="text" id="Bandwidth1" name="Bandwidth1" value="25000000"> </td>
+					<td>Add. Tune Delay (msec.) <input type="text" id="TuneSleep1" name="TuneSleep1" value="0"> </td></tr>
+					<tr><td>Samples Per Snapshot <input type="text" id="SamplesPerSnapshot1" name="SamplesPerSnapshot1" value="1024"> </td></tr>
+					<tr><td>Snapshots to Throw Away<input type="text" id="SnapshotsThrowAway1" name="SnapshotsThrowAway1" value="0" readonly> </td>
+					<td>Snapshots to Use<input type="text" id="SnapshotsUse1" name="SnapshotsUse1" value="1" readonly> </td></tr>
+					</table>	
+					*Snapshots to throw away and snapshots to use fields are not editable, as I suspect that there are bugs related with these fields.
+			</div>
+			
+			<!--Experiment Settings -->
+			<div id="RFSensor">
+				<h3> Experiment Mode </h3>
+				<table><tr>
+					<tr><td>Experiment Mode <select name="ExpMode" id = "ExpMode"><option value="IQ">RAW I-Q</option> <option value="PSD">Time Averaged PSD</option> </select></td>
+					<td>Output PSD in Off Cycle <select name="PSDOffCycle" id = "PSDOffCycle"><option value="true">True</option> <option value="false">False</option> </select></td></tr>
+					</table>	
+					
+			</div>
+			<!-- RAW IQ File -->
+			<div id="RAW">
+				<h3>EXPERIMENT TYPE 1 - RAW IQ</h3>
+				<table><tr>
+				<td>Start Frequency MHz <input type="text" id="RAWIQStartFreq" name="RAWIQStartFreq" value="900"> </td>
+				<td>Stop Frequency MHz <input type="text" id="RAWIQStopFreq" name="RAWIQStopFreq" value="950"> </td></tr>
+				<tr><td>On Time in ms <input type="text" id="OnTime" name="OnTime" value="100"> </td>
+				<td>Cycle Time in ms <input type="text" id="CycleTime" name="CycleTime" value="1000"> </td></tr>
+				<tr><td>Seconds of Data Per File<input type="text" id="SecRAWFile" name="SecRAWFile" value="60"> </td></tr>
+				</table>
+			</div>
+			
+			<!-- PSD File -->
+			<div id="PSD">
+				<h3>EXPERIMENT TYPE 2 - TIME AVERAGED PSD</h3>
+				<table><tr>
+				<td>Minutes of Data Per Upload <input type="text" id="MinPSDUpload" name="MinPSDUpload" value="60"> </td>
+				<td>Seconds of Data Per Sample <input type="text" id="SecPSDSample" name="SecPSDSample" value="60"> </td>
+				</tr></table>
+			</div>
+			
+			<!-- Advanced -->
+			<div id="PSD">
+				<h3>Advanced</h3>
+				<table><tr>
+				<td>Compression Ratio - Raw IQ (in percent, int) <input type="text" id="RawIQComp" name="RawIQComp" value="400"> </td>
+				<td>Compression Ratio - PSD  (in percent, int) <input type="text" id="PSDComp" name="PSDComp" value="167"> </td>
+				</tr></table>
+				*Compression ratio = uncompressed size / compressed size.
+			</div>
+			
+			<!-- Submit -->
+			<input type="button" value="Calculate" onclick="calculate()">
+		</form>
+
+		<!-- Calculation Result Screen (Hidden; Turns on when User clicks "Calculate" button.)-->
+		<div id="Result" style="display:none;">
+			<div id="ResultBody">
+				This section is where the calculation results are shown (replaced by the calculatior script dynamically).
+				_______________________________________
+				/ You should emulate your heros, but    \
+				| don't carry it too far. Especially if |
+				\ they are dead.                        /
+				 ---------------------------------------
+						\   ^__^
+						 \  (oo)\_______
+							(__)\       )\/\
+								||----w |
+								||     ||
+			</div>
+			<input type="button" value="Clear" onclick="ret()">
+		</div>
+		
+	</body>
+
+</html>
