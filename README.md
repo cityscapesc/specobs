@@ -40,9 +40,6 @@ Below are the ways you can contribute to CityScape Spectrum Observatory.
 3. IDEAS AND FEEDBACK. Your feedback is very important for us to make things a little better and improve the research and analysis. Your active contribution with our team always helps us to find ways and improve.
 4. CREATE NEW FEATURES. Contribute to CityScape Spectrum Observatory open sources by implementing new features, onboarding variety of RF sensors, sharing the issues and fixing bugs.
 
-Q. I wanted to contribute to source code and where can I get it started?
-Spectrum observatory sources was setup on CodePlex (https://spectrumobservatory.codeplex.com) for you to setup and start writing features. To contribute to the code changes on codeplex, you would need to agree with the contributor license agreement. Please send us an email from the feedback page with subject line: "Spectrum Observatory Open Source Contributor License" with complete details. The spectrum observatory adminstrator will get that information back to you. You can then create an account on codeplex and get it approved by the administrator.
-
 Q. What software required to build and write code for cityscape spectrum observatory?
 You would need the following software:
 1. Visual Studio 2013 or above
