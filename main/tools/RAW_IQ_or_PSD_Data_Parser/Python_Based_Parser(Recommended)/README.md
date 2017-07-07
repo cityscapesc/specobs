@@ -149,4 +149,4 @@ Currently (May 10, 2017), every station hosted at cityscape.cloudapp.net are amp
 
 **It takes very long (several minutes) to parse data.**
 
-Yes.
+Yes. This is because your Python-Protobuf is not built to handle large data files. Some versions of Python-Protobuf (ex: Python-Protobuf from Ubuntu 16.04 repo) run much faster.
