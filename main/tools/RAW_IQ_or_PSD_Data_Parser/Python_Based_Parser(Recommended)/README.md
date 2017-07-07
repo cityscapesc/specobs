@@ -31,29 +31,29 @@ Note that this may take up to several minutes (for large files).
 This will convert the extracted data into Matlab-decodable (.mat) format. There are other options as well: you can type 'python rawIQ_process.py --help' or 'python psdFile_process.py --help' to see list of available options.
 
 ## List of Files
-"dsor or dsox to protobuf decompressor"/decompress.exe : Decompresses dsox or dsor files into uncompressed Protobuffer files. Requires .NET or Mono runtime.
+* "dsor or dsox to protobuf decompressor"/decompress.exe : Decompresses dsox or dsor files into uncompressed Protobuffer files. Requires .NET or Mono runtime.
 
-"dsor or dsox to protobuf decompressor"/decompress.cs : source code of decompress.exe. 
+* "dsor or dsox to protobuf decompressor"/decompress.cs : source code of decompress.exe. 
 
-"dsor or dsox to protobuf decompressor"/decompress.py : Python equivalent of decompress.exe (if you prefer Python).
+* "dsor or dsox to protobuf decompressor"/decompress.py : Python equivalent of decompress.exe (if you prefer Python).
 
-"Protobuf Binaries & .proto files"/protobuf-windows-build(full).zip: protobuf binary, with max file size = 512M, for Windows 7 or higher.  
+* "Protobuf Binaries & .proto files"/protobuf-windows-build(full).zip: protobuf binary, with max file size = 512M, for Windows 7 or higher.  
 
-"Protobuf Binaries & .proto files"/protoc.exe : protobuffer compiler (for Windows). Can be used to decode a protobuffer database file and generate a human-readable text file. Max file size = 512MB (Use Python based parser for larger files).
+* "Protobuf Binaries & .proto files"/protoc.exe : protobuffer compiler (for Windows). Can be used to decode a protobuffer database file and generate a human-readable text file. Max file size = 512MB (Use Python based parser for larger files).
 
-"Protobuf Binaries & .proto files"/psdFile.proto : Protobuf definition file for the aggregated PSD files (used by the CityScape project). Protobuf libraries and binaries need this file to correctly decode (or encode) the downloaded PSD files.
+* "Protobuf Binaries & .proto files"/psdFile.proto : Protobuf definition file for the aggregated PSD files (used by the CityScape project). Protobuf libraries and binaries need this file to correctly decode (or encode) the downloaded PSD files.
 
-"Protobuf Binaries & .proto files"/rawIQ.proto : psdFile.proto : Protobuf definition file for the Raw I-Q files (used by the CityScape project). Protobuf libraries and binaries need this file to correctly decode (or encode) the downloaded files.
+* "Protobuf Binaries & .proto files"/rawIQ.proto : psdFile.proto : Protobuf definition file for the Raw I-Q files (used by the CityScape project). Protobuf libraries and binaries need this file to correctly decode (or encode) the downloaded files.
 	
-Python/psdFile_pb2.py : Protobuf "data access code" for PSD scan file, for Python 2.7. Required to encode or decode CityScape PSD data files with Python; can be generated from psdFile.proto if necessary. 
+* Python/psdFile_pb2.py : Protobuf "data access code" for PSD scan file, for Python 2.7. Required to encode or decode CityScape PSD data files with Python; can be generated from psdFile.proto if necessary. 
 
-Python/rawIQ_pb2.py : Protobuf "data access code" for RAW IQ file, for Python 2.7. Required to encode or decode CityScape I-Q data files with Python; can be generated from psdFile.proto if necessary. 
+* Python/rawIQ_pb2.py : Protobuf "data access code" for RAW IQ file, for Python 2.7. Required to encode or decode CityScape I-Q data files with Python; can be generated from psdFile.proto if necessary. 
 
-Python/psdFile_process.py : A sample Python program to read and process CityScape PSD scan files. Provides a simple CLI interface to plot or dump the data.
+* Python/psdFile_process.py : A sample Python program to read and process CityScape PSD scan files. Provides a simple CLI interface to plot or dump the data.
 
-Python/rawIQ_process.py : A sample Python program to read and process CityScape RAW IQ files.  Provides a simple CLI interface to plot or dump the data.
+* Python/rawIQ_process.py : A sample Python program to read and process CityScape RAW IQ files.  Provides a simple CLI interface to plot or dump the data.
 
-Python/CityScapePSDPlotter.py : A sample Python program to read and plot PSD scan files. GUI-Based.
+* Python/CityScapePSDPlotter.py : A sample Python program to read and plot PSD scan files. GUI-Based.
 
 ## Usage
 ### Decompressing Files (Optional if using the Python-based Parser)
