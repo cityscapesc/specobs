@@ -119,18 +119,18 @@ If you are using Windows 7 or higher, or using GNU/Linux with Wine installed, yo
 In Debian-based Linux distros, you can simply download protobuf by running sudo apt-get protobuf-compiler. However, the maximum input file size for this protoc build can be smaller than what you want. You can still use the Python-based parser, as that limit does not apply to the Python-base parser.
   
 ### Understanding CityScape PSD / RAW IQ File Data Structure
--*.proto files serve as documentation of the RAW IQ / PSD protobuf file structures. We recommend reading those files in order to understand what kind of metadata can be stored in these data files.  
+* *.proto files serve as documentation of the RAW IQ / PSD protobuf file structures. We recommend reading those files in order to understand what kind of metadata can be stored in these data files.  
   
--To convert a timestamp with "scale: TICKS" into a UNIX timestamp, simply divide it by 10000000. (Note that this is a special case. The timestamp stored in protobuf-net format is already adjusted to start at 1970/01/01 00:00AM.)  
+* To convert a timestamp with "scale: TICKS" into a UNIX timestamp, simply divide it by 10000000. (Note that this is a special case. The timestamp stored in protobuf-net format is already adjusted to start at 1970/01/01 00:00AM.)  
   
--Power in the PSD files are represented in a fixed-point format ( https://en.wikipedia.org/wiki/Q_(number_format) ), which are then stored as signed int16 numbers. 
+* Power in the PSD files are represented in a fixed-point format ( https://en.wikipedia.org/wiki/Q_(number_format) ), which are then stored as signed int16 numbers. 
 
 ### Units of the I-Q Data and PSD Estimates
--If your station is amplitude-calibrated, generated I-Q Data are normalized in a such way that the periodogram of the I-Q data will generate power spectral densitiy estimates in a dBm scale (instead of in arbitrary scale). This is done by applying a software-level amplification (or attenuation) to the received I-Q data. If the station is not calibrated, it will generate data in an arbitrary scale.
+* If your station is amplitude-calibrated, generated I-Q Data are normalized in a such way that the periodogram of the I-Q data will generate power spectral densitiy estimates in a dBm scale (instead of in arbitrary scale). This is done by applying a software-level amplification (or attenuation) to the received I-Q data. If the station is not calibrated, it will generate data in an arbitrary scale.
 
-Currently (May 10, 2017), every station hosted at cityscape.cloudapp.net are amplitude-calibrated.
+Currently (Jul 07, 2017), every station hosted at cityscape.cloudapp.net are amplitude-calibrated.
 
--Similarly, PSD estimate data are in dBm/(FFT Bin Size) if the station is amplitude-calibrated. If not, it is in an arbitrary scale.
+* Similarly, PSD estimate data are in dBm/(FFT Bin Size) if the station is amplitude-calibrated. If not, it is in an arbitrary scale.
 
 ### Troubleshoot
 
