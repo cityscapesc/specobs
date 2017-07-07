@@ -6,10 +6,6 @@ Source codes of the project are published under Apache 2.0 license.
 
 ## Frequently Asked Questions (FAQs):
 
-**Q. Is the CityScape Spectrum Observatory an open source project?**
-
-Yes, the spectrum observatory is an open source project available to the public under an Apache 2.0 License. The source code is available at https://github.com/cityscapesc/specobs.
-
 **Q. What is included in the open source code base?**
 
 The code base includes all of the CityScape Spectrum Observatory source code modules required to build the software for measurement stations, data processing and the web site. For complete details, please read through the see the source code and it corresponding documentation.
