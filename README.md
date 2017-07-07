@@ -6,6 +6,15 @@ Source codes of the project are published under Apache 2.0 license.
 
 ## Frequently Asked Questions (FAQs):
 
+
+**Q. How can I contribute to CityScape spectrum observatory?**
+
+Below are the ways you can contribute to CityScape Spectrum Observatory.
+1. SETUP YOUR OWN STATION. By registering a new station at your location and configure it to upload the spectrum data to the Microsoft Azure cloud so the data can be made available to public for analysis.
+2. RESEARCH AND ANALYSIS. Be a part of the community of like minded individuals by sharing information and serve the communitys research more better 
+3. IDEAS AND FEEDBACK. Your feedback is very important for us to make things a little better and improve the research and analysis. Your active contribution with our team always helps us to find ways and improve.
+4. CREATE NEW FEATURES. Contribute to CityScape Spectrum Observatory open sources by implementing new features, onboarding variety of RF sensors, sharing the issues and fixing bugs
+
 **Q. What is included in the open source code base?**
 
 The code base includes all of the CityScape Spectrum Observatory source code modules required to build the software for measurement stations, data processing and the web site. For complete details, please read through the see the source code and it corresponding documentation.
@@ -32,15 +41,7 @@ Other USRP sensors should work as well, but have not been tested. Also, adding n
 
 **Q. What is a Microsoft account and why do I need it?**
 
-You can find more information on a Microsoft account here: http://www.microsoft.com/en-us/account/default.aspx.  You need to register with the CiytScape Spectrum Observatory site to access services like "Register a New Station".
-
-**Q. How can I contribute to CityScape spectrum observatory?**
-
-Below are the ways you can contribute to CityScape Spectrum Observatory.
-1. SETUP YOUR OWN STATION. By registering a new station at your location and configure it to upload the spectrum data to the Microsoft Azure cloud so the data can be made available to public for analysis.
-2. RESEARCH AND ANALYSIS. Be a part of the community of like minded individuals by sharing information and serve the communitys research more better 
-3. IDEAS AND FEEDBACK. Your feedback is very important for us to make things a little better and improve the research and analysis. Your active contribution with our team always helps us to find ways and improve.
-4. CREATE NEW FEATURES. Contribute to CityScape Spectrum Observatory open sources by implementing new features, onboarding variety of RF sensors, sharing the issues and fixing bugs.
+You can find more information on a Microsoft account here: http://www.microsoft.com/en-us/account/default.aspx.  You need to register with the CiytScape Spectrum Observatory site to access services like "Register a New Station"..
 
 **Q. What software required to build and write code for cityscape spectrum observatory?**
 
