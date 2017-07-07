@@ -136,17 +136,17 @@ Currently (Jul 07, 2017), every station hosted at cityscape.cloudapp.net are amp
 
 **Exception thrown by the Python script:**
 
--Supplied *_pb2.py files may not work correctly with some versions of Python-Protobuf library. You can re-build *_pb2.py files with your own Protobuf library. Alternatively, you can try different versions of Python-Protobuf library. *_pb2.py rebuild Guide : https://developers.google.com/protocol-buffers/docs/pythontutorial .
+* Supplied *_pb2.py files may not work correctly with some versions of Python-Protobuf library. You can re-build *_pb2.py files with your own Protobuf library. Alternatively, you can try different versions of Python-Protobuf library. *_pb2.py rebuild Guide : https://developers.google.com/protocol-buffers/docs/pythontutorial .
 
 **Decompress.exe won't run:**
 
--Try installing recent version of .NET Framework (Windows) or Mono (Linux).
+* Try installing recent version of .NET Framework (Windows) or Mono (Linux).
 
 **Decoded data look incorrect.**
 
--Check if you used the correct parser script - psdFile_process.py for aggregated PSD files, rawIQ_process.py for raw I-Q data files.
+* Check if you used the correct parser script - psdFile_process.py for aggregated PSD files, rawIQ_process.py for raw I-Q data files.
 
--If you suspect that the data generated from the station is incorrect (=fault of the station, not the parser), try contacting the station administrator.
+* If you suspect that the data generated from the station is incorrect (=fault of the station, not the parser), try contacting the station administrator.
 
 
 **It takes very long (several minutes) to parse data.**
