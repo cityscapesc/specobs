@@ -24,7 +24,7 @@ You can contribute to code including features, bug fixes and tests. Please refer
 
 **Q. What features can be contributed to the sources?**
 
-We encouage any feature that would make the spectrum observatory a more valuable resouce. We will do regular updates to the project, so any new feature you create can be lveraged by the entire community.
+We encouage any feature that would make the spectrum observatory a more valuable resouce. We will do regular updates to the project, so any new feature you create can be leveraged by the entire community.
 
 **Q. What are the system requirements for coding the CityScape Spectrum Observatory?**
 
