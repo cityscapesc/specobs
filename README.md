@@ -4,6 +4,21 @@ The CityScape Spectrum Observatory interface (http://cityscape.cloudapp.net) is 
 
 Source codes of the project are published under Apache 2.0 license.
 
+## Directory
+
+* Readme.md : This file.
+* LICENSE : License of this project (Apache 2).
+* main/ : Where the main project codes are located.
+* main/tools : Where various tools are located. Existing tools:
+  * main/tools/Cityscape_SDR_Calibration : Amplitude calibration tools.
+  * main/tools/Cityscape_Test_Suite : Tools for stand-alone operation of CityScape sensors (without connecting to the cloud).
+  * main/tools/File_Size_Estimate : Estimates uploaded file size per unit time.
+  * main/tools/RAW_IQ_or_PSD_Data_Parser : For parsing or plotting downloaded data files.
+  * main/tools/USRP_N200_UBX40_Filter_Testing : For testing filter response of USRP N2x0 boards (with various daughterboards). 
+* main/external : Where the main project codes are located.
+* main/lib : Where a few dependant library blobs are located.
+* main/devbins
+
 ## Frequently Asked Questions (FAQs):
 
 
